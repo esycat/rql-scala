@@ -1,0 +1,7 @@
+ext {
+    isSnapshot = version.endsWith('-SNAPSHOT')
+}
+
+ext.sclArt = { String artifactId ->
+    sprintf('%s_%s', artifactId, project.ext.scala.branch)
+}

@@ -1,0 +1,8 @@
+dependencies {
+    compile group: 'org.scala-lang', name: 'scala-library', version: project.ext.scala.version
+}
+
+compileScala {
+    scalaCompileOptions.deprecation = true
+    //scalaCompileOptions.useCompileDaemon = true
+}

@@ -1,0 +1,29 @@
+# Caches
+.cache/
+.gradle/
+.sass-cache/
+
+# Build output
+build/
+out/
+target/
+
+# Eclipse, Intellij IDEA, and Sublime Text project configs
+.settings/
+.project
+.classpath
+.buildpath
+.idea/
+*.iml
+*.ipr
+*.iws
+*.sublime-project
+*.sublime-workspace
+
+# OS and various viewers garbage
+Thumbs.db
+.DS_Store
+
+# Auto-generated symlink
+/content
+

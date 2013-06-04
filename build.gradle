@@ -1,0 +1,77 @@
+description = ''
+group = 'com.esyfur'
+version = '0.0.1'
+
+defaultTasks 'clean', 'run'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'com.esyfur', name: 'gradle-expand-props', version: project.ext.get('plugin.propsUtil.version')
+        classpath group: 'ws.antonov.gradle.plugins', name: 'gradle-plugin-protobuf', version: '0.8'
+    }
+}
+
+apply plugin: 'scala'
+apply plugin: 'application'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'idea'
+//apply plugin: 'protobuf'
+apply plugin: 'propsUtil'
+
+mainClassName = [group, project.name, 'Main'].join('.')
+
+apply from: 'project/util.gradle'
+apply from: 'project/scala.gradle'
+
+ext {
+    protobuf = [
+        resDir:  relativePath(sourceSets.main.resources.getSrcDirs().iterator().next()),
+        destDir: relativePath(sourceSets.main.java.getSrcDirs().iterator().next())
+    ]
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api',  version: project.ext.log4j.version
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: project.ext.log4j.version
+
+    compile group: 'com.typesafe', name: 'config',                     version: '1.0.0'
+    compile group: 'com.typesafe', name: sclArt('scalalogging-log4j'), version: '1.0.1'
+
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: project.ext.get('google.protobuf.version')
+
+//    protobuf files('src/main/resources/ql2.proto')
+}
+
+task protoApiDownload() {
+    // TODO: In the future Gradle is going to support URLs in the Copy task.
+    // from rethinkdb.protocolApiUrl
+    // into project.ext.protobuf.resDir
+
+    doLast {
+        ant.get(
+            src: rethinkdb.protocolApiUrl,
+            dest: project.ext.protobuf.resDir,
+            verbose: true
+        )
+    }
+}
+
+task protoApiCompile(type: Exec) {
+    mustRunAfter protoApiDownload
+    executable 'protoc'
+    args '--java_out=' + project.ext.protobuf.destDir, project.ext.protobuf.resDir + File.separator + 'ql2.proto'
+}
+
+tasks.compileJava.dependsOn protoApiCompile
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
+}
