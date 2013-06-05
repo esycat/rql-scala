@@ -3,8 +3,9 @@ package com.esyfur.rql
 import java.io._
 import java.net.Socket
 
+import com.google.protobuf.Message
 import rethinkdb.{Ql2 => p}
-import com.esyfur.rql.ast.{DbDrop, DbCreate, DbList}
+import ast.{DbDrop, DbCreate, DbList}
 
 object Connection {
     var default: Connection = _
@@ -31,13 +32,11 @@ class Connection(
         socket = new Socket(host, port)
         in  = socket.getInputStream()
         out = socket.getOutputStream()
+        //out = System.out
 
         val version = pack(p.VersionDummy.Version.V0_1.getNumber)
-
+        console(version)
         out.write(version)
-        //out2.println("asdfasfsdfa")
-        println("lalala1")
-        println("lalala2")
 
         this
     }
@@ -64,13 +63,14 @@ class Connection(
         this
     }
 
-    def execute(q: Query): Response = {
+    def execute(query: Query, options: Map[String, String]): Response = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
+        // Constructing query.
         val protobuf = p.Query.newBuilder()
             .setType(p.Query.QueryType.START)
             .setToken(token)
-            .setQuery(q.getTerm)
+            .setQuery(query.build)
 
         send(protobuf.build)
         receive()
@@ -90,11 +90,15 @@ class Connection(
     def dbDrop() = new DbDrop
     */
 
-    private def send(protobuf: p.Query): Unit = {
+    private def send(protobuf: Message): Unit = {
         val size = pack(protobuf.getSerializedSize)
+
+        console(size, protobuf.toByteArray)
+
         out.write(size)
         protobuf.writeTo(out)
 
+        /*
         println("Length 1:")
         println(protobuf.toByteArray.length)
 
@@ -103,19 +107,26 @@ class Connection(
 
         println("Length 3:")
         println(protobuf.getSerializedSize)
+        */
     }
 
     private def receive(): Response = {
-        val reader  = new BufferedReader(new InputStreamReader(in))
+        val reader = new BufferedReader(new InputStreamReader(in))
         val writer = new PrintWriter(out, true)
 
-        writer.println(" ")
-
-        println("Any luck?")
+        println("Any luck?:")
         println(in.read())
-        println(reader.readLine())
 
         new Response
+    }
+
+    private def console(value: Array[Byte]): Unit = {
+        val tpl = "[%d] %s"
+        println(tpl.format(value.length, value.mkString(" ")))
+    }
+
+    private def console(values: Array[Byte]*): Unit = {
+        values.foreach(console)
     }
 
 }

@@ -8,7 +8,7 @@ class Cursor(
     private val term: Term,
     chunk: String,
     var complete: Boolean
-    ) {
+    ) /*extends BufferedIterator*/ {
 
     private val chunks: Seq[String] = LinkedList[String](chunk)
 

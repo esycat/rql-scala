@@ -1,12 +1,12 @@
 package com.esyfur.rql
 
+import scala.collection.mutable.ListMap
+
 import rethinkdb.{Ql2 => p}
 
 abstract class Query {
 
     val termType: p.Term.TermType
-
-    var state: String = _
 
     override def toString = {
         val printer = new QueryPrinter(this)
@@ -21,10 +21,11 @@ abstract class Query {
     }
 
     final def run(conn: Connection): Response = {
-        conn.execute(this)
+        val options = ListMap[String, String]()
+        conn.execute(this, options.toMap)
     }
 
-    def getTerm(): p.Term = {
+    def build(): p.Term = {
         val protobuf = p.Term.newBuilder()
             .setType(termType)
 

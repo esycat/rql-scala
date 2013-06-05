@@ -20,12 +20,14 @@ package object rql {
     def pack(value: Int): Array[Byte] = {
         val bytes = ByteBuffer.allocate(4)
             .order(ByteOrder.LITTLE_ENDIAN)
-            .putInt(p.VersionDummy.Version.V0_1.getNumber)
+            .putInt(value)
             .array()
 
+        /*
         println("[pack] before: " + value)
         println("[pack] after:  " + bytes)
         println("[pack] string: " + new String(bytes))
+        */
 
         //new String(bytes)
 
