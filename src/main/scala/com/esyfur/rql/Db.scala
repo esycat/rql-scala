@@ -10,23 +10,32 @@ class Db(val name: String) extends Query {
 
     val termType = p.Term.TermType.DB
 
-    def create(): Db = {
-        this
+    def create(): DbCreate = {
+        new DbCreate
     }
 
-    def drop() = {
-
+    def drop(): DbDrop = {
+        new DbDrop
     }
 
-    /*
-    def tableList(): Query = {
-    }
+    def table(name: String) = new Table(name)
 
-    def tableCreate(name: String): Query = {
-    }
+    def tableCreate(name: String) = table(name).create()
 
-    def tableDrop(name: String): Query = {
-    }
-    */
+    def tableDrop(name: String) = table(name).drop()
 
+    def tableList() = new TableList
+
+}
+
+class DbList extends TopLevelQuery {
+    val termType = p.Term.TermType.DB_LIST
+}
+
+class DbCreate extends TopLevelQuery {
+    val termType = p.Term.TermType.DB_CREATE
+}
+
+class DbDrop extends TopLevelQuery {
+    val termType = p.Term.TermType.DB_DROP
 }

@@ -10,7 +10,7 @@ object Main {
     def main(args: Array[String]) {
         conn = connect(host).repl()
 
-        conn.dbList.run
+        dbList.run
 
         println("Yay")
 

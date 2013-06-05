@@ -1,15 +1,11 @@
 package com.esyfur
 
-import java.nio.{ByteBuffer,ByteOrder}
-
-import rethinkdb.{Ql2 => p}
-
 package object rql {
 
-    val DEFAULT_HOST = "localhost"
-    val DEFAULT_PORT_DRIVER = 28015
+    val DEFAULT_HOST         = "localhost"
+    val DEFAULT_PORT_DRIVER  = 28015
     val DEAFULT_PORT_CLUSTER = 29015
-    val DEFAULT_PORT_WEB = 8080
+    val DEFAULT_PORT_WEB     = 8080
 
     def connect(host: String = DEFAULT_HOST, port: Int = DEFAULT_PORT_DRIVER, db: String = null): Connection = {
         val conn = new Connection(host, port)
@@ -17,21 +13,14 @@ package object rql {
         conn
     }
 
-    def pack(value: Int): Array[Byte] = {
-        val bytes = ByteBuffer.allocate(4)
-            .order(ByteOrder.LITTLE_ENDIAN)
-            .putInt(value)
-            .array()
+    def db(name: String) = new Db(name)
 
-        /*
-        println("[pack] before: " + value)
-        println("[pack] after:  " + bytes)
-        println("[pack] string: " + new String(bytes))
-        */
+    def dbCreate(name: String) = db(name).create()
 
-        //new String(bytes)
+    def dbDrop(name: String) = db(name).drop()
 
-        bytes
-    }
+    def dbList = new DbList
+
+    def table(name: String) = new Table(name)
 
 }

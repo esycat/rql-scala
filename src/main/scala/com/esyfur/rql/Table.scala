@@ -10,12 +10,22 @@ class Table(val name: String) extends Query {
 
     val termType = p.Term.TermType.TABLE
 
-    def create(): Table = {
-        this
+    def create(): TableCreate = {
+        new TableCreate
     }
 
-    def drop() = {
+    def drop(): TableDrop = {
+        new TableDrop
+    }
 
+    private def index(name: String) = new Index(name)
+
+    def indexCreate(name: String) = index(name).create()
+
+    def indexDrop(name: String) = index(name).create()
+
+    def indexList(): IndexList = {
+        new IndexList
     }
 
     def insert() = {
@@ -34,21 +44,16 @@ class Table(val name: String) extends Query {
 
     }
 
-    def indexList() = {
+}
 
-    }
+class TableList extends MethodQuery {
+    val termType = p.Term.TermType.TABLE_LIST
+}
 
-    def indexCreate() = {
+class TableCreate extends MethodQuery {
+    val termType = p.Term.TermType.TABLE_CREATE
+}
 
-    }
-
-    def indexDrop() = {
-
-    }
-
-    /*
-    def count(): Query = {
-    }
-    */
-
+class TableDrop extends MethodQuery {
+    val termType = p.Term.TermType.TABLE_DROP
 }

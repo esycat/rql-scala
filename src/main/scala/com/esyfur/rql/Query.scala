@@ -13,14 +13,14 @@ abstract class Query {
         printer.print()
     }
 
-    final def run(): Response = {
+    final def run(): Cursor = {
         if (Connection.default == null)
             throw new RqlDriverError("Query.run must be given a connection to run on.")
 
         run(Connection.default)
     }
 
-    final def run(conn: Connection): Response = {
+    final def run(conn: Connection): Cursor = {
         val options = ListMap[String, String]()
         conn.execute(this, options.toMap)
     }
