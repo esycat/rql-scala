@@ -1,9 +1,6 @@
 package com.esyfur.rql
 
-import java.io.{PrintWriter, InputStreamReader, BufferedReader}
-import java.net.Socket
-
-import com.google.protobuf.GeneratedMessage
+import rethinkdb.{Ql2 => p}
 
 object Main {
 
@@ -11,7 +8,9 @@ object Main {
     var host = "devroom"
 
     def main(args: Array[String]) {
-        conn = new Connection(host)
+        conn = connect(host).repl()
+
+        conn.dbList.run
 
         println("Yay")
 

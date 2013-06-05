@@ -3,53 +3,47 @@ package com.esyfur.rql
 import java.io._
 import java.net.Socket
 
-import rethinkdb.{Ql2 => rethinkdb}
+import rethinkdb.{Ql2 => p}
+import com.esyfur.rql.ast.{DbDrop, DbCreate, DbList}
 
 object Connection {
     var default: Connection = _
 }
 
-class Connection extends AutoCloseable {
-
-    private var host: String = DEFAULT_HOST
-    private var port: Int = DEFAULT_PORT_DRIVER
+class Connection(
+    private val host: String,
+    private val port: Int
+    ) extends AutoCloseable {
 
     private var socket: Socket = _
-    private var in: BufferedReader = _
-    private var out: PrintWriter = _
+    private var in: InputStream = _
+    private var out: OutputStream = _
 
     private var db: Db = _
 
-    def this(host: String = DEFAULT_HOST, port: Int = DEFAULT_PORT_DRIVER, db: String = null) = {
-        this()
+    private var nextToken: Int = 1
 
-        this.host = host
-        this.port = port
-        if (db != null) use(db)
+    reconnect()
 
-        connect()
-    }
-
-    private def connect(): Unit = {
-        if (isOpen) throw new RqlError("Already connected")
+    def reconnect(): Connection = {
+        if (isOpen) close()
 
         socket = new Socket(host, port)
-        in  = new BufferedReader(new InputStreamReader(socket.getInputStream()))
-        out = new PrintWriter(socket.getOutputStream(), true)
+        in  = socket.getInputStream()
+        out = socket.getOutputStream()
 
-        println(getVersion)
-        sendStr(getVersion)
+        val version = pack(p.VersionDummy.Version.V0_1.getNumber)
 
-        println(in.readLine())
-    }
+        out.write(version)
+        //out2.println("asdfasfsdfa")
+        println("lalala1")
+        println("lalala2")
 
-    def reconnect() = {
-        if (isOpen) close()
-        connect()
+        this
     }
 
     def close(): Unit = {
-        if (!isOpen) throw new RqlClientError("Not connected")
+        if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
         in.close()
         out.close()
@@ -70,12 +64,58 @@ class Connection extends AutoCloseable {
         this
     }
 
-    private def sendStr(s: String): Unit = {
-        out.write(s)
+    def execute(q: Query): Response = {
+        if (!isOpen) throw new RqlDriverError("Connection is closed.")
+
+        val protobuf = p.Query.newBuilder()
+            .setType(p.Query.QueryType.START)
+            .setToken(token)
+            .setQuery(q.getTerm)
+
+        send(protobuf.build)
+        receive()
     }
 
-    private def sendProtobuf(): Unit = {
+    private def token: Int = {
+        val token = nextToken
+        nextToken += 1
+        token
+    }
 
+    def dbList() = new DbList
+
+    /*
+    def dbCreate(name: String) = new DbCreate
+
+    def dbDrop() = new DbDrop
+    */
+
+    private def send(protobuf: p.Query): Unit = {
+        val size = pack(protobuf.getSerializedSize)
+        out.write(size)
+        protobuf.writeTo(out)
+
+        println("Length 1:")
+        println(protobuf.toByteArray.length)
+
+        println("Length 2:")
+        println(protobuf.toByteString.size())
+
+        println("Length 3:")
+        println(protobuf.getSerializedSize)
+    }
+
+    private def receive(): Response = {
+        val reader  = new BufferedReader(new InputStreamReader(in))
+        val writer = new PrintWriter(out, true)
+
+        writer.println(" ")
+
+        println("Any luck?")
+        println(in.read())
+        println(reader.readLine())
+
+        new Response
     }
 
 }

@@ -1,12 +1,14 @@
 package com.esyfur.rql
 
-import scala.collection.immutable.List
+import rethinkdb.{Ql2 => p}
 
 object Db {
 
 }
 
-class Db(val name: String) {
+class Db(val name: String) extends Query {
+
+    val termType = p.Term.TermType.DB
 
     def create(): Db = {
         this
@@ -16,14 +18,15 @@ class Db(val name: String) {
 
     }
 
-    def createTable(name: String): Collection = {
-        val collection = new Collection(name)
-        collection.create()
+    /*
+    def tableList(): Query = {
     }
 
-    def dropTable(name: String) = {
-        val collection = new Collection(name)
-        collection.drop()
+    def tableCreate(name: String): Query = {
     }
+
+    def tableDrop(name: String): Query = {
+    }
+    */
 
 }
