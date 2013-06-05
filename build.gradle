@@ -29,8 +29,8 @@ apply from: 'project/scala.gradle'
 
 ext {
     protobuf = [
-        resDir:  relativePath(sourceSets.main.resources.getSrcDirs().iterator().next()),
-        destDir: relativePath(sourceSets.main.java.getSrcDirs().iterator().next())
+        specFile: new File(sourceSets.main.resources.getSrcDirs().iterator().next(), 'ql2.proto'),
+        srcDir: relativePath(sourceSets.main.java.getSrcDirs().iterator().next())
     ]
 }
 
@@ -51,14 +51,16 @@ dependencies {
 }
 
 task protoApiDownload() {
+    outputs.file project.ext.protobuf.specFile
+
     // TODO: In the future Gradle is going to support URLs in the Copy task.
-    // from rethinkdb.protocolApiUrl
-    // into project.ext.protobuf.resDir
+    // from rethinkdb.api.url
+    // into project.ext.protobuf.specFile
 
     doLast {
         ant.get(
-            src: rethinkdb.protocolApiUrl,
-            dest: project.ext.protobuf.resDir,
+            src: rethinkdb.api.url,
+            dest: project.ext.protobuf.specFile,
             verbose: true
         )
     }
@@ -66,8 +68,12 @@ task protoApiDownload() {
 
 task protoApiCompile(type: Exec) {
     mustRunAfter protoApiDownload
+
+    inputs.file project.ext.protobuf.specFile
+    outputs.dir new File(project.ext.protobuf.srcDir, rethinkdb.api.package)
+
     executable 'protoc'
-    args '--java_out=' + project.ext.protobuf.destDir, project.ext.protobuf.resDir + File.separator + 'ql2.proto'
+    args '--java_out=' + project.ext.protobuf.srcDir, relativePath(project.ext.protobuf.specFile)
 }
 
 tasks.compileJava.dependsOn protoApiCompile
