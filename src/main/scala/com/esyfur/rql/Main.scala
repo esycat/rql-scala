@@ -1,6 +1,6 @@
 package com.esyfur.rql
 
-import rethinkdb.{Ql2 => p}
+import com.rethinkdb.{Ql2 => p}
 
 object Main {
 

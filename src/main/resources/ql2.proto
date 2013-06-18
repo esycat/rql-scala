@@ -1,4 +1,3 @@
-package rethinkdb;
 ////////////////////////////////////////////////////////////////////////////////
 //                            THE HIGH-LEVEL VIEW                             //
 ////////////////////////////////////////////////////////////////////////////////
@@ -25,6 +24,8 @@ package rethinkdb;
 //   batches of <1000, and you need to send a [CONTINUE] query with the same
 //   token to get more results from the original query.
 ////////////////////////////////////////////////////////////////////////////////
+
+option java_package = "com.rethinkdb";
 
 // This enum contains the magic numbers for your version.  See **THE HIGH-LEVEL
 // VIEW** for what to do with it.

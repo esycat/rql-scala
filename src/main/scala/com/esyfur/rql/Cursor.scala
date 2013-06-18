@@ -2,7 +2,7 @@ package com.esyfur.rql
 
 import scala.collection.mutable.LinkedList
 
-import rethinkdb.{Ql2 => p}
+import com.rethinkdb.{Ql2 => p}
 
 class Cursor(
     private val connection: Connection,

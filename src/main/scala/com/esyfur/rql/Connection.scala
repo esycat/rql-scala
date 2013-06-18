@@ -5,7 +5,7 @@ import java.nio.{ByteOrder, ByteBuffer}
 import java.net.Socket
 
 import com.google.protobuf.Message
-import rethinkdb.{Ql2 => p}
+import com.rethinkdb.{Ql2 => p}
 
 import Connection.{pack, unpack, console}
 

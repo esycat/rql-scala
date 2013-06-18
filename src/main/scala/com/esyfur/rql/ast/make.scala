@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.esyfur.rql.{Query, TopLevelQuery, MethodQuery}
-import rethinkdb.{Ql2 => p}
+import com.rethinkdb.{Ql2 => p}
 
 
 class MakeArray extends Query {
