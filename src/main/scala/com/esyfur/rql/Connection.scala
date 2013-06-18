@@ -146,11 +146,13 @@ class Connection(
         response.getType() match {
             // Atom response
             case ResponseType.SUCCESS_ATOM => {
+                Datum.deconstruct(response.getResponse(0))
+
                 val chunk = "" // TODO
                 new Cursor(this, query, response, chunk)
             }
 
-            // Sequence responses
+            // Sequence or partial responses
             case ResponseType.SUCCESS_PARTIAL | ResponseType.SUCCESS_SEQUENCE => {
                 val chunk = "" // TODO
                 new Cursor(this, query, response, chunk)
@@ -158,16 +160,13 @@ class Connection(
 
             // Error responses
             case ResponseType.RUNTIME_ERROR => {
-                val message = response.getResponseList.get(0).getRStr
-                throw new RqlRuntimeError(message)
+                throw new RqlRuntimeError(response.getResponse(0).getRStr)
             }
             case ResponseType.COMPILE_ERROR => {
-                val message = response.getResponseList.get(0).getRStr
-                throw new RqlCompileError(message)
+                throw new RqlCompileError(response.getResponse(0).getRStr)
             }
             case ResponseType.CLIENT_ERROR => {
-                val message = response.getResponseList.get(0).getRStr
-                throw new RqlClientError(message)
+                throw new RqlClientError(response.getResponse(0).getRStr)
             }
 
             // Unknown response

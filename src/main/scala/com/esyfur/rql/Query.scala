@@ -46,8 +46,3 @@ abstract class MethodQuery extends Query {
 
 }
 
-abstract class Datum extends Query {
-
-    var datumType: p.Datum.DatumType = _
-
-}
