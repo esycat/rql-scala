@@ -3,6 +3,7 @@ package com.esyfur.rql
 import java.io.{InputStream, OutputStream, IOException}
 import java.nio.{ByteOrder, ByteBuffer}
 import java.net.Socket
+import java.util.concurrent.atomic.AtomicInteger
 
 import com.google.protobuf.Message
 import com.rethinkdb.{Ql2 => p}
@@ -50,13 +51,13 @@ class Connection(
     private val port: Int
     ) extends AutoCloseable {
 
+    private val nextToken: AtomicInteger = new AtomicInteger()
+
     private var socket: Socket = _
     private var in: InputStream = _
     private var out: OutputStream = _
 
     private var db: Db = _
-
-    private var nextToken: Long = 1
 
     reconnect()
 
@@ -104,24 +105,15 @@ class Connection(
     def execute(query: Query, options: Map[String, String]): Cursor = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
-        val token = yieldToken
-        val term = query.build
-
         // Constructing query.
         val message = p.Query.newBuilder()
             .setType(p.Query.QueryType.START)
-            .setToken(token)
-            .setQuery(term)
+            .setToken(nextToken.incrementAndGet())
+            .setQuery(query.build)
             .build()
 
         send(message)
         receive(message)
-    }
-
-    private def yieldToken: Long = {
-        val token = nextToken
-        nextToken += 1
-        token
     }
 
     private def send(message: Message) {
