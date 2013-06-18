@@ -1,5 +1,7 @@
 package com.esyfur
 
+import java.net.InetSocketAddress
+
 package object rql {
 
     val DEFAULT_HOST         = "localhost"
@@ -8,7 +10,12 @@ package object rql {
     val DEFAULT_PORT_WEB     = 8080
 
     def connect(host: String = DEFAULT_HOST, port: Int = DEFAULT_PORT_DRIVER, db: String = null): Connection = {
-        val conn = new Connection(host, port)
+        val addr = new InetSocketAddress(host, port)
+        connect(addr, db)
+    }
+
+    def connect(address: InetSocketAddress, db: String): Connection = {
+        val conn = new Connection(address)
         if (db != null) conn.use(db)
         conn
     }

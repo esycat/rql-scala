@@ -2,7 +2,7 @@ package com.esyfur.rql
 
 import java.io.{InputStream, OutputStream, IOException}
 import java.nio.{ByteOrder, ByteBuffer}
-import java.net.Socket
+import java.net.{InetSocketAddress, Socket}
 import java.util.concurrent.atomic.AtomicInteger
 
 import com.google.protobuf.Message
@@ -47,8 +47,7 @@ object Connection {
 }
 
 class Connection(
-    private val host: String,
-    private val port: Int
+    private val address: InetSocketAddress
     ) extends AutoCloseable {
 
     private val nextToken: AtomicInteger = new AtomicInteger()
@@ -65,12 +64,13 @@ class Connection(
         if (isOpen) close()
 
         try {
-            socket = new Socket(host, port)
+            socket = new Socket(address.getAddress, address.getPort)
+
             in  = socket.getInputStream()
             out = socket.getOutputStream()
         }
         catch {
-            case e: IOException => throw new RqlDriverError("Could not connect to %s:%d.".format(host, port))
+            case e: IOException => throw new RqlDriverError("Could not connect to %s.".format(address))
         }
 
         val version = pack(p.VersionDummy.Version.V0_1.getNumber)
@@ -144,18 +144,10 @@ class Connection(
 
         import p.Response.ResponseType
         response.getType() match {
-            // Error responses
-            case ResponseType.RUNTIME_ERROR => {
-                val message = "" // response.getResponse(0)
-                throw new RqlRuntimeError(message)
-            }
-            case ResponseType.COMPILE_ERROR => {
-                val message = "" // response.getResponse(0)
-                throw new RqlCompileError(message)
-            }
-            case ResponseType.CLIENT_ERROR => {
-                val message = "" // response.getResponse(0)
-                throw new RqlClientError(message)
+            // Atom response
+            case ResponseType.SUCCESS_ATOM => {
+                val chunk = "" // TODO
+                new Cursor(this, query, response, chunk)
             }
 
             // Sequence responses
@@ -164,10 +156,18 @@ class Connection(
                 new Cursor(this, query, response, chunk)
             }
 
-            // Atom response
-            case ResponseType.SUCCESS_ATOM => {
-                val chunk = "" // TODO
-                new Cursor(this, query, response, chunk)
+            // Error responses
+            case ResponseType.RUNTIME_ERROR => {
+                val message = response.getResponseList.get(0).getRStr
+                throw new RqlRuntimeError(message)
+            }
+            case ResponseType.COMPILE_ERROR => {
+                val message = response.getResponseList.get(0).getRStr
+                throw new RqlCompileError(message)
+            }
+            case ResponseType.CLIENT_ERROR => {
+                val message = response.getResponseList.get(0).getRStr
+                throw new RqlClientError(message)
             }
 
             // Unknown response
