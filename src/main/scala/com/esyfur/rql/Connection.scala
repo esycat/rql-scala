@@ -65,6 +65,8 @@ class Connection(
 
         try {
             socket = new Socket(address.getAddress, address.getPort)
+            socket.setKeepAlive(true)
+            socket.setTcpNoDelay(true)
 
             in  = socket.getInputStream()
             out = socket.getOutputStream()
@@ -122,17 +124,14 @@ class Connection(
     private def send(message: Message) {
         val size = pack(message.getSerializedSize)
 
-        println("sending data...")
         out.write(size)
         message.writeTo(out)
+
+        out.flush()
     }
 
     private def receive[T](query: p.Query): Cursor = {
-        println("receiving data...")
-
         val size = unpack(read())
-
-        println("parsing results...")
 
         val buffer = read(size)
         console(buffer)
@@ -149,7 +148,8 @@ class Connection(
         response.getType() match {
             // Atom response
             case SUCCESS_ATOM => {
-                Datum.unwrap(response.getResponse(0))
+                val datum = Datum.unwrap(response.getResponse(0))
+                println(datum)
 
                 val chunk = "" // TODO
                 new Cursor(this, query, response, chunk)

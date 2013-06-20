@@ -1,5 +1,7 @@
 package com.esyfur.rql
 
+import com.rethinkdb.{Ql2 => p}
+
 class RqlError(message: String) extends Exception {
 
 }

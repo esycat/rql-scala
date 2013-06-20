@@ -24,23 +24,17 @@ object Datum {
     }
 
     def unwrap[T](datum: p.Datum): Any = datum.getType match {
-        case R_NULL   => null
-        case R_BOOL   => datum.getRBool.asInstanceOf[T]
-        case R_NUM    => datum.getRNum.asInstanceOf[T]
-        case R_STR    => datum.getRStr.asInstanceOf[T]
-        case R_ARRAY  => ArrayDatum.unwrap(datum.getRArrayList.asScala)
-        case R_OBJECT => ??? // new ObjectDatum(datum.getRObjectList).asInstanceOf[T]
+        case R_NULL    => null
+        case R_BOOL    => datum.getRBool.asInstanceOf[T]
+        case R_NUM     => datum.getRNum.asInstanceOf[T]
+        case R_STR     => datum.getRStr.asInstanceOf[T]
+        case R_ARRAY   => ArrayDatum.unwrap(datum.getRArrayList.asScala)
+        case R_OBJECT  => ??? // ObjectDatum.unwrap(datum.getRObjectList.asScala)
         case datumType => {
             val message = "Unexpected datum type %s.".format(datumType)
             throw new RqlDriverError(message)
         }
     }
-
-}
-
-object ArrayDatum {
-
-    def unwrap(datum: Seq[p.Datum]): Any
 
 }
 
@@ -57,7 +51,7 @@ private[rql] abstract class Datum[+T] extends Query {
 
 }
 
-final class NullDatum extends Datum[Nothing] {
+final class NullDatum extends Datum[Null] {
 
     val datumType = R_NULL
     val value = null
@@ -72,10 +66,6 @@ final class BoolDatum(val value: Boolean) extends Datum[Boolean] {
 
 final class NumDatum(val value: Double) extends Datum[Double] {
 
-    //def this(value: Int)   = this(value.toDouble)
-    //def this(value: Long)  = this(value.toDouble)
-    //def this(value: Float) = this(value.toDouble)
-
     val datumType = R_NUM
 
 }
@@ -86,13 +76,27 @@ final class StrDatum(val value: String) extends Datum[String] {
 
 }
 
-final class ArrayDatum[T <: Datum](val value: List[T]) extends Datum[List[T]] {
+object ArrayDatum {
+
+    def unwrap(datum: Seq[p.Datum]): Any = {
+        datum.map { Datum.unwrap(_) }
+    }
+
+}
+
+final class ArrayDatum[T](val value: Seq[T]) extends Datum[Seq[T]] {
 
     val datumType = R_ARRAY
 
 }
 
-final class ObjectDatum[T >: Datum](val value: List[T]) extends Datum[List[T]] {
+object ObjectDatum {
+
+    def unwrap(datum: Seq[p.Datum]): Any = ???
+
+}
+
+final class ObjectDatum[T](val value: Seq[T]) extends Datum[Seq[T]] {
 
     val datumType = R_OBJECT
 
