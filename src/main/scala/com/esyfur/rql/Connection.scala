@@ -50,7 +50,7 @@ class Connection(
     private val address: InetSocketAddress
     ) extends AutoCloseable {
 
-    private val nextToken: AtomicInteger = new AtomicInteger()
+    private val token: AtomicInteger = new AtomicInteger()
 
     private var socket: Socket = _
     private var in: InputStream = _
@@ -111,7 +111,7 @@ class Connection(
         // Constructing query.
         val message = p.Query.newBuilder()
             .setType(p.Query.QueryType.START)
-            .setToken(nextToken.incrementAndGet())
+            .setToken(token.incrementAndGet())
             .setQuery(query.build)
             .build()
 
