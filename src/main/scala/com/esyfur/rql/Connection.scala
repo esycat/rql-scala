@@ -70,7 +70,10 @@ class Connection(
             out = socket.getOutputStream()
         }
         catch {
-            case e: IOException => throw new RqlDriverError("Could not connect to %s.".format(address))
+            case e: IOException => {
+                val message = "Could not connect to %s.".format(address)
+                throw new RqlDriverError(message)
+            }
         }
 
         val version = pack(p.VersionDummy.Version.V0_1.getNumber)
@@ -102,7 +105,7 @@ class Connection(
         this
     }
 
-    def execute(query: Query, options: Map[String, String]): Cursor = {
+    def execute[T](query: Query, options: Map[String, String]): Cursor = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
         // Constructing query.
@@ -124,7 +127,7 @@ class Connection(
         message.writeTo(out)
     }
 
-    private def receive(query: p.Query): Cursor = {
+    private def receive[T](query: p.Query): Cursor = {
         println("receiving data...")
 
         val size = unpack(read())
@@ -142,36 +145,37 @@ class Connection(
             // This response is corrupted or not intended for us.
             throw new RqlDriverError("Unexpected response received.")
 
-        import p.Response.ResponseType
+        import p.Response.ResponseType.{SUCCESS_ATOM, SUCCESS_PARTIAL, SUCCESS_SEQUENCE, RUNTIME_ERROR, COMPILE_ERROR, CLIENT_ERROR}
         response.getType() match {
             // Atom response
-            case ResponseType.SUCCESS_ATOM => {
-                Datum.deconstruct(response.getResponse(0))
+            case SUCCESS_ATOM => {
+                Datum.unwrap(response.getResponse(0))
 
                 val chunk = "" // TODO
                 new Cursor(this, query, response, chunk)
             }
 
             // Sequence or partial responses
-            case ResponseType.SUCCESS_PARTIAL | ResponseType.SUCCESS_SEQUENCE => {
+            case SUCCESS_PARTIAL | SUCCESS_SEQUENCE => {
                 val chunk = "" // TODO
                 new Cursor(this, query, response, chunk)
             }
 
             // Error responses
-            case ResponseType.RUNTIME_ERROR => {
+            case RUNTIME_ERROR => {
                 throw new RqlRuntimeError(response.getResponse(0).getRStr)
             }
-            case ResponseType.COMPILE_ERROR => {
+            case COMPILE_ERROR => {
                 throw new RqlCompileError(response.getResponse(0).getRStr)
             }
-            case ResponseType.CLIENT_ERROR => {
+            case CLIENT_ERROR => {
                 throw new RqlClientError(response.getResponse(0).getRStr)
             }
 
             // Unknown response
             case responseType => {
-                throw new RqlDriverError("Unknown response type %s.".format(responseType))
+                val message = "Unknown response type %s.".format(responseType)
+                throw new RqlDriverError(message)
             }
         }
     }
