@@ -6,7 +6,7 @@ object Db {
 
 }
 
-class Db(val name: String) extends Query {
+class Db(val name: String) extends Term {
 
     val termType = p.Term.TermType.DB
 

@@ -6,7 +6,7 @@ object Table {
 
 }
 
-class Table(val name: String) extends Query {
+class Table(val name: String) extends Term {
 
     val termType = p.Term.TermType.TABLE
 

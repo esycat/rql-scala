@@ -38,7 +38,7 @@ object Datum {
 
 }
 
-private[rql] abstract class Datum[+T] extends Query {
+private[rql] abstract class Datum[+T] extends Term {
 
     val termType = p.Term.TermType.DATUM
     val datumType: p.Datum.DatumType

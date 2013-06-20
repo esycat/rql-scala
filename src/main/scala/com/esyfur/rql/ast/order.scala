@@ -1,9 +1,9 @@
 package com.esyfur.rql.ast
 
-import com.esyfur.rql.{Query, TopLevelQuery, MethodQuery}
+import com.esyfur.rql.{Term, TopLevelQuery, MethodQuery}
 import com.rethinkdb.{Ql2 => p}
 
-abstract class Order extends Query {
+abstract class Order extends Term {
 
 }
 
