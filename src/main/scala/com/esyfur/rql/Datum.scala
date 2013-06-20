@@ -62,17 +62,23 @@ final class BoolDatum(val value: Boolean) extends Datum[Boolean] {
 
     val datumType = R_BOOL
 
+    protected override def getDatumBuilder() = super.getDatumBuilder().setRBool(value)
+
 }
 
 final class NumDatum(val value: Double) extends Datum[Double] {
 
     val datumType = R_NUM
 
+    protected override def getDatumBuilder() = super.getDatumBuilder().setRNum(value)
+
 }
 
 final class StrDatum(val value: String) extends Datum[String] {
 
     val datumType = R_STR
+
+    protected override def getDatumBuilder() = super.getDatumBuilder().setRStr(value)
 
 }
 
