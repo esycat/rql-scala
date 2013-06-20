@@ -51,6 +51,10 @@ private[rql] abstract class Datum[+T] extends Query {
 
     val value: T
 
+    protected override def getTermBuilder() = super.getTermBuilder().setDatum(getDatumBuilder)
+
+    protected def getDatumBuilder(): p.Datum.Builder = p.Datum.newBuilder().setType(datumType)
+
 }
 
 final class NullDatum extends Datum[Nothing] {

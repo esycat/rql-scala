@@ -25,12 +25,9 @@ abstract class Query {
         conn.execute(this, options.toMap)
     }
 
-    def build(): p.Term = {
-        val protobuf = p.Term.newBuilder()
-            .setType(termType)
+    protected def getTermBuilder(): p.Term.Builder = p.Term.newBuilder().setType(termType)
 
-        protobuf.build
-    }
+    def build(): p.Term = getTermBuilder().build()
 
 }
 
