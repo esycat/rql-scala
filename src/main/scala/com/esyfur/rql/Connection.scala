@@ -107,7 +107,7 @@ class Connection(
         this
     }
 
-    def execute[T](query: Term, options: Map[String, String]): Cursor = {
+    def execute[T](query: Query, options: Map[String, String]): Cursor = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
         // Constructing query.
