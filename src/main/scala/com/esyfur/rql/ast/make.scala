@@ -11,5 +11,4 @@ class MakeArray extends Term {
 
 class MakeObj extends Term {
     val termType = p.Term.TermType.MAKE_OBJ
-
 }
