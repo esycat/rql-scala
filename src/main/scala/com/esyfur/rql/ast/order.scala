@@ -8,9 +8,15 @@ abstract class Order extends Term {
 }
 
 class Asc extends Order {
+
     val termType = p.Term.TermType.ASC
+    val st = "asc"
+
 }
 
 class Desc extends Order {
+
     val termType = p.Term.TermType.DESC
+    val st = "desc"
+
 }

@@ -3,7 +3,7 @@ package com.esyfur.rql
 import scala.collection.mutable.ListMap
 
 import com.rethinkdb.{Ql2 => p}
-import ast._
+import ast.ops._
 
 abstract class Query extends Term {
 
