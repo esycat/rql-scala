@@ -6,9 +6,10 @@ object Db {
 
 }
 
-class Db(val name: String) extends Term {
+class Db(val name: String) extends TopLevelQuery {
 
     val termType = p.Term.TermType.DB
+    val st = "db"
 
     def create(): DbCreate = {
         new DbCreate
@@ -30,12 +31,15 @@ class Db(val name: String) extends Term {
 
 class DbList extends TopLevelQuery {
     val termType = p.Term.TermType.DB_LIST
+    val st = "db_list"
 }
 
 class DbCreate extends TopLevelQuery {
     val termType = p.Term.TermType.DB_CREATE
+    val st = "db_create"
 }
 
 class DbDrop extends TopLevelQuery {
     val termType = p.Term.TermType.DB_DROP
+    val st = "db_drop"
 }

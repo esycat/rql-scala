@@ -7,9 +7,16 @@ import ast.ops._
 
 abstract class Query extends Term {
 
+    val posArgs: List
+    val optArgs: Map
+
     override def toString = {
         val printer = new QueryPrinter(this)
         printer.print()
+    }
+
+    def compose(args: List, optargs: Map) = {
+
     }
 
     final def run(): Cursor = {
@@ -20,8 +27,8 @@ abstract class Query extends Term {
     }
 
     final def run(conn: Connection): Cursor = {
-        val options = ListMap[String, String]()
-        conn.execute(this, options.toMap)
+        val options = ListMap[String, Query]()
+        conn.execute(this, options)
     }
 
     /* The following are all operators and methods that operate on Rql queries to build up more complex operations.
@@ -51,6 +58,29 @@ abstract class BiOpQuery(a: Query, b: Query) extends Query {
 
 }
 
-abstract class TopLevelQuery extends Query {}
+abstract class TopLevelQuery extends Query {
 
-abstract class MethodQuery extends Query {}
+    override def compose(args, optargs) = {
+        /*
+        args.extend([name + '= ' + optargs[name] for name in optargs.keys()])
+        T('r.', st, '(', T(*(args), intsp = ', '), ')')
+        */
+    }
+
+}
+
+abstract class MethodQuery extends Query {
+
+    override def compose(args, optargs) = {
+        /*
+        if needs_wrap(this.args[0]) args[0] = T('r.expr(', args[0], ')')
+
+        restargs = args[1:]
+        restargs.extend([k+'='+v for k,v in optargs.items()])
+        restargs = T(*restargs, intsp = ', ')
+
+        T(args[0], '.', st, '(', restargs, ')')
+        */
+    }
+
+}

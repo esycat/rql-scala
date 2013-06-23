@@ -48,12 +48,15 @@ class Table(val name: String) extends Term {
 
 class TableList extends MethodQuery {
     val termType = p.Term.TermType.TABLE_LIST
+    val st = "table_list"
 }
 
 class TableCreate extends MethodQuery {
     val termType = p.Term.TermType.TABLE_CREATE
+    val st = "table_create"
 }
 
 class TableDrop extends MethodQuery {
     val termType = p.Term.TermType.TABLE_DROP
+    val st = "table_drop"
 }

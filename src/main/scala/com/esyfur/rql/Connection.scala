@@ -5,6 +5,8 @@ import java.nio.{ByteOrder, ByteBuffer}
 import java.net.{InetSocketAddress, Socket}
 import java.util.concurrent.atomic.AtomicInteger
 
+import scala.collection.Map
+
 import com.google.protobuf.Message
 import com.rethinkdb.{Ql2 => p}
 
@@ -102,22 +104,29 @@ class Connection(
         this
     }
 
-    def use(name: String) = use(new Db(name))
+    def use(name: String): Connection = use(new Db(name))
 
     def use (db: Db): Connection = {
         this.db = db
         this
     }
 
-    def execute[T](query: Query, options: Map[String, String]): Cursor = {
+    def execute[T](query: Query, options: Map[String, Query]): Cursor = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
         // Constructing query.
-        val message = p.Query.newBuilder()
+        val builder = p.Query.newBuilder()
             .setType(p.Query.QueryType.START)
             .setToken(token.incrementAndGet())
             .setQuery(query.build)
-            .build()
+
+        if (this.db != null) builder.addGlobalOptargs(
+            p.Query.AssocPair.newBuilder()
+                .setKey("db")
+                .setVal(db.build)
+        )
+
+        val message = builder.build()
 
         send(message)
         receive(message)
@@ -139,7 +148,7 @@ class Connection(
         console(buffer)
 
         val response = p.Response.parseFrom(buffer)
-        println(response)
+        //println(response)
 
         // Check that this is the response we were expecting.
         if (response.getToken() != query.getToken())

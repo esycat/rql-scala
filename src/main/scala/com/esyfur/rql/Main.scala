@@ -4,11 +4,14 @@ import com.rethinkdb.{Ql2 => p}
 
 object Main {
 
+    val host = "devroom"
+    val db   = "test"
+
     var conn: Connection = _
-    var host = "devroom"
 
     def main(args: Array[String]) {
         conn = connect(host).repl()
+        conn.use(db)
 
         dbList.run
 

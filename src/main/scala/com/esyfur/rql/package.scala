@@ -14,6 +14,8 @@ package object rql {
         connect(addr, db)
     }
 
+    // def connect(host: String, db: String): Connection = connect(host = host, db = db)
+
     def connect(address: InetSocketAddress, db: String): Connection = {
         val conn = new Connection(address)
         if (db != null) conn.use(db)
