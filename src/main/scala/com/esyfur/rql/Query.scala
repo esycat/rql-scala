@@ -15,7 +15,7 @@ abstract class Query extends Term {
         printer.print()
     }
 
-    def compose(args: List, optargs: Map) = {
+    def compose(args: List[Query], optargs: Map[String, Query]) = {
 
     }
 
@@ -52,6 +52,23 @@ abstract class Query extends Term {
     def &(that: Query) = new All(this, that)
     def |(that: Query) = new Any(this, that)
 
+    // Polymorphic object/sequence operations
+    /*
+    def pluck(attrs: List[Query]) = new Pluck(attrs)
+
+    def without(attrs: List[Query]) = new Without(attrs)
+
+    def do(func) = new FunCall(func_wrap(func), this)
+
+    def default(handler) = new Default(handler)
+
+    def update(func, non_atomic=(), durability=()) = new Update(func_wrap(func), non_atomic = non_atomic, durability = durability)
+
+    def replace(func, non_atomic=(), durability=()) = new Replace(func_wrap(func), non_atomic = non_atomic, durability = durability)
+
+    def delete(durability=()) = new Delete(durability = durability)
+    */
+
 }
 
 abstract class BiOpQuery(a: Query, b: Query) extends Query {
@@ -60,7 +77,7 @@ abstract class BiOpQuery(a: Query, b: Query) extends Query {
 
 abstract class TopLevelQuery extends Query {
 
-    override def compose(args, optargs) = {
+    override def compose(args: List[Query], optargs: Map[String, Query]) = {
         /*
         args.extend([name + '= ' + optargs[name] for name in optargs.keys()])
         T('r.', st, '(', T(*(args), intsp = ', '), ')')
@@ -71,7 +88,7 @@ abstract class TopLevelQuery extends Query {
 
 abstract class MethodQuery extends Query {
 
-    override def compose(args, optargs) = {
+    override def compose(args: List[Query], optargs: Map[String, Query]) = {
         /*
         if needs_wrap(this.args[0]) args[0] = T('r.expr(', args[0], ')')
 
