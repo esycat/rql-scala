@@ -1,21 +1,22 @@
 package com.esyfur.rql
 
-import scala.collection.mutable.ListMap
+import scala.collection.Map
+import scala.collection.mutable
 
 import com.rethinkdb.{Ql2 => p}
 import ast.ops._
 
 abstract class Query extends Term {
 
-    val posArgs: List
-    val optArgs: Map
+    val posArgs: Seq[Query] = new mutable.LinkedList[Query]()
+    val optArgs: Map[String, Query] = new mutable.HashMap[String, Query]()
 
     override def toString = {
         val printer = new QueryPrinter(this)
         printer.print()
     }
 
-    def compose(args: List[Query], optargs: Map[String, Query]) = {
+    def compose(posArgs: Seq[Query], optArgs: Map[String, Query]) = {
 
     }
 
@@ -27,7 +28,7 @@ abstract class Query extends Term {
     }
 
     final def run(conn: Connection): Cursor = {
-        val options = ListMap[String, Query]()
+        val options = mutable.HashMap[String, Query]()
         conn.execute(this, options)
     }
 
@@ -77,7 +78,7 @@ abstract class BiOpQuery(a: Query, b: Query) extends Query {
 
 abstract class TopLevelQuery extends Query {
 
-    override def compose(args: List[Query], optargs: Map[String, Query]) = {
+    override def compose(posArgs: Seq[Query], optArgs: Map[String, Query]) = {
         /*
         args.extend([name + '= ' + optargs[name] for name in optargs.keys()])
         T('r.', st, '(', T(*(args), intsp = ', '), ')')
@@ -88,7 +89,7 @@ abstract class TopLevelQuery extends Query {
 
 abstract class MethodQuery extends Query {
 
-    override def compose(args: List[Query], optargs: Map[String, Query]) = {
+    override def compose(posArgs: Seq[Query], optArgs: Map[String, Query]) = {
         /*
         if needs_wrap(this.args[0]) args[0] = T('r.expr(', args[0], ')')
 
