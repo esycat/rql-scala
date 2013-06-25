@@ -22,7 +22,8 @@ apply plugin: 'idea'
 //apply plugin: 'protobuf'
 apply plugin: 'propsUtil'
 
-mainClassName = [group, project.name, 'Main'].join('.')
+mainClassName = [group, project.name, 'test', 'Main'].join('.')
+sourceSets.main.scala.srcDirs += sourceSets.test.scala.srcDirs
 
 apply from: 'project/util.gradle'
 apply from: 'project/scala.gradle'

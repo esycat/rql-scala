@@ -1,19 +1,17 @@
-package com.esyfur.rql
+package com.esyfur.rql.test
 
-import com.rethinkdb.{Ql2 => p}
+import com.esyfur.{rql => r}
 
 object Main {
 
     val host = "devroom"
     val db   = "lalala"
 
-    var conn: Connection = _
-
     def main(args: Array[String]) {
-        conn = connect(host).repl()
+        val conn = r.connect(host).repl()
         conn.use(db)
 
-        dbList.run
+        r.dbList.run
         conn.database.get.tableList.run
 
         println("Yay")
