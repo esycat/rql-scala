@@ -59,7 +59,7 @@ class Connection(
     private var in: InputStream = _
     private var out: OutputStream = _
 
-    private var db: Option[Db] = None
+    private var defaultDb: Option[Db] = None
 
     reconnect()
 
@@ -107,12 +107,12 @@ class Connection(
 
     def use(name: String): Connection = use(new Db(name))
 
-    def use(db: Db): Connection = {
-        this.db = Some(db)
+    private def use(db: Db): Connection = {
+        this.defaultDb = Some(db)
         this
     }
 
-    def database = this.db
+    def db = this.defaultDb.get
 
     def execute[T](query: Query, options: Map[String, Query]): Cursor = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
@@ -123,7 +123,7 @@ class Connection(
             .setToken(token.incrementAndGet())
             .setQuery(query.build)
 
-        db foreach { db => builder.addGlobalOptargs(
+        defaultDb foreach { db => builder.addGlobalOptargs(
             p.Query.AssocPair.newBuilder()
                 .setKey("db")
                 .setVal(db.build)

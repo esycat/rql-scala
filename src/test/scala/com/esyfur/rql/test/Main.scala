@@ -12,7 +12,8 @@ object Main {
         conn.use(db)
 
         r.dbList.run
-        conn.database.get.tableList.run
+        r.db(db).tableList.run(conn)
+        conn.db.tableList.run
 
         println("Yay")
 
