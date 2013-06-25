@@ -5,6 +5,8 @@ import com.esyfur.rql.{Term, MethodQuery}
 
 object Table {
 
+    def apply(name: String) = new Table(name)
+
 }
 
 class Table(val name: String) extends Term {
@@ -12,11 +14,11 @@ class Table(val name: String) extends Term {
     protected val termType = p.Term.TermType.TABLE
 
     def create(): TableCreate = {
-        new TableCreate
+        new TableCreate(name)
     }
 
     def drop(): TableDrop = {
-        new TableDrop
+        new TableDrop(name)
     }
 
     private def index(name: String) = new Index(name)
@@ -47,17 +49,17 @@ class Table(val name: String) extends Term {
 
 }
 
-class TableList extends MethodQuery {
-    protected val termType = p.Term.TermType.TABLE_LIST
-    val st = "table_list"
-}
-
-class TableCreate extends MethodQuery {
+class TableCreate(val name: String) extends MethodQuery {
     protected val termType = p.Term.TermType.TABLE_CREATE
     val st = "table_create"
 }
 
-class TableDrop extends MethodQuery {
+class TableDrop(val name: String) extends MethodQuery {
     protected val termType = p.Term.TermType.TABLE_DROP
     val st = "table_drop"
+}
+
+class TableList extends MethodQuery {
+    protected val termType = p.Term.TermType.TABLE_LIST
+    val st = "table_list"
 }

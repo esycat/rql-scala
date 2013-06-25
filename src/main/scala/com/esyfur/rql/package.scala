@@ -23,14 +23,12 @@ package object rql {
         conn
     }
 
-    def db(name: String) = new Db(name)
+    def db(name: String) = Db(name)
 
     def dbCreate(name: String) = db(name).create()
 
     def dbDrop(name: String) = db(name).drop()
 
     def dbList = new DbList
-
-    def table(name: String) = new Table(name)
 
 }

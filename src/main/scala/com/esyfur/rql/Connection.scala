@@ -105,10 +105,8 @@ class Connection(
         this
     }
 
-    def use(name: String): Connection = use(new Db(name))
-
-    private def use(db: Db): Connection = {
-        this.defaultDb = Some(db)
+    def use(name: String): Connection = {
+        this.defaultDb = Some(Db(name))
         this
     }
 
