@@ -5,7 +5,7 @@ import com.rethinkdb.{Ql2 => p}
 /*
 class Row extends Term {
 
-    val termType = p.Term.QueryType.
+    protected val termType = p.Term.QueryType.
 
 }
 */

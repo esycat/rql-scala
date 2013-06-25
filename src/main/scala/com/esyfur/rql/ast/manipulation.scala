@@ -6,21 +6,21 @@ import com.esyfur.rql.MethodQuery
 
 class Append extends MethodQuery {
 
-    val termType = p.Term.TermType.APPEND
+    protected val termType = p.Term.TermType.APPEND
     val st = "append"
 
 }
 
 class Prepend extends MethodQuery {
 
-    val termType = p.Term.TermType.PREPEND
+    protected val termType = p.Term.TermType.PREPEND
     val st = "prepend"
 
 }
 
 class Difference extends MethodQuery {
 
-    val termType = p.Term.TermType.DIFFERENCE
+    protected val termType = p.Term.TermType.DIFFERENCE
     val st = "difference"
 
 }

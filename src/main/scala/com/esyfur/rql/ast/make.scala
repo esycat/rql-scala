@@ -1,14 +1,13 @@
 package com.esyfur.rql.ast
 
-import com.esyfur.rql.{Term, TopLevelQuery, MethodQuery}
+import com.esyfur.rql.Query
 import com.rethinkdb.{Ql2 => p}
 
-
-class MakeArray extends Term {
-    val termType = p.Term.TermType.MAKE_ARRAY
+class MakeArray extends Query {
+    protected val termType = p.Term.TermType.MAKE_ARRAY
 
 }
 
-class MakeObj extends Term {
-    val termType = p.Term.TermType.MAKE_OBJ
+class MakeObj extends Query {
+    protected val termType = p.Term.TermType.MAKE_OBJ
 }

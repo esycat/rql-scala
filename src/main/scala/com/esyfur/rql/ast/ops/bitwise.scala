@@ -5,21 +5,21 @@ import com.esyfur.rql.{BiOpQuery, Query}
 
 class Any(a: Query, b: Query) extends BiOpQuery(a, b) {
 
-    val termType = p.Term.TermType.ANY
+    protected val termType = p.Term.TermType.ANY
     val st = "|"
 
 }
 
 class All(a: Query, b: Query) extends BiOpQuery(a, b) {
 
-    val termType = p.Term.TermType.ALL
+    protected val termType = p.Term.TermType.ALL
     val st = "&"
 
 }
 
 class Not(value: Query) extends Query {
 
-    val termType = p.Term.TermType.NOT
+    protected val termType = p.Term.TermType.NOT
     val st = "~"
 
     /*

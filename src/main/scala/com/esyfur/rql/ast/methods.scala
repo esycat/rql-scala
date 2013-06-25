@@ -5,7 +5,7 @@ import com.esyfur.rql.{Query, BiOpQuery, TopLevelQuery, MethodQuery}
 
 class Var extends Query {
 
-    val termType = p.Term.TermType.VAR
+    protected val termType = p.Term.TermType.VAR
 
     /*
     def compose(args, optargs) = "var_ " + args(0)
@@ -14,28 +14,28 @@ class Var extends Query {
 
 class JavaScript extends TopLevelQuery {
 
-    val termType = p.Term.TermType.JAVASCRIPT
+    protected val termType = p.Term.TermType.JAVASCRIPT
     val st = "js"
 
 }
 
 class UserError extends TopLevelQuery {
 
-    val termType = p.Term.TermType.ERROR
+    protected val termType = p.Term.TermType.ERROR
     val st = "error"
 
 }
 
 class Default extends Query {
 
-    val termType = p.Term.TermType.DEFAULT
+    protected val termType = p.Term.TermType.DEFAULT
     val st = "default"
 
 }
 
 class ImplicitVar extends Query {
 
-    val termType = p.Term.TermType.IMPLICIT_VAR
+    protected val termType = p.Term.TermType.IMPLICIT_VAR
 
     /*
     def compose(args, optargs) = 'r.row'
@@ -44,31 +44,31 @@ class ImplicitVar extends Query {
 
 class SetInsert extends MethodQuery {
 
-    val termType = p.Term.TermType.SET_INSERT
+    protected val termType = p.Term.TermType.SET_INSERT
     val st = "set_insert"
 }
 
 class SetUnion extends MethodQuery {
 
-    val termType = p.Term.TermType.SET_UNION
+    protected val termType = p.Term.TermType.SET_UNION
     val st = "set_union"
 }
 
 class SetIntersection extends MethodQuery {
 
-    val termType = p.Term.TermType.SET_INTERSECTION
+    protected val termType = p.Term.TermType.SET_INTERSECTION
     val st = "set_intersection"
 }
 
 class SetDifference extends MethodQuery {
 
-    val termType = p.Term.TermType.SET_DIFFERENCE
+    protected val termType = p.Term.TermType.SET_DIFFERENCE
     val st = "set_difference"
 }
 
 class Slice extends Query {
 
-    val termType = p.Term.TermType.SLICE
+    protected val termType = p.Term.TermType.SLICE
 
     /*
     def compose(args, optargs) = T(args[ 0], '[', args[ 1], ':', args[ 2], ']')
@@ -78,20 +78,20 @@ class Slice extends Query {
 
 class Skip extends MethodQuery {
 
-    val termType = p.Term.TermType.SKIP
+    protected val termType = p.Term.TermType.SKIP
     val st = "skip"
 }
 
 class Limit extends MethodQuery {
 
-    val termType = p.Term.TermType.LIMIT
+    protected val termType = p.Term.TermType.LIMIT
     val st = "limit"
 
 }
 
 class GetAttr extends Query {
 
-    val termType = p.Term.TermType.GETATTR
+    protected val termType = p.Term.TermType.GETATTR
 
     /*
     def compose(args, optargs) = T(args[ 0], '[', args[ 1], ']')
@@ -100,55 +100,55 @@ class GetAttr extends Query {
 
 class Contains extends MethodQuery {
 
-    val termType = p.Term.TermType.CONTAINS
+    protected val termType = p.Term.TermType.CONTAINS
     val st = "contains"
 }
 
 class HasFields extends MethodQuery {
 
-    val termType = p.Term.TermType.HAS_FIELDS
+    protected val termType = p.Term.TermType.HAS_FIELDS
     val st = "has_fields"
 
 }
 
 class WithFields extends MethodQuery {
 
-    val termType = p.Term.TermType.WITH_FIELDS
+    protected val termType = p.Term.TermType.WITH_FIELDS
     val st = "with_fields"
 
 }
 
 class Keys extends MethodQuery {
 
-    val termType = p.Term.TermType.KEYS
+    protected val termType = p.Term.TermType.KEYS
     val st = "keys"
 
 }
 
 class Pluck extends MethodQuery {
 
-    val termType = p.Term.TermType.PLUCK
+    protected val termType = p.Term.TermType.PLUCK
     val st = "pluck"
 
 }
 
 class Without extends MethodQuery {
 
-    val termType = p.Term.TermType.WITHOUT
+    protected val termType = p.Term.TermType.WITHOUT
     val st = "without"
 
 }
 
 class Merge extends MethodQuery {
 
-    val termType = p.Term.TermType.MERGE
+    protected val termType = p.Term.TermType.MERGE
     val st = "merge"
 
 }
 
 class Between extends MethodQuery {
 
-    val termType = p.Term.TermType.BETWEEN
+    protected val termType = p.Term.TermType.BETWEEN
     val st = "between"
 
 }

@@ -8,8 +8,8 @@ import ast.ops._
 
 abstract class Query extends Term {
 
-    val posArgs: Seq[Query] = new mutable.LinkedList[Query]()
-    val optArgs: Map[String, Query] = new mutable.HashMap[String, Query]()
+    protected val posArgs: Seq[Query]
+    protected val optArgs: Map[String, Query]
 
     override def toString = {
         val printer = new QueryPrinter(this)

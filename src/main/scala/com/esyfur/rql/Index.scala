@@ -4,7 +4,7 @@ import com.rethinkdb.{Ql2 => p}
 
 protected class Index(val name: String) {
 
-    val termType = null
+    protected val termType = null
 
     def create(): IndexCreate = {
         new IndexCreate
@@ -17,13 +17,13 @@ protected class Index(val name: String) {
 }
 
 class IndexList extends TopLevelQuery {
-    val termType = p.Term.TermType.INDEX_LIST
+    protected val termType = p.Term.TermType.INDEX_LIST
 }
 
 class IndexCreate extends TopLevelQuery {
-    val termType = p.Term.TermType.INDEX_CREATE
+    protected val termType = p.Term.TermType.INDEX_CREATE
 }
 
 class IndexDrop extends TopLevelQuery {
-    val termType = p.Term.TermType.INDEX_DROP
+    protected val termType = p.Term.TermType.INDEX_DROP
 }

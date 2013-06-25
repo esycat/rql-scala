@@ -40,10 +40,10 @@ object Datum {
 
 private[rql] abstract class Datum[+T] extends Term {
 
-    val termType = p.Term.TermType.DATUM
-    val datumType: p.Datum.DatumType
+    protected val termType = p.Term.TermType.DATUM
+    protected val datumType: p.Datum.DatumType
 
-    val value: T
+    protected val value: T
 
     protected override def getTermBuilder() = super.getTermBuilder().setDatum(getDatumBuilder)
 
@@ -53,14 +53,14 @@ private[rql] abstract class Datum[+T] extends Term {
 
 final class NullDatum extends Datum[Null] {
 
-    val datumType = R_NULL
-    val value = null
+    protected val datumType = R_NULL
+    protected val value = null
 
 }
 
 final class BoolDatum(val value: Boolean) extends Datum[Boolean] {
 
-    val datumType = R_BOOL
+    protected val datumType = R_BOOL
 
     protected override def getDatumBuilder() = super.getDatumBuilder().setRBool(value)
 
@@ -68,7 +68,7 @@ final class BoolDatum(val value: Boolean) extends Datum[Boolean] {
 
 final class NumDatum(val value: Double) extends Datum[Double] {
 
-    val datumType = R_NUM
+    protected val datumType = R_NUM
 
     protected override def getDatumBuilder() = super.getDatumBuilder().setRNum(value)
 
@@ -76,7 +76,7 @@ final class NumDatum(val value: Double) extends Datum[Double] {
 
 final class StrDatum(val value: String) extends Datum[String] {
 
-    val datumType = R_STR
+    protected val datumType = R_STR
 
     protected override def getDatumBuilder() = super.getDatumBuilder().setRStr(value)
 
@@ -92,7 +92,7 @@ object ArrayDatum {
 
 final class ArrayDatum[T](val value: Seq[T]) extends Datum[Seq[T]] {
 
-    val datumType = R_ARRAY
+    protected val datumType = R_ARRAY
 
 }
 
@@ -104,6 +104,6 @@ object ObjectDatum {
 
 final class ObjectDatum[T](val value: Seq[T]) extends Datum[Seq[T]] {
 
-    val datumType = R_OBJECT
+    protected val datumType = R_OBJECT
 
 }
