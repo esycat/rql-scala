@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast.ops
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{BiOpQuery, Query}
+import com.esyfur.rql.{Query, OpQuery, BiOpQuery}
 
 class Any(a: Query, b: Query) extends BiOpQuery(a, b) {
 
@@ -17,7 +17,7 @@ class All(a: Query, b: Query) extends BiOpQuery(a, b) {
 
 }
 
-class Not(value: Query) extends Query {
+class Not(value: Query) extends OpQuery {
 
     protected val termType = p.Term.TermType.NOT
     val st = "~"

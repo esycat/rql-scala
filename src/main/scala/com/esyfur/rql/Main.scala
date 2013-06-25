@@ -5,7 +5,7 @@ import com.rethinkdb.{Ql2 => p}
 object Main {
 
     val host = "devroom"
-    val db   = "test"
+    val db   = "lalala"
 
     var conn: Connection = _
 
@@ -14,6 +14,7 @@ object Main {
         conn.use(db)
 
         dbList.run
+        conn.database.get.tableList.run
 
         println("Yay")
 

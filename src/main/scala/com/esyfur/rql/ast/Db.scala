@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{TableList, Table, TopLevelQuery}
+import com.esyfur.rql.{Datum, TopLevelQuery}
 
 object Db {
 
@@ -11,6 +11,8 @@ class Db(val name: String) extends TopLevelQuery {
 
     protected val termType = p.Term.TermType.DB
     val st = "db"
+
+    protected override val posArgs = Seq(Datum(name))
 
     def create(): DbCreate = {
         new DbCreate

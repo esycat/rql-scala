@@ -11,6 +11,7 @@ import com.google.protobuf.Message
 import com.rethinkdb.{Ql2 => p}
 
 import Connection.{pack, unpack, console}
+import com.esyfur.rql.ast.Db
 
 object Connection {
     private[rql] var default: Connection = _
@@ -43,7 +44,7 @@ object Connection {
     }
 
     private def console(values: Array[Byte]*) {
-        values.foreach(console)
+        values foreach console
     }
 
 }
@@ -58,7 +59,7 @@ class Connection(
     private var in: InputStream = _
     private var out: OutputStream = _
 
-    private var db: Db = _
+    private var db: Option[Db] = None
 
     reconnect()
 
@@ -106,10 +107,12 @@ class Connection(
 
     def use(name: String): Connection = use(new Db(name))
 
-    def use (db: Db): Connection = {
-        this.db = db
+    def use(db: Db): Connection = {
+        this.db = Some(db)
         this
     }
+
+    def database = this.db
 
     def execute[T](query: Query, options: Map[String, Query]): Cursor = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
@@ -120,11 +123,12 @@ class Connection(
             .setToken(token.incrementAndGet())
             .setQuery(query.build)
 
-        if (this.db != null) builder.addGlobalOptargs(
+        db foreach { db => builder.addGlobalOptargs(
             p.Query.AssocPair.newBuilder()
                 .setKey("db")
                 .setVal(db.build)
-        )
+            )
+        }
 
         val message = builder.build()
 

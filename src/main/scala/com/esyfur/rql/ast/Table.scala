@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{IndexList, Index, Term}
+import com.esyfur.rql.{Term, MethodQuery}
 
 object Table {
 

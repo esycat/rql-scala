@@ -1,23 +1,36 @@
 package com.esyfur.rql
 
-import scala.collection.Map
-import scala.collection.mutable
+import scala.collection.{Seq, Map, mutable}
 
 import com.rethinkdb.{Ql2 => p}
 import ast.ops._
 
 abstract class Query extends Term {
 
-    protected val posArgs: Seq[Query]
-    protected val optArgs: Map[String, Query]
+    protected val posArgs: Seq[Term] = mutable.ListBuffer[Term]()
+    protected val optArgs: Map[String, Term] = mutable.HashMap[String, Term]()
 
     override def toString = {
         val printer = new QueryPrinter(this)
         printer.print()
     }
 
-    def compose(posArgs: Seq[Query], optArgs: Map[String, Query]) = {
+    protected override def getTermBuilder() = {
+        val builder = super.getTermBuilder()
 
+        // applying positional arguments
+        for (arg <- posArgs) builder.addArgs(arg.build)
+
+        // applying named arguments
+        for ((key, arg) <- optArgs) {
+            val pair = p.Term.AssocPair.newBuilder
+                .setKey(key)
+                .setVal(arg.build)
+
+            builder.addOptargs(pair)
+        }
+
+        builder
     }
 
     final def run(): Cursor = {
@@ -72,33 +85,20 @@ abstract class Query extends Term {
 
 }
 
-abstract class BiOpQuery(a: Query, b: Query) extends Query {
+abstract class OpQuery extends Query {
+
+}
+
+abstract class BiOpQuery(a: Term, b: Term) extends OpQuery {
+
+    protected override val posArgs = Seq(a, b)
 
 }
 
 abstract class TopLevelQuery extends Query {
 
-    override def compose(posArgs: Seq[Query], optArgs: Map[String, Query]) = {
-        /*
-        args.extend([name + '= ' + optargs[name] for name in optargs.keys()])
-        T('r.', st, '(', T(*(args), intsp = ', '), ')')
-        */
-    }
-
 }
 
 abstract class MethodQuery extends Query {
-
-    override def compose(posArgs: Seq[Query], optArgs: Map[String, Query]) = {
-        /*
-        if needs_wrap(this.args[0]) args[0] = T('r.expr(', args[0], ')')
-
-        restargs = args[1:]
-        restargs.extend([k+'='+v for k,v in optargs.items()])
-        restargs = T(*restargs, intsp = ', ')
-
-        T(args[0], '.', st, '(', restargs, ')')
-        */
-    }
 
 }

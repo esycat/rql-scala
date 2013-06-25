@@ -1,6 +1,7 @@
 package com.esyfur
 
 import java.net.InetSocketAddress
+import com.esyfur.rql.ast.{Table, DbList, Db}
 
 package object rql {
 
