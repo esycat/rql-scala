@@ -89,9 +89,9 @@ class Limit extends MethodQuery {
 
 }
 
-class GetAttr extends Query {
+class GetField extends Query {
 
-    protected val termType = p.Term.TermType.GETATTR
+    protected val termType = p.Term.TermType.GET_FIELD
 
     /*
     def compose(args, optargs) = T(args[ 0], '[', args[ 1], ']')
