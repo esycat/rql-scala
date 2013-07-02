@@ -13,6 +13,7 @@ object Main {
 
         r.dbList.run
         r.db(db).tableList.run(conn)
+        r.db(db).tableCreate("lalala").run()
         conn.db.tableList.run
 
         println("Yay")

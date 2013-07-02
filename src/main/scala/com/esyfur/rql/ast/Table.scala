@@ -49,7 +49,7 @@ class Table(val name: String) extends Term {
 
 }
 
-class TableCreate(val name: String) extends MethodQuery {
+class TableCreate(val name: String) extends MethodQuery(name) {
     protected val termType = p.Term.TermType.TABLE_CREATE
     val st = "table_create"
 }
