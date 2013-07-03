@@ -22,6 +22,11 @@ package object rql {
         conn
     }
 
+    def expr[T](value: T): Term = value match {
+        case v: Term => v
+        case v => Datum(value)
+    }
+
     def db(name: String) = Db(name)
 
     def dbCreate(name: String) = db(name).create()

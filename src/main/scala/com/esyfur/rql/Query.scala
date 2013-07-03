@@ -83,6 +83,6 @@ abstract class TopLevelQuery extends Query {
 
 abstract class MethodQuery(args: Object*) extends Query {
 
-    protected override val posArgs = for (arg <- args) yield Datum(arg)
+    protected override val posArgs = for (arg <- args) yield expr(arg)
 
 }
