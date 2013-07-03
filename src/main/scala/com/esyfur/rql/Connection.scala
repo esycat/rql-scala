@@ -11,7 +11,6 @@ import com.google.protobuf.Message
 import com.rethinkdb.{Ql2 => p}
 
 import Connection.{pack, unpack, console}
-import com.esyfur.rql.Db
 
 object Connection {
     private[rql] var default: Connection = _
