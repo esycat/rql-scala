@@ -5,7 +5,7 @@ import scala.collection.{Seq, Map, mutable}
 import com.rethinkdb.{Ql2 => p}
 import ast.ops._
 
-abstract class Query extends Term {
+abstract class Query extends Term with Sequence {
 
     protected val posArgs: Seq[Term] = mutable.ListBuffer[Term]()
     protected val optArgs: Map[String, Term] = mutable.HashMap[String, Term]()

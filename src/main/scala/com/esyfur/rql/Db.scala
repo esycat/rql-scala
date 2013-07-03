@@ -1,4 +1,4 @@
-package com.esyfur.rql.ast
+package com.esyfur.rql
 
 import com.rethinkdb.{Ql2 => p}
 import com.esyfur.rql.{Datum, TopLevelQuery}
@@ -30,7 +30,7 @@ class Db(val name: String) extends TopLevelQuery {
 
     def tableDrop(name: String) = table(name).drop()
 
-    def tableList() = new TableList
+    def tableList = new TableList
 
 }
 

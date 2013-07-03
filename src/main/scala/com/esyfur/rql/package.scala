@@ -1,7 +1,6 @@
 package com.esyfur
 
 import java.net.InetSocketAddress
-import com.esyfur.rql.ast.{Table, DbList, Db}
 
 package object rql {
 
@@ -30,5 +29,7 @@ package object rql {
     def dbDrop(name: String) = db(name).drop()
 
     def dbList = new DbList
+
+    def table(name: String) = Connection.default.db.table(name)
 
 }
