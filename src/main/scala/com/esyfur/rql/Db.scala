@@ -13,11 +13,9 @@ class Db(val name: String) extends MethodQuery(name) {
     protected val termType = p.Term.TermType.DB
     val st = "db"
 
-    protected override val posArgs = Seq(Datum(name))
+    def create(): DbCreate = new DbCreate(this)
 
-    def create(): DbCreate = new DbCreate(name)
-
-    def drop(): DbDrop = new DbDrop(name)
+    def drop(): DbDrop = new DbDrop(this)
 
     def table(name: String) = new Table(this, name)
 
@@ -25,21 +23,21 @@ class Db(val name: String) extends MethodQuery(name) {
 
     def tableDrop(name: String) = table(name).drop()
 
-    def tableList = new TableList
+    def tableList = new TableList(this)
 
 }
 
-class DbCreate(val name: String) extends MethodQuery {
+class DbCreate(val db: Db) extends MethodQuery(db.name) {
     protected val termType = p.Term.TermType.DB_CREATE
     val st = "db_create"
 }
 
-class DbDrop(val name: String) extends MethodQuery {
+class DbDrop(val db: Db) extends MethodQuery(db.name) {
     protected val termType = p.Term.TermType.DB_DROP
     val st = "db_drop"
 }
 
-class DbList extends MethodQuery {
+class DbList extends TopLevelQuery {
     protected val termType = p.Term.TermType.DB_LIST
     val st = "db_list"
 }

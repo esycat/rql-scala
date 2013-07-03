@@ -5,31 +5,33 @@ import com.esyfur.rql.ast._
 
 object Table {
 
+    def apply(name: String) = new Table(Connection.default.db, name)
+
 }
 
 class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Sequence {
 
     protected val termType = p.Term.TermType.TABLE
 
-    def create() = new TableCreate(name)
+    def create() = new TableCreate(this)
 
-    def drop() = new TableDrop(name)
+    def drop() = new TableDrop(this)
 
-    private def index(name: String) = new Index(name)
+    private def index(name: String) = new Index(this, name)
 
     def indexCreate(name: String) = index(name).create()
 
     def indexDrop(name: String) = index(name).create()
 
-    def indexList() = new IndexList
+    def indexList() = new IndexList(this)
 
-    def insert() = new Insert()
+    def insert() = new Insert(this)
 
-    def update() = new Update()
+    def update() = new Update(this)
 
-    def replace() = new Replace()
+    def replace() = new Replace(this)
 
-    def delete() = new Delete()
+    def delete() = new Delete(this)
 
     def get(key: String) = new Get(key)
 
@@ -45,17 +47,17 @@ class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Seq
 
 }
 
-class TableCreate(val name: String) extends MethodQuery(name) {
+class TableCreate(val table: Table) extends MethodQuery(table.name) {
     protected val termType = p.Term.TermType.TABLE_CREATE
     val st = "table_create"
 }
 
-class TableDrop(val name: String) extends MethodQuery {
+class TableDrop(val table: Table) extends MethodQuery(table.name) {
     protected val termType = p.Term.TermType.TABLE_DROP
     val st = "table_drop"
 }
 
-class TableList extends MethodQuery {
+class TableList(val db: Db) extends MethodQuery(db) {
     protected val termType = p.Term.TermType.TABLE_LIST
     val st = "table_list"
 }

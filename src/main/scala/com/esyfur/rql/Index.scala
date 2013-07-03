@@ -2,28 +2,24 @@ package com.esyfur.rql
 
 import com.rethinkdb.{Ql2 => p}
 
-protected class Index(val name: String) extends TopLevelQuery {
+protected class Index(val table: Table, val name: String) extends MethodQuery(table, name) {
 
     protected val termType = null
 
-    def create(): IndexCreate = {
-        new IndexCreate
-    }
+    def create() = new IndexCreate(this)
 
-    def drop(): IndexDrop = {
-        new IndexDrop
-    }
+    def drop() = new IndexDrop(this)
 
 }
 
-class IndexList extends MethodQuery {
-    protected val termType = p.Term.TermType.INDEX_LIST
-}
-
-class IndexCreate extends MethodQuery {
+class IndexCreate(val index: Index) extends MethodQuery(index.name) {
     protected val termType = p.Term.TermType.INDEX_CREATE
 }
 
-class IndexDrop extends MethodQuery {
+class IndexDrop(val index: Index) extends MethodQuery(index.name) {
     protected val termType = p.Term.TermType.INDEX_DROP
+}
+
+class IndexList(val table: Table) extends MethodQuery(table) {
+    protected val termType = p.Term.TermType.INDEX_LIST
 }
