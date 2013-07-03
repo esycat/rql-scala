@@ -50,7 +50,6 @@ abstract class Query extends Term with Sequence with Operators {
 
     // Polymorphic object/sequence operations
     /*
-    def pluck(attrs: List[Query]) = new Pluck(attrs)
 
     def without(attrs: List[Query]) = new Without(attrs)
 

@@ -2,7 +2,7 @@ package com.esyfur.rql
 
 import com.rethinkdb.{Ql2 => p}
 
-protected class Index(val name: String) {
+protected class Index(val name: String) extends TopLevelQuery {
 
     protected val termType = null
 
@@ -16,14 +16,14 @@ protected class Index(val name: String) {
 
 }
 
-class IndexList extends TopLevelQuery {
+class IndexList extends MethodQuery {
     protected val termType = p.Term.TermType.INDEX_LIST
 }
 
-class IndexCreate extends TopLevelQuery {
+class IndexCreate extends MethodQuery {
     protected val termType = p.Term.TermType.INDEX_CREATE
 }
 
-class IndexDrop extends TopLevelQuery {
+class IndexDrop extends MethodQuery {
     protected val termType = p.Term.TermType.INDEX_DROP
 }

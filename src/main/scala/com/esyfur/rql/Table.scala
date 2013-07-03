@@ -5,11 +5,9 @@ import com.esyfur.rql.ast._
 
 object Table {
 
-    def apply(name: String) = new Table(name)
-
 }
 
-class Table(val name: String) extends Term with Sequence {
+class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Sequence {
 
     protected val termType = p.Term.TermType.TABLE
 

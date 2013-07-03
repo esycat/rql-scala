@@ -2,9 +2,9 @@ package com.esyfur.rql
 
 import ast._
 
-trait Sequence {
+trait Sequence { self: Term =>
 
-    def count() = new Count()
+    def count() = new Count(this)
 
     def filter(predicate: Predicate) = new Filter(predicate)
 
@@ -23,5 +23,8 @@ trait Sequence {
     def isEmpty() = ???
 
     def union(query: Query) = new Union(query)
+
+    // Polymorphic object/sequence operations
+    // def pluck(attrs: List[Query]) = new Pluck(attrs)
 
 }
