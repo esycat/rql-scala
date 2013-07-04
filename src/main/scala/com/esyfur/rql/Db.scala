@@ -8,7 +8,7 @@ object Db {
 
 }
 
-class Db(val name: String) extends MethodQuery(name) {
+class Db(val name: String) extends TopLevelQuery(name) {
 
     protected val termType = p.Term.TermType.DB
     val st = "db"
@@ -27,12 +27,12 @@ class Db(val name: String) extends MethodQuery(name) {
 
 }
 
-class DbCreate(val db: Db) extends MethodQuery(db.name) {
+class DbCreate(val db: Db) extends TopLevelQuery(db.name) {
     protected val termType = p.Term.TermType.DB_CREATE
     val st = "db_create"
 }
 
-class DbDrop(val db: Db) extends MethodQuery(db.name) {
+class DbDrop(val db: Db) extends TopLevelQuery(db.name) {
     protected val termType = p.Term.TermType.DB_DROP
     val st = "db_drop"
 }

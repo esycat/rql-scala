@@ -24,7 +24,7 @@ class Count(operand: Term) extends MethodQuery(operand) {
 
 }
 
-class Limit(operand: Term, limit: Int) extends MethodQuery(operand /*, limit*/) {
+class Limit(operand: Term, number: Int) extends MethodQuery(operand, number) {
 
     protected val termType = p.Term.TermType.LIMIT
     val st = "limit"

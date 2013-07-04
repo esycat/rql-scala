@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{Query, MethodQuery}
+import com.esyfur.rql.{Term, Query, MethodQuery}
 
 class Map extends MethodQuery {
 
@@ -30,13 +30,13 @@ class Skip extends MethodQuery {
     val st = "skip"
 }
 
-class Slice extends Query {
+class Slice(operand: Term, startIndex: Int, endIndex: Int = null) extends MethodQuery(operand, startIndex, endIndex) {
 
     protected val termType = p.Term.TermType.SLICE
 
 }
 
-class Union(query: Query) extends MethodQuery {
+class Union(operand: Term, query: Query) extends MethodQuery(operand, query) {
 
     protected val termType = p.Term.TermType.UNION
     val st = "union"

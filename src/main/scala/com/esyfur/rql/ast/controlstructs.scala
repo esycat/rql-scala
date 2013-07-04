@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{Query, TopLevelQuery, MethodQuery}
+import com.esyfur.rql.{ValueQuery, Query, TopLevelQuery, MethodQuery}
 
 class Var extends Query {
 
@@ -15,7 +15,7 @@ class ImplicitVar extends Query {
 
 }
 
-class JavaScript extends TopLevelQuery {
+class JavaScript(expression: String) extends ValueQuery(expression) {
 
     protected val termType = p.Term.TermType.JAVASCRIPT
     val st = "js"

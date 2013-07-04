@@ -1,20 +1,24 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.Term
+import com.esyfur.rql.{ValueQuery, Term, TopLevelQuery, MethodQuery}
 
-abstract class Order extends Term {
+class OrderBy(operand: Term, keys: String*) extends MethodQuery(operand /*, keys: _* */) {
+
+    protected val termType = p.Term.TermType.ORDERBY
 
 }
 
-class Asc extends Order {
+abstract class Ordering(val key: String) extends ValueQuery(key)
+
+class Asc(key: String) extends Ordering(key) {
 
     protected val termType = p.Term.TermType.ASC
     val st = "asc"
 
 }
 
-class Desc extends Order {
+class Desc(key: String) extends Ordering(key) {
 
     protected val termType = p.Term.TermType.DESC
     val st = "desc"

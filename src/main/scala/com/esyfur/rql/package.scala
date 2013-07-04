@@ -1,6 +1,7 @@
 package com.esyfur
 
 import java.net.InetSocketAddress
+import com.esyfur.rql.ast.{Ordering, Asc, Desc}
 
 package object rql {
 
@@ -24,8 +25,20 @@ package object rql {
 
     def expr[T](value: T): Term = value match {
         case v: Term => v
-        case v => Datum(value)
+        case _ => Datum(value)
     }
+
+    def branch(test: Boolean, positive: (() => Unit), negative: (() => Unit)) = ???
+
+    def js(expression: String) = ???
+
+    def sum(key: String) = ???
+
+    def avg(key: String) = ???
+
+    def asc(key: String): Ordering = new Asc(key)
+
+    def desc(key: String): Ordering = new Desc(key)
 
     def db(name: String) = Db(name)
 

@@ -66,22 +66,47 @@ abstract class Query extends Term with Sequence with Operators {
 
 }
 
+/**
+ * Base class for all arithmetic, bitwise, comparison, logic and other operators.
+ */
 abstract class OpQuery extends Query {
 
 }
 
-abstract class BiOpQuery(a: Term, b: Term) extends OpQuery {
+/**
+ * Base class for unary operators.
+ */
+abstract class UnOpQuery(val operand: Term) extends OpQuery {
+
+    protected override val posArgs = Seq(operand)
+
+}
+
+/**
+ * Base class for binary operators.
+ */
+abstract class BiOpQuery(val a: Term, val b: Term) extends OpQuery {
 
     protected override val posArgs = Seq(a, b)
 
 }
 
-abstract class TopLevelQuery extends Query {
+abstract class ValueQuery(value: String) extends Query {
+
+    protected override val posArgs = Seq(value)
 
 }
 
-abstract class MethodQuery(args: Object*) extends Query {
+abstract class MethodQuery(args: Seq[Any]) extends Query {
 
-    protected override val posArgs = for (arg <- args) yield expr(arg)
+    protected override val posArgs = for (arg <- args if arg != null) yield expr(arg)
+
+    def this(args: Any*) = this(args)
+
+}
+
+abstract class TopLevelQuery(value: String = null) extends Query {
+
+    protected override val posArgs = if (value == null) Seq() else Seq(value)
 
 }

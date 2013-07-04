@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.MethodQuery
+import com.esyfur.rql.{Term, MethodQuery}
 
 class Get(key: String) extends MethodQuery(key) {
 
@@ -24,7 +24,7 @@ class Between(lowerKey: String, upperKey: String, index: Option[String] = None) 
 
 }
 
-class Filter(predicate: Predicate) extends MethodQuery {
+class Filter(operand: Term, predicate: Predicate) extends MethodQuery(operand, predicate) {
 
     protected val termType = p.Term.TermType.FILTER
     val st = "filter"
