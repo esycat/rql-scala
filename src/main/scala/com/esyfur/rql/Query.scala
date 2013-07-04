@@ -17,6 +17,8 @@ abstract class Query extends Term with Sequence with Operators {
     protected override def getTermBuilder() = {
         val builder = super.getTermBuilder()
 
+        //println("Term: %s, Pos args cnt: %d".format(this.getClass, posArgs.length))
+
         // applying positional arguments
         for (arg <- posArgs) builder.addArgs(arg.build)
 

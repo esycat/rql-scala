@@ -39,7 +39,7 @@ object Connection {
      */
     private def console(value: Array[Byte]) {
         val tpl = "[%d] %s"
-        println(tpl.format(value.length, value.mkString(" ")))
+        //println(tpl.format(value.length, value.mkString(" ")))
     }
 
     private def console(values: Array[Byte]*) {
@@ -149,7 +149,6 @@ class Connection(
         console(buffer)
 
         val response = p.Response.parseFrom(buffer)
-        //println(response)
 
         // Check that this is the response we were expecting.
         if (response.getToken() != query.getToken())
