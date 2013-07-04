@@ -30,7 +30,7 @@ class Skip extends MethodQuery {
     val st = "skip"
 }
 
-class Slice(operand: Term, startIndex: Int, endIndex: Int = null) extends MethodQuery(operand, startIndex, endIndex) {
+class Slice(operand: Term, startIndex: Int, endIndex: Int) extends MethodQuery(operand, startIndex, endIndex) {
 
     protected val termType = p.Term.TermType.SLICE
 

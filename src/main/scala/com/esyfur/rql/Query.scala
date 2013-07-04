@@ -95,20 +95,18 @@ abstract class BiOpQuery(val a: Term, val b: Term) extends OpQuery {
 
 abstract class ValueQuery(value: String) extends Query {
 
-    protected override val posArgs = Seq(value)
+    protected override val posArgs = Seq(expr(value))
 
 }
 
-abstract class MethodQuery(args: Seq[Any]) extends Query {
+abstract class MethodQuery(args: Any*) extends Query {
 
     protected override val posArgs = for (arg <- args if arg != null) yield expr(arg)
-
-    def this(args: Any*) = this(args)
 
 }
 
 abstract class TopLevelQuery(value: String = null) extends Query {
 
-    protected override val posArgs = if (value == null) Seq() else Seq(value)
+    protected override val posArgs = if (value == null) Seq() else Seq(expr(value))
 
 }

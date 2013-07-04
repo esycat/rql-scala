@@ -29,7 +29,7 @@ object Datum {
         case R_NUM     => datum.getRNum.asInstanceOf[T]
         case R_STR     => datum.getRStr.asInstanceOf[T]
         case R_ARRAY   => ArrayDatum.unwrap(datum.getRArrayList.asScala)
-        case R_OBJECT  => ??? // ObjectDatum.unwrap(datum.getRObjectList.asScala)
+        case R_OBJECT  => ObjectDatum.unwrap(datum.getRObjectList.asScala)
         case datumType => {
             val message = "Unexpected datum type %s.".format(datumType)
             throw new RqlDriverError(message)
@@ -84,9 +84,7 @@ final class StrDatum(val value: String) extends Datum[String] {
 
 object ArrayDatum {
 
-    def unwrap(datum: Seq[p.Datum]): Any = {
-        datum.map { Datum.unwrap(_) }
-    }
+    def unwrap(datum: Seq[p.Datum]): Seq[Any] = datum.map(Datum unwrap _)
 
 }
 
@@ -98,7 +96,9 @@ final class ArrayDatum[T](val value: Seq[T]) extends Datum[Seq[T]] {
 
 object ObjectDatum {
 
-    def unwrap(datum: Seq[p.Datum]): Any = ???
+    def unwrap(datum: Seq[p.Datum.AssocPair]): Map[String, Any] = datum.map(pair =>
+        pair.getKey -> (Datum unwrap pair.getVal)
+    )(collection.breakOut)
 
 }
 

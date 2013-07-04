@@ -6,6 +6,7 @@ import java.net.{InetSocketAddress, Socket}
 import java.util.concurrent.atomic.AtomicInteger
 
 import scala.collection.Map
+import scala.collection.JavaConverters._
 
 import com.google.protobuf.Message
 import com.rethinkdb.{Ql2 => p}
@@ -168,6 +169,9 @@ class Connection(
 
             // Sequence or partial responses
             case SUCCESS_PARTIAL | SUCCESS_SEQUENCE => {
+                val res = response.getResponseList().asScala.map { Datum.unwrap(_) }
+                println(res)
+
                 val chunk = "" // TODO
                 new Cursor(this, query, response, chunk)
             }

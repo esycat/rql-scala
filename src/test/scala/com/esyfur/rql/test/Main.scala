@@ -21,6 +21,9 @@ object Main {
 
         r.db(db).table(tbl).count().run()
 
+        val a = r.db(db).table(tbl).run()
+        println(a)
+
         println("Yay")
 
         conn.close()

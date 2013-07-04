@@ -18,7 +18,7 @@ trait Sequence { self: Term =>
 
     def limit(number: Int) = new Limit(this, number)
 
-    def slice(startIndex: Int, endIndex: Int = null) = new Slice(this, startIndex, endIndex)
+    def slice(startIndex: Int, endIndex: Int) = new Slice(this, startIndex, endIndex)
 
     def indexesOf() = ???
 
