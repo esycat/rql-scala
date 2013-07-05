@@ -24,7 +24,7 @@ class ConcatMap extends MethodQuery {
 
 }
 
-class Skip extends MethodQuery {
+class Skip(operand: Term, number: Integer) extends MethodQuery(operand, number) {
 
     protected val termType = p.Term.TermType.SKIP
     val st = "skip"

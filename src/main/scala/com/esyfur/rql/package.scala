@@ -23,14 +23,24 @@ package object rql {
         conn
     }
 
+    // def do() = ???
+
+    def branch(test: Boolean, positive: (() => Unit), negative: (() => Unit)) = ???
+
+    def foreach() = ???
+
+    def error() = ???
+
+    def default() = ???
+
     def expr[T](value: T): Term = value match {
         case v: Term => v
         case _ => Datum(value)
     }
 
-    def branch(test: Boolean, positive: (() => Unit), negative: (() => Unit)) = ???
-
     def js(expression: String) = ???
+
+    def count() = ???
 
     def sum(key: String) = ???
 

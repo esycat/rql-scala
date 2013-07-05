@@ -4,29 +4,55 @@ import ast._
 
 trait Sequence { self: Term =>
 
-    def count() = new Count(this)
+    /* Transformations */
 
-    def filter(predicate: Predicate) = new Filter(this, predicate)
+    def map(): Query = ???
 
-    def withFields() = ???
+    def withFields(fields: String*): Query = ???
 
-    def concatMap() = ???
+    def concatMap(): Query = ???
 
-    def orderBy(keys: String*) = new OrderBy(this, keys: _*)
+    def orderBy(keys: String*): Query = new OrderBy(this, keys: _*)
 
     //def orderBy(keys: Ordering*) = new OrderBy(this, keys)
 
-    def limit(number: Int) = new Limit(this, number)
+    def skip(number: Int): Query = new Skip(this, number)
 
-    def slice(startIndex: Int, endIndex: Int) = new Slice(this, startIndex, endIndex)
+    def limit(number: Int): Query = new Limit(this, number)
 
-    def indexesOf() = ???
+    def slice(startIndex: Int, endIndex: Int): Query = new Slice(this, startIndex, endIndex)
+
+    def nth(index: Int): Query = ???
+
+    def indexesOf(datum: Datum[Any]): Query = ???
+
+    def indexesOf(predicate: Predicate): Query = ???
 
     def isEmpty() = ???
 
-    def union(query: Query) = new Union(this, query)
+    def union(query: Query): Query = new Union(this, query)
 
-    // Polymorphic object/sequence operations
-    // def pluck(attrs: List[Query]) = new Pluck(attrs)
+    def sample(number: Int): Query = ???
+
+
+    /* Aggregation */
+
+    def reduce() = new Reduce(this)
+
+    def count() = new Count(this)
+
+    def distinct(): Query = new Distinct(this)
+
+    def groupedMapReduce() = ???
+
+    def groupBy() = ???
+
+    def contains(values: Any*) = new Contains(this, values: _*)
+
+    /* Document Manipulation */
+
+    def pluck() = new Pluck(this)
+
+    def without() = new Without(this)
 
 }

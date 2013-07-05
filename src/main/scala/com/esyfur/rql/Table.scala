@@ -9,7 +9,7 @@ object Table {
 
 }
 
-class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Sequence {
+class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Sequence with Selection {
 
     protected val termType = p.Term.TermType.TABLE
 
@@ -37,7 +37,6 @@ class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Seq
 
     def getAll(key: String, index: Option[String] = None) = new GetAll(key, index)
 
-    def between(lowerKey: String, upperKey: String, index: Option[String] = None) = new Between(lowerKey, upperKey, index)
 
     def innerJoin(table: Table, predicate: Predicate) = new InnerJoin(table, predicate)
 

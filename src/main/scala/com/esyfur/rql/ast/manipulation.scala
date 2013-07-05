@@ -2,16 +2,16 @@ package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
 
-import com.esyfur.rql.MethodQuery
+import com.esyfur.rql.{Term, MethodQuery}
 
-class Pluck extends MethodQuery {
+class Pluck(operand: Term) extends MethodQuery(operand) {
 
     protected val termType = p.Term.TermType.PLUCK
     val st = "pluck"
 
 }
 
-class Without extends MethodQuery {
+class Without(operand: Term) extends MethodQuery(operand) {
 
     protected val termType = p.Term.TermType.WITHOUT
     val st = "without"

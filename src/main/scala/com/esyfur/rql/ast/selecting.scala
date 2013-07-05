@@ -17,7 +17,8 @@ class GetAll(key: String, index: Option[String] = None) extends MethodQuery(key)
 
 }
 
-class Between(lowerKey: String, upperKey: String, index: Option[String] = None) extends MethodQuery(lowerKey, upperKey) {
+class Between(operand: Term, lowerKey: String, upperKey: String, index: Option[String] = None)
+    extends MethodQuery(operand, lowerKey, upperKey) {
 
     protected val termType = p.Term.TermType.BETWEEN
     val st = "between"
