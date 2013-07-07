@@ -36,6 +36,12 @@ class Slice(operand: Term, startIndex: Int, endIndex: Int) extends MethodQuery(o
 
 }
 
+class IsEmpty(operand: Term) extends MethodQuery(operand) {
+
+    protected val termType = p.Term.TermType.IS_EMPTY
+
+}
+
 class Union(operand: Term, query: Query) extends MethodQuery(operand, query) {
 
     protected val termType = p.Term.TermType.UNION

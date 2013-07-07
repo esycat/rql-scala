@@ -7,11 +7,9 @@ import com.rethinkdb.{Ql2 => p}
 class Cursor(
     private val connection: Connection,
     private val query: p.Query,
-    private val response: p.Response,
-    chunk: String
-    ) /*extends BufferedIterator*/ {
-
-    private val chunks: Seq[String] = LinkedList[String](chunk)
+    /* private */ val chunk: Any,
+    private val completed: Boolean = true
+    ) {
 
     def next() = ???
 
@@ -21,5 +19,6 @@ class Cursor(
 
     def toArray() = ???
 
+    def close() = connection.end(query)
 
 }

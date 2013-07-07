@@ -134,6 +134,26 @@ class Connection(
         receive(message)
     }
 
+    private[rql] def continue(origQuery: p.Query): Unit = {
+        val builder = p.Query.newBuilder()
+            .setType(p.Query.QueryType.CONTINUE)
+            .setToken(origQuery.getToken)
+
+        val message = builder.build()
+
+        send(message)
+    }
+
+    private[rql] def end(origQuery: p.Query): Unit = {
+        val builder = p.Query.newBuilder()
+            .setType(p.Query.QueryType.STOP)
+            .setToken(origQuery.getToken)
+
+        val message = builder.build()
+
+        send(message)
+    }
+
     private def send(message: Message): Unit = {
         val size = pack(message.getSerializedSize)
 
@@ -160,20 +180,15 @@ class Connection(
         response.getType() match {
             // Atom response
             case SUCCESS_ATOM => {
-                val datum = Datum.unwrap(response.getResponse(0))
-                println(datum)
-
-                val chunk = "" // TODO
-                new Cursor(this, query, response, chunk)
+                val chunk = Datum unwrap response.getResponse(0)
+                new Cursor(this, query, chunk)
             }
 
             // Sequence or partial responses
             case SUCCESS_PARTIAL | SUCCESS_SEQUENCE => {
-                val res = response.getResponseList().asScala.map(Datum unwrap _)
-                println(res)
-
-                val chunk = "" // TODO
-                new Cursor(this, query, response, chunk)
+                val chunk = response.getResponseList().asScala.map(Datum unwrap _)
+                val completed = (response.getType() != SUCCESS_PARTIAL)
+                new Cursor(this, query, chunk, completed)
             }
 
             // Error responses

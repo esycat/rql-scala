@@ -25,11 +25,11 @@ object Datum {
 
     def unwrap[T](datum: p.Datum): Any = datum.getType match {
         case R_NULL    => null
-        case R_BOOL    => datum.getRBool.asInstanceOf[T]
-        case R_NUM     => datum.getRNum.asInstanceOf[T]
-        case R_STR     => datum.getRStr.asInstanceOf[T]
-        case R_ARRAY   => ArrayDatum.unwrap(datum.getRArrayList.asScala)
-        case R_OBJECT  => ObjectDatum.unwrap(datum.getRObjectList.asScala)
+        case R_BOOL    => datum.getRBool
+        case R_NUM     => datum.getRNum
+        case R_STR     => datum.getRStr
+        case R_ARRAY   => ArrayDatum unwrap datum.getRArrayList.asScala
+        case R_OBJECT  => ObjectDatum unwrap datum.getRObjectList.asScala
         case datumType => {
             val message = "Unexpected datum type %s.".format(datumType)
             throw new RqlDriverError(message)

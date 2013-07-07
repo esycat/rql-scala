@@ -28,7 +28,7 @@ trait Sequence { self: Term =>
 
     def indexesOf(predicate: Predicate): Query = ???
 
-    def isEmpty() = ???
+    def isEmpty(): Query = new IsEmpty(this)
 
     def union(query: Query): Query = new Union(this, query)
 
