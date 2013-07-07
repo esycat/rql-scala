@@ -38,12 +38,12 @@ object Connection {
     /**
      * A helper to print byte arrays to stdout.
      */
-    private def console(value: Array[Byte]) {
+    private def console(value: Array[Byte]): Unit = {
         val tpl = "[%d] %s"
         //println(tpl.format(value.length, value.mkString(" ")))
     }
 
-    private def console(values: Array[Byte]*) {
+    private def console(values: Array[Byte]*): Unit = {
         values foreach console
     }
 
@@ -88,7 +88,7 @@ class Connection(
         this
     }
 
-    def close() {
+    def close(): Unit = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
         in.close()
@@ -134,7 +134,7 @@ class Connection(
         receive(message)
     }
 
-    private def send(message: Message) {
+    private def send(message: Message): Unit = {
         val size = pack(message.getSerializedSize)
 
         out.write(size)

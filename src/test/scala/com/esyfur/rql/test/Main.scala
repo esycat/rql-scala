@@ -8,7 +8,7 @@ object Main {
     val db   = "lalala"
     val tbl  = "awesomeThings"
 
-    def main(args: Array[String]) {
+    def main(args: Array[String]): Unit = {
         val conn = r.connect(host).repl()
         conn.use(db)
 

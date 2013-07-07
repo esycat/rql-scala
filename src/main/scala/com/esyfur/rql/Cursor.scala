@@ -13,13 +13,13 @@ class Cursor(
 
     private val chunks: Seq[String] = LinkedList[String](chunk)
 
-    def next() {}
+    def next() = ???
 
     def hasNext: Boolean = false
 
-    def each() {}
+    def each() = ???
 
-    def toArray() {}
+    def toArray() = ???
 
 
 }
