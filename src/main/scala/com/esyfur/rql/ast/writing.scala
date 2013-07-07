@@ -3,14 +3,14 @@ package com.esyfur.rql.ast
 import com.rethinkdb.{Ql2 => p}
 import com.esyfur.rql.{Table, MethodQuery}
 
-class Insert(val table: Table) extends MethodQuery(table) {
+class Insert[T](val table: Table, json: collection.Map[String, T]) extends MethodQuery(table, json) {
 
     protected val termType = p.Term.TermType.INSERT
     val st = "insert"
 
 }
 
-class Update(val table: Table) extends MethodQuery(table) {
+class Update[T](val table: Table, json: collection.Map[String, T]) extends MethodQuery(table, json) {
 
     protected val termType = p.Term.TermType.UPDATE
     val st = "update"

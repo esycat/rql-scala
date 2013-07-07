@@ -169,7 +169,7 @@ class Connection(
 
             // Sequence or partial responses
             case SUCCESS_PARTIAL | SUCCESS_SEQUENCE => {
-                val res = response.getResponseList().asScala.map { Datum.unwrap(_) }
+                val res = response.getResponseList().asScala.map(Datum unwrap _)
                 println(res)
 
                 val chunk = "" // TODO

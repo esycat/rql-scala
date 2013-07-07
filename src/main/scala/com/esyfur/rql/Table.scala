@@ -9,7 +9,8 @@ object Table {
 
 }
 
-class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Sequence with Selection {
+class Table(val db: Db, val name: String)
+    extends MethodQuery(db, name) with Sequence with Selection {
 
     protected val termType = p.Term.TermType.TABLE
 
@@ -25,9 +26,9 @@ class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Seq
 
     def indexList() = new IndexList(this)
 
-    def insert() = new Insert(this)
+    def insert[T](json: collection.Map[String, T]) = new Insert(this, json)
 
-    def update() = new Update(this)
+    def update[T](json: collection.Map[String, T]) = new Update(this, json)
 
     def replace() = new Replace(this)
 
@@ -36,7 +37,6 @@ class Table(val db: Db, val name: String) extends MethodQuery(db, name) with Seq
     def get(key: String) = new Get(key)
 
     def getAll(key: String, index: Option[String] = None) = new GetAll(key, index)
-
 
     def innerJoin(table: Table, predicate: Predicate) = new InnerJoin(table, predicate)
 

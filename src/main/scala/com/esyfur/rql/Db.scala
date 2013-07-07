@@ -13,11 +13,11 @@ class Db(val name: String) extends TopLevelQuery(name) {
     protected val termType = p.Term.TermType.DB
     val st = "db"
 
-    def create(): DbCreate = new DbCreate(this)
+    def create() = new DbCreate(this)
 
-    def drop(): DbDrop = new DbDrop(this)
+    def drop() = new DbDrop(this)
 
-    def table(name: String) = new Table(this, name)
+    def table(name: String, useOutdated: Boolean = false) = new Table(this, name)
 
     def tableCreate(name: String) = table(name).create()
 

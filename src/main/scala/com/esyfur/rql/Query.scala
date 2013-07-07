@@ -53,8 +53,6 @@ abstract class Query extends Term with Operators with Sequence with Selection {
     // Polymorphic object/sequence operations
     /*
 
-    def without(attrs: List[Query]) = new Without(attrs)
-
     def do(func) = new FunCall(func_wrap(func), this)
 
     def default(handler) = new Default(handler)
