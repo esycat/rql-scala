@@ -35,8 +35,6 @@ object Main {
         val c7 = r.db(db).table(tbl).isEmpty.run()
         println(c7.chunk)
 
-        println("Yay")
-
         conn.close()
     }
 
