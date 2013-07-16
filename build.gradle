@@ -15,15 +15,14 @@ buildscript {
 }
 
 apply plugin: 'scala'
-apply plugin: 'application'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'idea'
 //apply plugin: 'protobuf'
 apply plugin: 'propsUtil'
 
-mainClassName = [group, project.name, 'test', 'Main'].join('.')
-sourceSets.main.scala.srcDirs += sourceSets.test.scala.srcDirs
+//mainClassName = [group, project.name, 'test', 'Main'].join('.')
+//sourceSets.main.scala.srcDirs += sourceSets.test.scala.srcDirs
 
 apply from: 'project/util.gradle'
 apply from: 'project/scala.gradle'
@@ -82,8 +81,16 @@ task protoApiCompile(type: Exec) {
 tasks.compileJava.dependsOn protoApiCompile
 
 task test(overwrite: true, dependsOn: testClasses) << {
+    def suiteClassName = [project.group, project.name, 'test', 'TestSpec'].join('.')
+
     ant.taskdef(name: 'scalatest', classname: 'org.scalatest.tools.ScalaTestAntTask', classpath: sourceSets.test.runtimeClasspath.asPath)
-    ant.scalatest(runpath: sourceSets.test.output.classesDir, haltonfailure: true, fork: false) { reporter type: 'stderr' }
+    ant.scalatest(runpath: sourceSets.test.output.classesDir, haltonfailure: true, fork: false) {
+        reporter(type: 'stderr')
+        suite(classname: suiteClassName)
+        config(name: 'db.host', value: project.ext.test.db.host)
+        config(name: 'db.port', value: project.ext.test.db.port)
+        config(name: 'db.name', value: project.ext.test.db.name)
+    }
 }
 
 task wrapper(type: Wrapper) {

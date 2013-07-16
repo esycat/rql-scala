@@ -9,10 +9,17 @@ import java.net.InetSocketAddress
 
 class TestSpec extends FunSpec with BeforeAndAfter with ShouldMatchers {
 
-    val host = "devroom"
-    val port = r.DEFAULT_PORT_DRIVER
-    val db   = "lalala"
+    var host: String = _
+    var port: Int    = _
+    var db: String   = _
     val tbl  = "awesomeThings"
+
+    override def withFixture(test: NoArgTest) {
+        host = test.configMap("db.host").asInstanceOf[String]
+        port = test.configMap("db.port").asInstanceOf[String].toInt
+        db   = test.configMap("db.name").asInstanceOf[String]
+        super.withFixture(test)
+    }
 
     describe("The driver") {
         def checkAndClose(connection: Connection): Unit = {
