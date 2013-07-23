@@ -7,14 +7,17 @@ import org.scalatest.{Suite, BeforeAndAfterAll}
 
 trait ConnectionAndDatabase extends Suite with BeforeAndAfterAll {
 
+    protected var configMap: Map[String, Any] = _
     protected var connection: Connection = _
 
     protected override def beforeAll(configMap: Map[String, Any]): Unit = {
+        this.configMap = configMap
+
         val host = configMap("db.host").asInstanceOf[String]
         val port = configMap("db.port").asInstanceOf[String].toInt
         val name = configMap("db.name").asInstanceOf[String]
 
-        connection = r.connect(host, port, name)
+        connection = r.connect(host, port, name).repl()
     }
 
     protected override def afterAll(): Unit = {

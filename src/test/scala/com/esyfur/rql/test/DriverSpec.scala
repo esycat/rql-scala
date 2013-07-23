@@ -10,11 +10,10 @@ class DriverSpec extends BaseSpec {
     private var port: Int    = _
     private var name: String = _
 
-    protected override def withFixture(test: NoArgTest) {
-        host = test.configMap("db.host").asInstanceOf[String]
-        port = test.configMap("db.port").asInstanceOf[String].toInt
-        name = test.configMap("db.name").asInstanceOf[String]
-        super.withFixture(test)
+    protected override def beforeAll(configMap: Map[String, Any]): Unit = {
+        host = configMap("db.host").asInstanceOf[String]
+        port = configMap("db.port").asInstanceOf[String].toInt
+        name = configMap("db.name").asInstanceOf[String]
     }
 
     describe("The driver") {
@@ -57,21 +56,6 @@ class DriverSpec extends BaseSpec {
             connection.use(name)
             connection.db.name should be (name)
             connection.close()
-        }
-    }
-
-    describe("RQL") {
-        it("should be able to create a database") {
-
-        }
-
-        it("should be able to drop a database") {
-
-        }
-
-        it("should be able to get a list of existing databases") {
-            r.connect(host, port, name).repl()
-            r.dbList.run
         }
     }
 
