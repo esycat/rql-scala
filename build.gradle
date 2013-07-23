@@ -89,7 +89,7 @@ task test(overwrite: true, dependsOn: testClasses) << {
         config(name: 'db.name', value: project.ext.test.db.name)
         suite(classname: getSuiteClassName('Driver'))
         suite(classname: getSuiteClassName('Rql'))
-        //suite(classname: getSuiteClassName('Connection'))
+        suite(classname: getSuiteClassName('Query'))
     }
 }
 

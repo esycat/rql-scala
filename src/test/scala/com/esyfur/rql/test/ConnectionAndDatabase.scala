@@ -3,24 +3,19 @@ package com.esyfur.rql.test
 import com.esyfur.{rql => r}
 import r.Connection
 
-import org.scalatest.{Suite, BeforeAndAfterAll}
+trait ConnectionAndDatabase extends SuppliedConfig {
 
-trait ConnectionAndDatabase extends Suite with BeforeAndAfterAll {
-
-    protected var configMap: Map[String, Any] = _
     protected var connection: Connection = _
 
     protected override def beforeAll(configMap: Map[String, Any]): Unit = {
-        this.configMap = configMap
+        super.beforeAll(configMap)
 
-        val host = configMap("db.host").asInstanceOf[String]
-        val port = configMap("db.port").asInstanceOf[String].toInt
-        val name = configMap("db.name").asInstanceOf[String]
-
-        connection = r.connect(host, port, name).repl()
+        connection = r.connect(dbHost, dbPort, dbName).repl()
+        connection.db.create.run
     }
 
     protected override def afterAll(): Unit = {
+        connection.db.drop.run
         connection.close()
     }
 

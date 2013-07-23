@@ -6,11 +6,11 @@ import java.net.InetSocketAddress
 
 class RqlSpec extends BaseSpec with ConnectionAndDatabase {
 
-    private lazy val name: String = configMap("db.name").asInstanceOf[String]
+    protected lazy val dbNameTmp = dbName + "_" + getRndSuffix
 
     describe("RQL") {
         it("should be able to create a database") {
-            val cursor = r.dbCreate(name).run
+            val cursor = r.dbCreate(dbNameTmp).run
         }
 
         it("should be able to get a list of existing databases") {
@@ -18,7 +18,7 @@ class RqlSpec extends BaseSpec with ConnectionAndDatabase {
         }
 
         it("should be able to drop a database") {
-            val cursor = r.dbDrop(name).run
+            val cursor = r.dbDrop(dbNameTmp).run
         }
     }
 
