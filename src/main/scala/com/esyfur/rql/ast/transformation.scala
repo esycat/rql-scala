@@ -48,3 +48,10 @@ class Union(operand: Term, query: Query) extends MethodQuery(operand, query) {
     val st = "union"
 
 }
+
+class Sample(operand: Term, number: Int) extends MethodQuery(operand, number) {
+
+    protected val termType = p.Term.TermType.UNION
+    val st = "sample"
+
+}

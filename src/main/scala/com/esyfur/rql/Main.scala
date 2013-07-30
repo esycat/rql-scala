@@ -1,4 +1,4 @@
-package com.esyfur.rql.test
+package com.esyfur.rql
 
 import com.esyfur.{rql => r}
 
@@ -9,9 +9,12 @@ object Main {
     val tbl  = "awesomeThings"
 
     def main(args: Array[String]): Unit = {
-        val conn = r.connect(host).repl()
-        conn.use(db)
+        val conn = r.connect(host).repl().use(db)
 
+        val c0 = r.db(db).table(tbl).run
+        println(c0.chunk)
+
+        /*
         val c1 = r.dbList.run
         println(c1.chunk)
 
@@ -34,6 +37,7 @@ object Main {
 
         val c7 = r.db(db).table(tbl).isEmpty.run()
         println(c7.chunk)
+        */
 
         conn.close()
     }

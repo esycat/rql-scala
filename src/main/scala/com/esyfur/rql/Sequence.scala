@@ -32,7 +32,7 @@ trait Sequence { self: Term =>
 
     def union(query: Query): Query = new Union(this, query)
 
-    def sample(number: Int): Query = ???
+    def sample(number: Int): Query = new Sample(this, number)
 
 
     /* Aggregation */
