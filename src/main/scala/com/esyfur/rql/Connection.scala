@@ -144,10 +144,10 @@ class Connection(
         send(message)
     }
 
-    private[rql] def end(origQuery: p.Query): Unit = {
+    private[rql] def terminate(token: Long): Unit = {
         val builder = p.Query.newBuilder()
             .setType(p.Query.QueryType.STOP)
-            .setToken(origQuery.getToken)
+            .setToken(token)
 
         val message = builder.build()
 
@@ -180,15 +180,14 @@ class Connection(
         response.getType() match {
             // Atom response
             case SUCCESS_ATOM => {
-                val chunk = Datum unwrap response.getResponse(0)
-                new Cursor(this, query, chunk)
+                val data = Datum unwrap response.getResponse(0)
+                new Cursor(this, response, data)
             }
 
             // Sequence or partial responses
             case SUCCESS_PARTIAL | SUCCESS_SEQUENCE => {
-                val chunk = response.getResponseList().asScala.map(Datum unwrap _)
-                val completed = (response.getType() != SUCCESS_PARTIAL)
-                new Cursor(this, query, chunk, completed)
+                val data = response.getResponseList().asScala.map(Datum unwrap _)
+                new Cursor(this, response, data)
             }
 
             // Error responses
@@ -204,7 +203,7 @@ class Connection(
 
             // Unknown response
             case responseType => {
-                val message = "Unknown response type %s.".format(responseType)
+                val message = "Unknown response type (%s).".format(responseType)
                 throw new RqlDriverError(message)
             }
         }

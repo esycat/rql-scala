@@ -6,19 +6,24 @@ import com.rethinkdb.{Ql2 => p}
 
 class Cursor(
     private val connection: Connection,
-    private val query: p.Query,
-    /* private */ val chunk: Any,
-    private val completed: Boolean = true
-    ) {
+    private val response: p.Response,
+    /* private */ val chunk: Any
+    ) extends /*Iterable[Any] with*/ Iterator[Any] with AutoCloseable {
 
-    def next() = ???
+    private var index = 0
 
-    def hasNext: Boolean = false
+    private def isPartial = (response.getType == p.Response.ResponseType.SUCCESS_PARTIAL)
+
+    def hasNext: Boolean = {
+        isPartial || index < response.getResponseCount
+    }
+
+    def next(): Any = ???
 
     def each() = ???
 
     def toArray() = ???
 
-    def close() = connection.end(query)
+    def close(): Unit = connection.terminate(response.getToken)
 
 }
