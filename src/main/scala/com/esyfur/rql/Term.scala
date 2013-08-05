@@ -1,7 +1,7 @@
 package com.esyfur.rql
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.ast.{MakeObj, MakeArray}
+import com.esyfur.rql.{MakeObj, MakeArray}
 
 object Term {
 

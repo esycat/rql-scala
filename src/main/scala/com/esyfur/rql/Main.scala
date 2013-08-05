@@ -14,6 +14,10 @@ object Main {
         val c0 = r.db(db).table(tbl).run
         println(c0.chunk)
 
+        val dataSet1 = Map("field1" -> "123", "field2" -> "456", "field3" -> "789")
+        val c1 = r.db(db).table(tbl).insert(dataSet1).run
+        println(c1.chunk)
+
         /*
         val c1 = r.dbList.run
         println(c1.chunk)

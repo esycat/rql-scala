@@ -15,8 +15,8 @@ object Datum {
         case v: Float   => new NumDatum(v)
         case v: Double  => new NumDatum(v)
         case v: String  => new StrDatum(v)
-        case v: Array[AnyVal] => ??? // new ArrayDatum(v)
-        case v: Array[AnyRef] => ??? // new ObjectDatum(v)
+        case v: Seq[Any] => ??? // new MakeArray(v)
+        case v: Map[String, Any] => ??? // new MakeObj(v)
         case _          => {
             val message = "Cannot convert %s to datum.".format(value.getClass)
             throw new RqlDriverError(message)
@@ -102,8 +102,20 @@ object ObjectDatum {
 
 }
 
-final class ObjectDatum[T](val value: Seq[T]) extends Datum[Seq[T]] {
+final class ObjectDatum[T](val value: Map[String, Any]) extends Datum[Map[String, Any]] {
 
     protected val datumType = R_OBJECT
+
+}
+
+class MakeArray(value: Seq[Any]) extends Query {
+
+    protected val termType = p.Term.TermType.MAKE_ARRAY
+
+}
+
+class MakeObj(value: Map[String, Any]) extends Query {
+
+    protected val termType = p.Term.TermType.MAKE_OBJ
 
 }
