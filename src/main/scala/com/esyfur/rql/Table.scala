@@ -14,25 +14,25 @@ class Table(val db: Db, val name: String)
 
     protected val termType = p.Term.TermType.TABLE
 
-    def create() = new TableCreate(this)
+    def create(): TableCreate = new TableCreate(this)
 
-    def drop() = new TableDrop(this)
+    def drop(): TableDrop = new TableDrop(this)
 
     private def index(name: String) = new Index(this, name)
 
-    def indexCreate(name: String) = index(name).create()
+    def indexCreate(name: String): IndexCreate = index(name).create()
 
-    def indexDrop(name: String) = index(name).create()
+    def indexDrop(name: String): IndexDrop = index(name).drop()
 
-    def indexList() = new IndexList(this)
+    def indexList(): IndexList = new IndexList(this)
 
-    def insert[T](json: collection.Map[String, T]) = new Insert(this, json)
+    def insert(document: Document) = new Insert(this, document)
 
-    def update[T](json: collection.Map[String, T]) = new Update(this, json)
+    def update(document: Document) = new Update(this, document)
 
-    def replace() = new Replace(this)
+    def replace(): Replace = new Replace(this)
 
-    def delete() = new Delete(this)
+    def delete(): Delete = new Delete(this)
 
     def get(key: String) = new Get(key)
 

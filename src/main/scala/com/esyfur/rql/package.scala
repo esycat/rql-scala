@@ -5,6 +5,8 @@ import com.esyfur.rql.ast.{Ordering, Asc, Desc}
 
 package object rql {
 
+    type Document = collection.Map[String, Any]
+
     val DEFAULT_HOST         = "localhost"
     val DEFAULT_PORT_DRIVER  = 28015
     val DEAFULT_PORT_CLUSTER = 29015

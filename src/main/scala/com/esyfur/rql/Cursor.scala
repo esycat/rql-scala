@@ -8,7 +8,7 @@ class Cursor(
     private val connection: Connection,
     private val response: p.Response,
     /* private */ val chunk: Any
-    ) extends /*Iterable[Any] with*/ Iterator[Any] with AutoCloseable {
+    ) extends Iterator[Any] with AutoCloseable {
 
     private var index = 0
 

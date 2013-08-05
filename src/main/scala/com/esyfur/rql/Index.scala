@@ -6,9 +6,9 @@ protected class Index(val table: Table, val name: String) extends MethodQuery(ta
 
     protected val termType = null
 
-    def create() = new IndexCreate(this)
+    def create(): IndexCreate = new IndexCreate(this)
 
-    def drop() = new IndexDrop(this)
+    def drop(): IndexDrop = new IndexDrop(this)
 
 }
 
