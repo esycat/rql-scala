@@ -46,7 +46,7 @@ abstract class Query extends Term with Operators with Sequence with Selection {
         run(Connection.default)
     }
 
-    final def run(conn: Connection): Cursor = {
+    final def run(conn: Connection, options: Option[QueryOptions] = None): Cursor = {
         val options = mutable.HashMap[String, Query]()
         conn.execute(this, options)
     }

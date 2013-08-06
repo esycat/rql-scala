@@ -26,11 +26,11 @@ class Table(val db: Db, val name: String)
 
     def indexList(): IndexList = new IndexList(this)
 
-    def insert(document: Document) = new Insert(this, document)
+    def insert(document: Document, options: Option[InsertOptions] = None) = new Insert(this, document)
 
-    def update(document: Document) = new Update(this, document)
+    def update(document: Document, options: Option[UpdateOptions] = None) = new Update(this, document)
 
-    def replace(): Replace = new Replace(this)
+    def replace(document: Document, options: Option[UpdateOptions] = None) = new Replace(this)
 
     def delete(): Delete = new Delete(this)
 

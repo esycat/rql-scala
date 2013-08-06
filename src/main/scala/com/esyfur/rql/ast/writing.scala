@@ -30,17 +30,3 @@ class Delete(val table: Table) extends MethodQuery(table) {
     val st = "delete"
 
 }
-
-class WriteOptions {
-
-    var durability: Durability.Value = Durability.Soft
-    var upsert: Boolean = true
-    var returnVals: Boolean = true
-    var noreply: Boolean = false
-
-}
-
-object Durability extends Enumeration {
-    val Hard = Value("hard")
-    val Soft = Value("soft")
-}
