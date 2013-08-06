@@ -8,22 +8,22 @@ import p.Datum.DatumType.{R_NULL, R_BOOL, R_NUM, R_STR, R_ARRAY, R_OBJECT}
 object Datum {
 
     def apply(value: Any): Datum[Any] = value match {
-        case null       => new NullDatum
-        case v: Boolean => new BoolDatum(v)
-        case v: Int     => new NumDatum(v)
-        case v: Long    => new NumDatum(v)
-        case v: Float   => new NumDatum(v)
-        case v: Double  => new NumDatum(v)
-        case v: String  => new StrDatum(v)
-        case v: Seq[Any] => ??? // new MakeArray(v)
-        case v: Map[String, Any] => ??? // new MakeObj(v)
-        case _          => {
+        case null                => new NullDatum
+        case v: Boolean          => new BoolDatum(v)
+        case v: Int              => new NumDatum(v)
+        case v: Long             => new NumDatum(v)
+        case v: Float            => new NumDatum(v)
+        case v: Double           => new NumDatum(v)
+        case v: String           => new StrDatum(v)
+        case v: Seq[Any]         => new ArrayDatum(v)
+        case v: Map[String, Any] => new ObjectDatum(v)
+        case _ => {
             val message = "Cannot convert %s to datum.".format(value.getClass)
             throw new RqlDriverError(message)
         }
     }
 
-    def unwrap[T](datum: p.Datum): Any = datum.getType match {
+    def unwrap(datum: p.Datum): Any = datum.getType match {
         case R_NULL    => null
         case R_BOOL    => datum.getRBool
         case R_NUM     => datum.getRNum

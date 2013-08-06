@@ -2,7 +2,7 @@ package com.esyfur.rql
 
 import ast._
 
-trait Sequence extends Joins { self: Term =>
+trait Sequence extends Term with Joins { self: Sequence =>
 
     /* Transformations */
 

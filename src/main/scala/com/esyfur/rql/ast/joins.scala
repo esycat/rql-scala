@@ -1,9 +1,9 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{Sequence, MethodQuery}
+import com.esyfur.rql.{Term, Sequence, MethodQuery}
 
-private[rql] trait Joins { self: Sequence =>
+private[rql] trait Joins extends Term { self: Sequence =>
 
     def innerJoin(other: Sequence, predicate: Predicate) = new InnerJoin(this, other, predicate)
 

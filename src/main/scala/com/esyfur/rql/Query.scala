@@ -51,24 +51,6 @@ abstract class Query extends Term with Operators with Sequence with Selection {
         conn.execute(this, options)
     }
 
-    /* The following are all operators and methods that operate on Rql queries to build up more complex operations.
-     */
-
-
-    // Polymorphic object/sequence operations
-    /*
-
-    def do(func) = new FunCall(func_wrap(func), this)
-
-    def default(handler) = new Default(handler)
-
-    def update(func, non_atomic=(), durability=()) = new Update(func_wrap(func), non_atomic = non_atomic, durability = durability)
-
-    def replace(func, non_atomic=(), durability=()) = new Replace(func_wrap(func), non_atomic = non_atomic, durability = durability)
-
-    def delete(durability=()) = new Delete(durability = durability)
-    */
-
 }
 
 /**
@@ -81,7 +63,7 @@ abstract class OpQuery extends Query {
 /**
  * Base class for unary operators.
  */
-abstract class UnOpQuery(val operand: Term) extends OpQuery {
+abstract class UnOpQuery(operand: Term) extends OpQuery {
 
     protected override val posArgs = Seq(operand)
 
@@ -90,7 +72,7 @@ abstract class UnOpQuery(val operand: Term) extends OpQuery {
 /**
  * Base class for binary operators.
  */
-abstract class BiOpQuery(val a: Term, val b: Term) extends OpQuery {
+abstract class BiOpQuery(a: Term, b: Term) extends OpQuery {
 
     protected override val posArgs = Seq(a, b)
 
