@@ -33,9 +33,9 @@ package object rql {
 
     def default() = ???
 
-    def expr[T](value: T): Term = value match {
+    def expr(value: Any): Term = value match {
         case v: Term => v
-        case _ => Datum(value)
+        case _       => Datum(value)
     }
 
     def js(expression: String) = ???

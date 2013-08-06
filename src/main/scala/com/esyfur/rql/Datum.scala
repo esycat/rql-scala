@@ -88,9 +88,21 @@ object ArrayDatum {
 
 }
 
-final class ArrayDatum[T](val value: Seq[T]) extends Datum[Seq[T]] {
+/**
+ * ArrayDatum isn't actually a datum, but a MAKE_ARRAY query.
+ */
+final class ArrayDatum(val value: Seq[Any]) extends Datum[Seq[Any]] {
 
+    protected override val termType = p.Term.TermType.MAKE_ARRAY //
     protected val datumType = R_ARRAY
+
+    protected override def getTermBuilder() = {
+        val builder = super.getTermBuilder().clearDatum()
+
+        // TODO:
+
+        builder
+    }
 
 }
 
@@ -102,20 +114,26 @@ object ObjectDatum {
 
 }
 
-final class ObjectDatum[T](val value: Map[String, Any]) extends Datum[Map[String, Any]] {
+/**
+ * ObjectDatum isn't actually a datum, but a MAKE_OBJ query.
+ */
+final class ObjectDatum(val value: Map[String, Any]) extends Datum[Map[String, Any]] {
 
+    protected override val termType = p.Term.TermType.MAKE_OBJ
     protected val datumType = R_OBJECT
 
-}
+    protected override def getTermBuilder() = {
+        val builder = super.getTermBuilder().clearDatum()
 
-class MakeArray(value: Seq[Any]) extends Query {
+        for ((key, arg) <- value) {
+            val pair = p.Term.AssocPair.newBuilder
+                .setKey(key)
+                .setVal(expr(arg).build)
 
-    protected val termType = p.Term.TermType.MAKE_ARRAY
+            builder.addOptargs(pair)
+        }
 
-}
-
-class MakeObj(value: Map[String, Any]) extends Query {
-
-    protected val termType = p.Term.TermType.MAKE_OBJ
+        builder
+    }
 
 }

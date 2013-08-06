@@ -1,14 +1,8 @@
 package com.esyfur.rql
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{MakeObj, MakeArray}
 
 object Term {
-
-    def needsWrapping(arg: Term): Boolean = arg match {
-        //case Datum | MakeArray | MakeObj => true
-        case _ => false
-    }
 
 }
 
