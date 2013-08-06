@@ -38,12 +38,6 @@ class Table(val db: Db, val name: String)
 
     def getAll(key: String, index: Option[String] = None) = new GetAll(key, index)
 
-    def innerJoin(table: Table, predicate: Predicate) = new InnerJoin(table, predicate)
-
-    def outerJoin(table: Table, predicate: Predicate) = new OuterJoin(table, predicate)
-
-    def eqJoin(leftAttr: String, table: Table, index: Option[String] = None) = new EqJoin(leftAttr, table, index)
-
 }
 
 class TableCreate(val table: Table) extends MethodQuery(table.name) {
