@@ -12,13 +12,26 @@ class Cursor(
 
     private var index = 0
 
-    private def isPartial = (response.getType == p.Response.ResponseType.SUCCESS_PARTIAL)
+    private def complete = (response.getType != p.Response.ResponseType.SUCCESS_PARTIAL)
 
-    def hasNext: Boolean = {
-        isPartial || index < response.getResponseCount
+    private def size: Int = response.getResponseCount
+
+    def hasNext: Boolean = (!complete || index < size)
+
+    def next(): Any = {
+        if (index == size) {
+            if (!complete) readMore()
+        }
+        else {
+            index += 1
+            chunk
+        }
     }
 
-    def next(): Any = ???
+    private def readMore(): Unit = {
+        connection.continue(response.getToken)
+    }
+
 
     def each() = ???
 

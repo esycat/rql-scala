@@ -134,10 +134,10 @@ class Connection(
         receive(message)
     }
 
-    private[rql] def continue(origQuery: p.Query): Unit = {
+    private[rql] def continue(token: Long): Unit = {
         val builder = p.Query.newBuilder()
             .setType(p.Query.QueryType.CONTINUE)
-            .setToken(origQuery.getToken)
+            .setToken(token)
 
         val message = builder.build()
 
