@@ -9,13 +9,16 @@ It should work for RethinkDB v1.7.
 ### SBT
 
 ```scala
+appDependencies ++= Seq(
+    "com.esyfur" % "rql" % "0.1"
+)
 ```
 
 ### Gradle
 
 ```groovy
 dependencies {
-    compile group: 'com.esyfur', name: 'rql-scala', version: '0.1'
+    compile group: 'com.esyfur', name: 'rql', version: '0.1'
 }
 ```
 
