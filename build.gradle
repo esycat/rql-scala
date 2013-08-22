@@ -1,6 +1,6 @@
 description = ''
 group = 'com.esyfur'
-version = '0.0.1'
+version = '0.0.2'
 
 defaultTasks 'clean', 'run'
 
@@ -46,7 +46,7 @@ dependencies {
     compile group: 'com.typesafe', name: 'config',                     version: '1.0.0'
     compile group: 'com.typesafe', name: sclArt('scalalogging-log4j'), version: '1.0.1'
 
-    compile group: 'com.google.protobuf', name: 'protobuf-java', version: project.ext.get('google.protobuf.version')
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: project.ext.google.protobuf.version
 
     testCompile group: 'org.scalatest', name: sclArt('scalatest'), version: '1.9.1'
 
