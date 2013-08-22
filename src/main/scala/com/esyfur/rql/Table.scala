@@ -14,7 +14,7 @@ class Table(val db: Db, val name: String)
 
     protected val termType = p.Term.TermType.TABLE
 
-    def create(): TableCreate = new TableCreate(this)
+    def create(options: Option[TableOptions] = None): TableCreate = new TableCreate(this, options.getOrElse(TableOptions()))
 
     def drop(): TableDrop = new TableDrop(this)
 
@@ -26,11 +26,11 @@ class Table(val db: Db, val name: String)
 
     def indexList(): IndexList = new IndexList(this)
 
-    def insert(document: Document, options: Option[InsertOptions] = None) = new Insert(this, document)
+    def insert(document: Document, options: Option[InsertOptions] = None) = new Insert(this, document, options.getOrElse(InsertOptions()))
 
-    def update(document: Document, options: Option[UpdateOptions] = None) = new Update(this, document)
+    def update(document: Document, options: Option[UpdateOptions] = None) = new Update(this, document, options.getOrElse(UpdateOptions()))
 
-    def replace(document: Document, options: Option[UpdateOptions] = None) = new Replace(this)
+    def replace(document: Document, options: Option[UpdateOptions] = None) = new Replace(this, options.getOrElse(UpdateOptions()))
 
     def delete(): Delete = new Delete(this)
 
@@ -40,9 +40,11 @@ class Table(val db: Db, val name: String)
 
 }
 
-class TableCreate(val table: Table) extends MethodQuery(table.name) {
+class TableCreate(val table: Table, val options: TableOptions) extends MethodQuery(table.name) {
     protected val termType = p.Term.TermType.TABLE_CREATE
     val st = "table_create"
+
+    override val optArgs = options.toMap
 }
 
 class TableDrop(val table: Table) extends MethodQuery(table.name) {

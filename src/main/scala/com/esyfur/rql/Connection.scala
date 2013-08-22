@@ -112,7 +112,7 @@ class Connection(
 
     def db = this.defaultDb.get
 
-    def execute[T](query: Query, options: Map[String, Query]): Cursor = {
+    def execute[T](query: Query, options: QueryOptions): Cursor = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
         // Constructing query.

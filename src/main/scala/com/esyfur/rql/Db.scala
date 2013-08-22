@@ -19,7 +19,7 @@ class Db(val name: String) extends TopLevelQuery(name) {
 
     def table(name: String, useOutdated: Boolean = false) = new Table(this, name)
 
-    def tableCreate(name: String, options: Option[TableOptions] = None) = table(name).create()
+    def tableCreate(name: String, options: Option[TableOptions] = None) = table(name).create(options)
 
     def tableDrop(name: String) = table(name).drop()
 
