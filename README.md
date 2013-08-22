@@ -30,6 +30,24 @@ dependencies {
 
 ## Usage
 
+```scala
+import com.esyfur.{rql => r}
+
+val host = "localhost"
+val db   = "awesomeness"
+val tbl  = "marvel"
+
+val conn = r.connect(host).repl().use(db)
+r.db(db).table(tbl).limit(5).run
+
+r.dbList.run
+r.db(db).tableList.run(conn)
+conn.db.tableList.limit(1).run
+r.db(db).table(tbl).slice(1, 2).run()
+r.db(db).table(tbl).isEmpty.run()
+
+```
+
 ## Development
 
 To re-download and re-compile the protobuf API:
