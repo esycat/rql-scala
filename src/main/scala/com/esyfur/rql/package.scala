@@ -2,6 +2,7 @@ package com.esyfur
 
 import java.net.InetSocketAddress
 import com.esyfur.rql.ast.{Ordering, Asc, Desc, Time}
+import java.util.Date
 
 package object rql {
 
@@ -62,7 +63,11 @@ package object rql {
 
     def now(): Time = ???
 
-    def time(): Time = ???
+    def time(year: Short, month: Short, day: Short, hour: Short = null, minute: Short = null, second: Short = null): Time = ???
+
+    def time(date: Date) = ???
+
+    // def time(date: DateTime) = ???
 
     def epochTime(): Time = ???
 
