@@ -1,7 +1,7 @@
 package com.esyfur
 
 import java.net.InetSocketAddress
-import com.esyfur.rql.ast.{Ordering, Asc, Desc}
+import com.esyfur.rql.ast.{Ordering, Asc, Desc, Time}
 
 package object rql {
 
@@ -59,5 +59,13 @@ package object rql {
     def dbList = new DbList
 
     def table(name: String) = Connection.default.db.table(name)
+
+    def now(): Time = ???
+
+    def time(): Time = ???
+
+    def epochTime(): Time = ???
+
+    def iso8601(): Time = ???
 
 }
