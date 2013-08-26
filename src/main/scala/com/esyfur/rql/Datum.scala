@@ -125,10 +125,10 @@ final class ObjectDatum(val value: Map[String, Any]) extends Datum[Map[String, A
     protected override def getTermBuilder() = {
         val builder = super.getTermBuilder().clearDatum()
 
-        for ((key, arg) <- value) {
+        for ((key, opt) <- value) {
             val pair = p.Term.AssocPair.newBuilder
                 .setKey(key)
-                .setVal(expr(arg).build)
+                .setVal(expr(opt).build)
 
             builder.addOptargs(pair)
         }

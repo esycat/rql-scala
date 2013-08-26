@@ -9,10 +9,10 @@ trait Options {
     /**
      * Takes a map of options, removes empty ones, and returns a map of values.
      */
-    //protected def collect(opts: Map[String, Option[_]]): Map[String, Term] = opts.filter(_._2.isDefined).mapValues(v => Datum(v.get))
+    //protected def collect(options: Map[String, Option[_]]): Map[String, Term] = options.filter(_._2.isDefined).mapValues(v => Datum(v.get))
 
-    protected def collect(opts: Map[String, Option[_]]): Map[String, Term] = opts collect {
-        case (name: String, value: Some[_]) => (name, Datum(value.get))
+    protected def collect(options: Map[String, Option[_]]): Map[String, Term] = options collect {
+        case (key: String, opt: Some[_]) => (key, Datum(opt.get))
     }
 
 }
