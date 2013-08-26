@@ -1,0 +1,22 @@
+apply plugin 'idea'
+
+idea {
+    project {
+        jdkName = '1.7'
+        languageLevel = '1.7'
+
+        // outputDir = file('build')
+
+        ipr {
+            withXml {
+                it.node.component.find { it.@name == 'VcsDirectoryMappings' }.mapping.@vcs = 'Git'
+            }
+        }
+    }
+
+    module {
+        inheritOutputDirs = false
+        outputDir = file('build/prod')
+        testOutputDir = file('build/test')
+    }
+}

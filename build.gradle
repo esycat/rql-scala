@@ -1,4 +1,4 @@
-description = ''
+description = 'Scala driver for RethinkDB.'
 group = 'com.esyfur'
 version = '0.0.2'
 
@@ -23,10 +23,10 @@ apply plugin: 'idea'
 apply plugin: 'propsUtil'
 
 mainClassName = [group, project.name, 'Main'].join('.')
-//sourceSets.main.scala.srcDirs += sourceSets.test.scala.srcDirs
 
 apply from: 'project/util.gradle'
 apply from: 'project/scala.gradle'
+apply from: 'project/ide.gradle'
 
 ext {
     protobuf = [
