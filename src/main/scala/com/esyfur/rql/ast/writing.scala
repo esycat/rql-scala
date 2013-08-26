@@ -8,7 +8,7 @@ class Insert[T <: Document](val table: Table, document: T, options: InsertOption
     protected val termType = p.Term.TermType.INSERT
     val st = "insert"
 
-    override val optArgs = options.toMap
+    protected override val optArgs = options.toMap
 
 }
 
@@ -17,7 +17,7 @@ class Update[T <: Document](val table: Table, document: T, options: UpdateOption
     protected val termType = p.Term.TermType.UPDATE
     val st = "update"
 
-    override val optArgs = options.toMap
+    protected override val optArgs = options.toMap
 
 }
 
@@ -26,7 +26,7 @@ class Replace(val table: Table, options: UpdateOptions) extends MethodQuery(tabl
     protected val termType = p.Term.TermType.REPLACE
     val st = "replace"
 
-    override val optArgs = options.toMap
+    protected override val optArgs = options.toMap
 
 }
 

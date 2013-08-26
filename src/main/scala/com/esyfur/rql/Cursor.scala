@@ -14,7 +14,7 @@ class Cursor(
 
     private def complete = (response.getType != p.Response.ResponseType.SUCCESS_PARTIAL)
 
-    private def size: Int = response.getResponseCount
+    override def size: Int = response.getResponseCount
 
     def hasNext: Boolean = (!complete || index < size)
 
@@ -31,7 +31,6 @@ class Cursor(
     private def readMore(): Unit = {
         connection.continue(response.getToken)
     }
-
 
     def each() = ???
 

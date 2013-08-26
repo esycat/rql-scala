@@ -44,7 +44,7 @@ class TableCreate(val table: Table, val options: TableOptions) extends MethodQue
     protected val termType = p.Term.TermType.TABLE_CREATE
     val st = "table_create"
 
-    override val optArgs = options.toMap
+    protected override val optArgs = options.toMap
 }
 
 class TableDrop(val table: Table) extends MethodQuery(table.name) {
