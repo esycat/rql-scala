@@ -63,7 +63,7 @@ package object rql {
 
     def now(): Time = ???
 
-    def time(year: Short, month: Short, day: Short, hour: Short = null, minute: Short = null, second: Short = null): Time = ???
+    def time(year: Short, month: Short, day: Short, hour: Short = 0, minute: Short = 0, second: Short = 0): Time = ???
 
     def time(date: Date) = ???
 

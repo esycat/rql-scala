@@ -1,51 +1,70 @@
 package com.esyfur.rql
 
+import scala.util.Random.nextDouble
 import com.esyfur.{rql => r}
 
-object Main {
+object Main extends App {
 
     val host = "devroom"
     val db   = "lalala"
     val tbl  = "awesomeThings"
 
-    def main(args: Array[String]): Unit = {
-        val conn = r.connect(host).repl().use(db)
+    val data1 = Map("rndVal" -> nextDouble, "title" -> "Master of Magic", "year" -> 1994, "genre" -> "strategy", "altNames" -> Seq("MoM"))
+    val data2 = Map("rndVal" -> nextDouble, "title" -> "Master of Orion", "year" -> 1993, "genre" -> "strategy", "altNames" -> Seq("MoO"))
 
-        val c0 = r.db(db).table(tbl).limit(2).run
-        println(c0.chunk)
+    var conn: Connection = _
+    var c: Cursor = _
 
-/*
-        val dataSet1 = Map("field1" -> "123", "field2" -> "456", "field3" -> "789")
-        val c1 = r.db(db).table(tbl).insert(dataSet1).run
-        println(c1.chunk)
-*/
+    conn = r.connect(host).repl().use(db)
+    setUp()
+    exercise()
+    tearDown()
+    conn.close()
 
-        /*
-        val c1 = r.dbList.run
-        println(c1.chunk)
+    private def exercise(): Unit = {
+        c = r.db(db).table(tbl).limit(2).run()
+        print(c)
 
-        val c2 = r.db(db).tableList.run(conn)
-        println(c2.chunk)
+        c = r.db(db).table(tbl).slice(1, 2).run()
+        print(c)
 
-        val c3 = conn.db.tableList.limit(1).run
-        println(c3.chunk)
+        c = r.db(db).table(tbl).count().run
+        print(c)
 
-        //r.db(db).tableCreate(tbl).run()
+        c = r.db(db).table(tbl).isEmpty.run()
+        print(c)
+    }
 
-        val c4 = r.db(db).table(tbl).count().run()
-        println(c4.chunk)
+    private def setUp(): Unit = {
+        c = r.dbCreate(db).run()
+        print(c)
 
-        val c5 = r.db(db).table(tbl).run()
-        println(c5.chunk)
+        c = r.dbList.run()
+        print(c)
 
-        val c6 = r.db(db).table(tbl).slice(1, 2).run()
-        println(c6.chunk)
+        c = r.db(db).tableCreate(tbl).run()
+        print(c)
 
-        val c7 = r.db(db).table(tbl).isEmpty.run()
-        println(c7.chunk)
-        */
+        c = r.db(db).tableList.run()
+        print(c)
 
-        conn.close()
+        c = r.db(db).table(tbl).insert(data1).run()
+        print(c)
+
+        c = r.db(db).table(tbl).insert(data2).run()
+        print(c)
+    }
+
+    private def tearDown(): Unit = {
+        c = r.db(db).tableDrop(tbl).run()
+        print(c)
+
+        c = r.dbDrop(db).run()
+        print(c)
+    }
+
+    private def print(c: Cursor): Unit = {
+        println(c.chunk)
     }
 
 }
