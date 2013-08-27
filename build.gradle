@@ -95,7 +95,7 @@ task test(overwrite: true, dependsOn: testClasses) << {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.6'
+    gradleVersion = '1.7'
 }
 
 def getSuiteClassName(String specName) {
