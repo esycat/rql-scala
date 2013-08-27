@@ -6,28 +6,32 @@ import com.esyfur.{rql => r}
 object Main extends App {
 
     val host = "devroom"
-    val db   = "lalala"
-    val tbl  = "awesomeThings"
+    val db   = "awesomeness"
+    val tbl  = "beautifulThings"
 
     val data1 = Map("rndVal" -> nextDouble, "title" -> "Master of Magic", "year" -> 1994, "genre" -> "strategy", "altNames" -> Seq("MoM"))
     val data2 = Map("rndVal" -> nextDouble, "title" -> "Master of Orion", "year" -> 1993, "genre" -> "strategy", "altNames" -> Seq("MoO"))
 
-    var conn: Connection = _
     var c: Cursor = _
 
-    conn = r.connect(host).repl().use(db)
+    // connect to the server, set default connection and database
+    val conn = r.connect(host).repl().use(db)
+
     setUp()
     exercise()
     tearDown()
+
     conn.close()
 
     private def exercise(): Unit = {
+        // select data from the table in different ways
         c = r.db(db).table(tbl).limit(2).run()
         print(c)
 
         c = r.db(db).table(tbl).slice(1, 2).run()
         print(c)
 
+        // check whether the table is empty
         c = r.db(db).table(tbl).count().run
         print(c)
 
@@ -36,18 +40,21 @@ object Main extends App {
     }
 
     private def setUp(): Unit = {
+        // create a new database and show a list of existing databases
         c = r.dbCreate(db).run()
         print(c)
 
         c = r.dbList.run()
         print(c)
 
+        // create a new table and show a list of existing tables in the database
         c = r.db(db).tableCreate(tbl).run()
         print(c)
 
         c = r.db(db).tableList.run()
         print(c)
 
+        // insert some data
         c = r.db(db).table(tbl).insert(data1).run()
         print(c)
 
