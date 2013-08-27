@@ -38,7 +38,7 @@ import com.esyfur.{rql => r}
 
 val host = "localhost"
 val db   = "awesomeness"
-val tbl  = "marvel"
+val tbl  = "beautifulThings"
 
 val data = Map(...)
 
