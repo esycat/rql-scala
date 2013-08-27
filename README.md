@@ -31,7 +31,7 @@ dependencies {
 ## Usage
 
 See the `Main` class for usage examples.
-Try `./gradlew run` to execute the class.
+Try `gradle run` to execute the class.
 
 ```scala
 import com.esyfur.{rql => r}
