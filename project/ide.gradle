@@ -2,10 +2,8 @@ apply plugin: 'idea'
 
 idea {
     project {
-        jdkName = '1.7'
-        languageLevel = '1.7'
-
-        // outputDir = file('build')
+        jdkName = JavaVersion.VERSION_1_7
+        languageLevel = JavaVersion.VERSION_1_7
 
         ipr {
             withXml {
