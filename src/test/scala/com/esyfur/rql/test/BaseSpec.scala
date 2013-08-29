@@ -8,9 +8,9 @@ abstract class BaseSpec extends FunSpec with BeforeAndAfterAll with ShouldMatche
 
     protected def getRndSuffix = scala.util.Random.alphanumeric.take(5).mkString.toLowerCase
 
-    protected def assertCursor(expected: Any)(actual: Cursor): Unit = {
-        assert(actual.hasNext)
-        assertResult(expected)(actual.next())
+    protected def assertCursor(expected: Any, actual: Cursor): Unit = {
+        actual.hasNext should be (true)
+        actual.next() should be (expected)
     }
 
 }

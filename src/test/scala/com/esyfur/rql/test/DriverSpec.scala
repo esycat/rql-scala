@@ -6,24 +6,27 @@ import java.net.InetSocketAddress
 
 class DriverSpec extends BaseSpec with SuppliedConfig {
 
+    private def assertConnection(connection: Connection): Unit = {
+        connection should not be (null)
+        connection.isOpen should be (true)
+        connection.close()
+    }
+
     describe("The driver") {
         it("should be able to establish a connection using a given host and default port") {
             val connection = r.connect(dbHost)
-            connection should not be (null)
-            connection.close()
+            assertConnection(connection)
         }
 
         it("should be able to establish a connection using given host and port") {
             val connection = r.connect(dbHost, dbPort)
-            connection should not be (null)
-            connection.close()
+            assertConnection(connection)
         }
 
-        it("should be able to establish a connection using a given socket address") {
+        it("should be able to establish a connection using a provided socket address") {
             val addr = new InetSocketAddress(dbHost, dbPort)
             val connection = r.connect(addr)
-            connection should not be (null)
-            connection.close()
+            assertConnection(connection)
         }
     }
 
