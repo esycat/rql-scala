@@ -9,6 +9,8 @@ class QuerySpec extends BaseSpec with ConnectionAndDatabase {
     describe("A database") {
         it("should be able to create a table") {
             val cursor = r.db(dbName).tableCreate(tableName).run
+            val expected = Map("created" -> 1.0)
+            assertCursor(expected)(cursor)
         }
 
         it("should be able to get a list of existing tables") {
