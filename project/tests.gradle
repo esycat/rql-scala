@@ -1,0 +1,18 @@
+def getSuiteClassName(String specName) {
+    [project.group, project.name, 'test', specName + 'Spec'].join('.')
+}
+
+task test(overwrite: true, dependsOn: testClasses) << {
+    ant.taskdef(
+            name: 'scalatest',
+            classname: 'org.scalatest.tools.ScalaTestAntTask',
+            classpath: sourceSets.test.runtimeClasspath.asPath
+    )
+    ant.scalatest(runpath: sourceSets.test.output.classesDir, haltonfailure: true, fork: false) {
+        reporter(type: 'stderr')
+        config(name: 'db.host', value: project.ext.test.db.host)
+        config(name: 'db.port', value: project.ext.test.db.port)
+        config(name: 'db.name', value: project.ext.test.db.name)
+        suite(classname: getSuiteClassName(project.ext.test.suite))
+    }
+}

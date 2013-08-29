@@ -27,13 +27,8 @@ mainClassName = [group, project.name, 'Main'].join('.')
 apply from: 'project/util.gradle'
 apply from: 'project/scala.gradle'
 apply from: 'project/ide.gradle'
-
-ext {
-    protobuf = [
-        specFile: new File(sourceSets.main.resources.getSrcDirs().iterator().next(), 'ql2.proto'),
-        srcDir: relativePath(sourceSets.main.java.getSrcDirs().iterator().next())
-    ]
-}
+apply from: 'project/protobuf.gradle'
+apply from: 'project/tests.gradle'
 
 repositories {
     mavenCentral()
@@ -53,53 +48,6 @@ dependencies {
 //    protobuf files('src/main/resources/ql2.proto')
 }
 
-task protoApiDownload() {
-    outputs.file project.ext.protobuf.specFile
-
-    // TODO: In the future Gradle is going to support URLs in the Copy task.
-    // from rethinkdb.api.url
-    // into project.ext.protobuf.specFile
-
-    doLast {
-        ant.get(
-            src: rethinkdb.api.url,
-            dest: project.ext.protobuf.specFile,
-            verbose: true
-        )
-    }
-}
-
-task protoApiCompile(type: Exec) {
-    mustRunAfter protoApiDownload
-
-    inputs.file project.ext.protobuf.specFile
-    outputs.dir new File(project.ext.protobuf.srcDir, rethinkdb.api.package)
-
-    executable 'protoc'
-    args '--java_out=' + project.ext.protobuf.srcDir, relativePath(project.ext.protobuf.specFile)
-}
-
-tasks.compileJava.dependsOn protoApiCompile
-
-task test(overwrite: true, dependsOn: testClasses) << {
-    ant.taskdef(
-        name: 'scalatest',
-        classname: 'org.scalatest.tools.ScalaTestAntTask',
-        classpath: sourceSets.test.runtimeClasspath.asPath
-    )
-    ant.scalatest(runpath: sourceSets.test.output.classesDir, haltonfailure: true, fork: false) {
-        reporter(type: 'stderr')
-        config(name: 'db.host', value: project.ext.test.db.host)
-        config(name: 'db.port', value: project.ext.test.db.port)
-        config(name: 'db.name', value: project.ext.test.db.name)
-        suite(classname: getSuiteClassName(project.ext.test.suite))
-    }
-}
-
 task wrapper(type: Wrapper) {
     gradleVersion = '1.7'
-}
-
-def getSuiteClassName(String specName) {
-    [project.group, project.name, 'test', specName + 'Spec'].join('.')
 }
