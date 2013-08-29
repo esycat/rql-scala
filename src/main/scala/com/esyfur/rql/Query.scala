@@ -6,11 +6,6 @@ import com.rethinkdb.{Ql2 => p}
 
 abstract class Query extends Term with Operators with Sequence with Selection {
 
-    /*
-    protected val posArgs: Seq[Term] = mutable.ListBuffer[Term]()
-    protected val optArgs: Map[String, Term] = mutable.HashMap[String, Term]()
-    */
-
     protected val posArgs: Seq[Term] = Seq.empty[Term]
     protected val optArgs: Map[String, Term] = Map.empty[String, Term]
 
