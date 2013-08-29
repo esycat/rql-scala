@@ -92,9 +92,7 @@ task test(overwrite: true, dependsOn: testClasses) << {
         config(name: 'db.host', value: project.ext.test.db.host)
         config(name: 'db.port', value: project.ext.test.db.port)
         config(name: 'db.name', value: project.ext.test.db.name)
-        suite(classname: getSuiteClassName('Driver'))
-        suite(classname: getSuiteClassName('Rql'))
-        suite(classname: getSuiteClassName('Query'))
+        suite(classname: getSuiteClassName(project.ext.test.suite))
     }
 }
 
