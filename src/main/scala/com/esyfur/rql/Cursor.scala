@@ -7,7 +7,7 @@ import com.rethinkdb.{Ql2 => p}
 class Cursor(
     private val connection: Connection,
     private val response: p.Response,
-    /* private */ val chunk: Any
+    private val chunk: Any
     ) extends Iterator[Any] with AutoCloseable {
 
     private var index = 0

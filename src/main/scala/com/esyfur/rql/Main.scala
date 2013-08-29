@@ -71,7 +71,8 @@ object Main extends App {
     }
 
     private def print(c: Cursor): Unit = {
-        println(c.chunk)
+        if (c.hasNext) println(c.next())
+        else println("Cursor empty")
     }
 
 }
