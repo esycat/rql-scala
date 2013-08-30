@@ -1,6 +1,6 @@
 description = 'Scala driver for RethinkDB.'
 group = 'com.esyfur'
-version = '0.0.2'
+version = '0.1.1'
 
 defaultTasks 'clean', 'run'
 
@@ -14,21 +14,20 @@ buildscript {
     }
 }
 
-apply plugin: 'maven'
 apply plugin: 'scala'
 apply plugin: 'application'
-apply plugin: 'signing'
 apply plugin: 'idea'
-//apply plugin: 'protobuf'
 apply plugin: 'propsUtil'
 
 mainClassName = [group, project.name, 'Main'].join('.')
 
 apply from: 'project/util.gradle'
 apply from: 'project/scala.gradle'
-apply from: 'project/ide.gradle'
+apply from: 'project/assemble.gradle'
+apply from: 'project/publishing.gradle'
 apply from: 'project/protobuf.gradle'
 apply from: 'project/tests.gradle'
+apply from: 'project/ide.gradle'
 
 repositories {
     mavenCentral()

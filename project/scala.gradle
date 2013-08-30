@@ -8,5 +8,4 @@ dependencies {
 
 compileScala {
     scalaCompileOptions.deprecation = true
-    //scalaCompileOptions.useCompileDaemon = true
 }

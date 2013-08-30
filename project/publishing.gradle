@@ -1,1 +1,42 @@
-apply plugin: 'signing'
+import org.ajoberstar.gradle.git.tasks.*
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'org.ajoberstar', name: 'gradle-git', version: project.ext.get('plugin.git.version')
+    }
+}
+
+apply plugin: 'maven-publish'
+apply plugin: 'scala'
+//apply plugin: 'signing'
+
+publishing {
+    publications {
+        main(MavenPublication) {
+            from components.java
+
+            artifact source: sourceJar, classifier: "src"
+            artifact source: docJar, classifier: "doc"
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+task docJar(type: Jar) {
+    from scaladoc
+    classifier = 'scaladoc'
+}
+
+task tagVersion(type: GitTag) {
+    tagName = version
+    message = "Release of v${version}."
+    // sign = true // JGit doesn't support signing yet
+    doLast {
+        println sprintf('A new version %s has been tagged.', tagName)
+    }
+}

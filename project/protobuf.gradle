@@ -3,6 +3,17 @@ ext.protobuf = [
     srcDir: relativePath(sourceSets.main.java.getSrcDirs().iterator().next())
 ]
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        // classpath group: 'ws.antonov.gradle.plugins', name: 'gradle-plugin-protobuf', version: '0.8'
+    }
+}
+
+//apply plugin: 'protobuf'
+
 task protoApiDownload() {
     outputs.file project.ext.protobuf.specFile
 
