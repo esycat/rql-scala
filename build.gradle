@@ -47,7 +47,3 @@ dependencies {
 
 //    protobuf files('src/main/resources/ql2.proto')
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.7'
-}
