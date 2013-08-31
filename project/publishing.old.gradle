@@ -13,15 +13,17 @@ apply plugin: 'maven'
 apply plugin: 'signing'
 
 artifacts {
-    archives jar
-    archives sourceJar
-    archives scaladocJar
+    archives sourceJar, scaladocJar
+}
+
+signing {
+    sign configurations.archives
+    required { !isSnapshot && gradle.taskGraph.hasTask("uploadArchives") }
 }
 
 uploadArchives {
-    def sonatypeUrl = project.ext.get('sonatype.url')
     repositories.mavenDeployer {
-        repository(url: sonatypeUrl) {
+        repository(url: project.ext.sonatype.url) {
             authentication(
                 userName: System.properties['sonatype.username'],
                 password: System.properties['sonatype.password']
@@ -36,10 +38,6 @@ install.repositories.mavenInstaller {
     pom.project getPomConfiguration()
 }
 
-signing {
-    sign configurations.archives
-    required { !isSnapshot && gradle.taskGraph.hasTask("uploadArchives") }
-}
 
 task pom << {
     pom {
@@ -57,22 +55,30 @@ task tagVersion(type: GitTag) {
 }
 
 /**
+ * This task is just for convenience, to emulate the future `maven-publish` plugin behavior.
+ */
+task publish {
+    dependsOn uploadArchives
+}
+
+/**
+ * This task is just for convenience, to emulate the future `maven-publish` plugin behavior.
+ */
+task release {
+    dependsOn tagVersion, publish
+}
+
+/**
  * Create POM config and return for use by other tasks.
  */
 def getPomConfiguration() {
-    def scminfo = project.ext.github
-    def repo = sprintf('%s/%s', scminfo.username, scminfo.repo.name)
-
-    def scmUrl = sprintf(scminfo.repo.url, repo)
-    def scmConnectionUrl    = 'scm:git:' + sprintf(scminfo.remote.url.fetch, repo)
-    def scmDevConnectionUrl = 'scm:git:' + sprintf(scminfo.remote.url.push, repo)
-
-    def projectUrl = scmUrl
+    def scmcfg = project.ext.github
+    def repo = sprintf('%s/%s', scmcfg.username, scmcfg.repo.name)
 
     return {
         name project.name
         description project.description
-        url projectUrl
+        url sprintf(scmcfg.repo.url, repo)
         inceptionYear '2013'
         packaging 'jar'
         licenses {
@@ -83,9 +89,9 @@ def getPomConfiguration() {
             }
         }
         scm {
-            url scmUrl
-            connection scmConnectionUrl
-            developerConnection scmDevConnectionUrl
+            url sprintf(scmcfg.repo.url, repo)
+            connection 'scm:git:' + sprintf(scmcfg.remote.url.fetch, repo)
+            developerConnection 'scm:git:' + sprintf(scmcfg.remote.url.push, repo)
         }
         developers {
             developer {

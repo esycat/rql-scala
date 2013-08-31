@@ -65,19 +65,13 @@ task tagVersion(type: GitTag) {
  * Create POM config and return for use by other tasks.
  */
 def getPomConfiguration() {
-    def scminfo = project.ext.github
-    def repo = sprintf('%s/%s', scminfo.username, scminfo.repo.name)
-
-    def scmUrl = sprintf(scminfo.repo.url, repo)
-    def scmConnectionUrl    = 'scm:git:' + sprintf(scminfo.remote.url.fetch, repo)
-    def scmDevConnectionUrl = 'scm:git:' + sprintf(scminfo.remote.url.push, repo)
-
-    def projectUrl = scmUrl
+    def scmcfg = project.ext.github
+    def repo = sprintf('%s/%s', scmcfg.username, scmcfg.repo.name)
 
     return {
         name project.name
         description project.description
-        url projectUrl
+        url sprintf(scmcfg.repo.url, repo)
         inceptionYear '2013'
         packaging 'jar'
         licenses {
@@ -88,9 +82,9 @@ def getPomConfiguration() {
             }
         }
         scm {
-            url scmUrl
-            connection scmConnectionUrl
-            developerConnection scmDevConnectionUrl
+            url sprintf(scmcfg.repo.url, repo)
+            connection 'scm:git:' + sprintf(scmcfg.remote.url.fetch, repo)
+            developerConnection 'scm:git:' + sprintf(scmcfg.remote.url.push, repo)
         }
         developers {
             developer {
