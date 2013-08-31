@@ -9,3 +9,8 @@ dependencies {
 compileScala {
     scalaCompileOptions.deprecation = true
 }
+
+task scaladocJar(type: Jar) {
+    from scaladoc
+    classifier = 'javadoc'
+}

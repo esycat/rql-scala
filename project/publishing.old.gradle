@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-apply plugin: 'maven-publish'
+apply plugin: 'maven'
 apply plugin: 'signing'
 
 artifacts {
@@ -18,38 +18,33 @@ artifacts {
     archives scaladocJar
 }
 
-publishing {
-    publications {
-        main(MavenPublication) {
-            from components.java
-
-            artifact source: sourceJar,   classifier: 'sources'
-            artifact source: scaladocJar, classifier: 'javadoc'
-
-            pom.withXml {
-                asNode().children().last() + getPomConfiguration()
-            }
+uploadArchives {
+    def sonatypeUrl = project.ext.get('sonatype.url')
+    repositories.mavenDeployer {
+        repository(url: sonatypeUrl) {
+            authentication(
+                userName: System.properties['sonatype.username'],
+                password: System.properties['sonatype.password']
+            )
         }
+        pom.project getPomConfiguration()
+        beforeDeployment { signing.signPom it }
     }
-    repositories {
-        mavenLocal()
-        maven {
-            url project.ext.sonatype.url
-            credentials {
-                username = System.properties['sonatype.username']
-                password = System.properties['sonatype.password']
-            }
-        }
-    }
+}
+
+install.repositories.mavenInstaller {
+    pom.project getPomConfiguration()
 }
 
 signing {
     sign configurations.archives
-    required { !project.ext.isSnapshot && gradle.taskGraph.hasTask("publish") }
+    required { !isSnapshot && gradle.taskGraph.hasTask("uploadArchives") }
 }
 
-task install {
-    dependsOn ':publishMainPublicationToMavenLocalRepository'
+task pom << {
+    pom {
+        project getPomConfiguration()
+    }.writeTo(mavenPomDir.toString() + '/pom.xml')
 }
 
 task tagVersion(type: GitTag) {
