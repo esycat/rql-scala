@@ -1,6 +1,10 @@
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
+if (hasProperty('mainClassName') && !property('mainClassName')) {
+    mainClassName = [group, project.name, 'Main'].join('.')
+}
+
 ext.sharedManifest = manifest {
     attributes \
         'Implementation-Title':   project.name,
