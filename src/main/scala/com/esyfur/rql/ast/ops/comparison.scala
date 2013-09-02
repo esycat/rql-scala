@@ -1,44 +1,44 @@
 package com.esyfur.rql.ast.ops
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{Query, BiOpQuery}
+import com.esyfur.rql.{Value, BiOpQuery}
 
-class Eq(a: Query, b: Query) extends BiOpQuery(a, b) {
+class Eq(a: Value, b: Value) extends BiOpQuery(a, b) {
 
     protected val termType = p.Term.TermType.EQ
     val st = "=="
 
 }
 
-class Ne(a: Query, b: Query) extends BiOpQuery(a, b) {
+class Ne(a: Value, b: Value) extends BiOpQuery(a, b) {
 
     protected val termType = p.Term.TermType.NE
     val st = "!="
 
 }
 
-class Lt(a: Query, b: Query) extends BiOpQuery(a, b) {
+class Lt(a: Value, b: Value) extends BiOpQuery(a, b) {
 
     protected val termType = p.Term.TermType.LT
     val st = "<"
 
 }
 
-class Le(a: Query, b: Query) extends BiOpQuery(a, b) {
+class Le(a: Value, b: Value) extends BiOpQuery(a, b) {
 
     protected val termType = p.Term.TermType.LE
     val st = "<="
 
 }
 
-class Gt(a: Query, b: Query) extends BiOpQuery(a, b) {
+class Gt(a: Value, b: Value) extends BiOpQuery(a, b) {
 
     protected val termType = p.Term.TermType.GT
     val st = ">"
 
 }
 
-class Ge(a: Query, b: Query) extends BiOpQuery(a, b) {
+class Ge(a: Value, b: Value) extends BiOpQuery(a, b) {
 
     protected val termType = p.Term.TermType.GE
     val st = ">="

@@ -58,7 +58,7 @@ final class NullDatum extends Datum[Null] {
 
 }
 
-final class BoolDatum(val value: Boolean) extends Datum[Boolean] {
+final class BoolDatum(val value: Boolean) extends Datum[Boolean] with BoolValue {
 
     protected val datumType = R_BOOL
 
@@ -66,7 +66,7 @@ final class BoolDatum(val value: Boolean) extends Datum[Boolean] {
 
 }
 
-final class NumDatum(val value: Double) extends Datum[Double] {
+final class NumDatum(val value: Double) extends Datum[Double] with NumValue {
 
     protected val datumType = R_NUM
 
@@ -74,7 +74,7 @@ final class NumDatum(val value: Double) extends Datum[Double] {
 
 }
 
-final class StrDatum(val value: String) extends Datum[String] {
+final class StrDatum(val value: String) extends Datum[String] with StrValue {
 
     protected val datumType = R_STR
 

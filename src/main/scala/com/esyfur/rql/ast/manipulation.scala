@@ -2,7 +2,7 @@ package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
 
-import com.esyfur.rql.{Term, MethodQuery}
+import com.esyfur.rql.{StrValue, Term, MethodQuery}
 
 class Pluck(operand: Term) extends MethodQuery(operand) {
 
@@ -78,5 +78,12 @@ class HasFields extends MethodQuery {
 
     protected val termType = p.Term.TermType.HAS_FIELDS
     val st = "has_fields"
+
+}
+
+class Match(operand: StrValue, regexp: String) extends MethodQuery(operand, regexp) {
+
+    protected val termType = p.Term.TermType.MATCH
+    val st = "match"
 
 }

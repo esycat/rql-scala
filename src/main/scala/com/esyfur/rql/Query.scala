@@ -4,7 +4,7 @@ import scala.collection.{Seq, Map, mutable}
 
 import com.rethinkdb.{Ql2 => p}
 
-abstract class Query extends Term with Operators with Sequence with Selection {
+abstract class Query extends Term with Sequence with Selection {
 
     protected val posArgs: Seq[Term] = Seq.empty[Term]
     protected val optArgs: Map[String, Term] = Map.empty[String, Term]

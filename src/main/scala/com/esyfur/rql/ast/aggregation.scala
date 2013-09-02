@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{Term, ValueQuery, MethodQuery}
+import com.esyfur.rql.{Term, MethodQuery}
 
 class Reduce(operand: Term) extends MethodQuery(operand) {
 
