@@ -1,8 +1,9 @@
 package com.esyfur
 
 import java.net.InetSocketAddress
-import com.esyfur.rql.ast.{Ordering, Asc, Desc, Time}
+import com.esyfur.rql.ast._
 import java.util.Date
+import org.joda.time.DateTime
 
 package object rql {
 
@@ -61,16 +62,14 @@ package object rql {
 
     def table(name: String) = Connection.default.db.table(name)
 
-    def now(): Time = ???
+    def now(): TimeValue = new Now()
 
-    def time(year: Short, month: Short, day: Short, hour: Short = 0, minute: Short = 0, second: Short = 0): Time = ???
+    def time(year: Short, month: Short, day: Short, hour: Short = 0, minute: Short = 0, second: Short = 0): TimeValue = time(new DateTime(year, month, day, hour, minute, second))
 
-    def time(date: Date) = ???
+    def time(dateTime: DateTime): TimeValue = new Time(dateTime)
 
-    // def time(date: DateTime) = ???
+    def epochTime(seconds: Long): TimeValue = new EpochTime(seconds)
 
-    def epochTime(): Time = ???
-
-    def iso8601(): Time = ???
+    def iso8601(dateString: String, defaultTimezone: Option[String] = None): TimeValue = new ISO8601(dateString)
 
 }

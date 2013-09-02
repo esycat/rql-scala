@@ -2,6 +2,7 @@ package com.esyfur.rql
 
 import scala.util.matching.Regex
 
+import com.esyfur.rql.ast.{During, Match, Time, ToEpochTime}
 import ast.ops._
 
 trait Value extends Term { self: Value =>
@@ -60,5 +61,36 @@ trait StrValue extends Term { self: StrValue =>
 
 }
 
+trait TimeValue extends Term { self: TimeValue =>
+
+    def toISO8601(): NumValue = ???
+
+    def toEpochTime() = new ToEpochTime(this)
+
+    def date(): TimeValue = ???
+
+    def timeOfDay(): NumValue = ???
+
+    def timezone(): StrValue = ???
+
+    def inTimezone(): TimeValue = ???
+
+    def during(start: TimeValue, end: TimeValue, options: Option[SpanOptions] = None) = new During(start, end, options)
+
+    def year(): NumValue = ???
+
+    def month(): NumValue = ???
+
+    def day(): NumValue = ???
+
+    def dayOfWeek(): NumValue = ???
+
+    def dayOfYear(): NumValue = ???
+
+    def hours(): NumValue = ???
+
+    def minutes(): NumValue = ???
+
+    def seconds(): NumValue = ???
 
 }

@@ -73,7 +73,24 @@ case class UpdateOptions(
 
 }
 
+case class SpanOptions(
+    leftBound:  Option[SpanBound.Value] = None,
+    rightBound: Option[SpanBound.Value] = None
+    ) extends Options {
+
+    def toMap = collect(Map(
+        "left_bound"  -> leftBound,
+        "right_bound" -> rightBound
+    ))
+
+}
+
 object Durability extends Enumeration {
     val Hard = Value("hard")
     val Soft = Value("soft")
+}
+
+object SpanBound extends Enumeration {
+    val Open   = Value("open")
+    val Closed = Value("closed")
 }

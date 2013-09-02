@@ -10,7 +10,6 @@ buildscript {
     }
     dependencies {
         classpath group: 'com.esyfur', name: 'gradle-expand-props', version: project.ext.get('plugin.propsUtil.version')
-        // classpath group: 'ws.antonov.gradle.plugins', name: 'gradle-plugin-protobuf', version: '0.8'
     }
 }
 
@@ -42,7 +41,8 @@ dependencies {
 
     compile group: 'com.google.protobuf', name: 'protobuf-java', version: project.ext.google.protobuf.version
 
-    testCompile group: 'org.scalatest', name: sclArt('scalatest'), version: project.ext.scalatest.version
+    compile group: 'joda-time', name: 'joda-time', version: project.ext.joda.time.version
+    compile group: 'org.joda', name: 'joda-convert', version: '1.3.1'
 
-//    protobuf files('src/main/resources/ql2.proto')
+    testCompile group: 'org.scalatest', name: sclArt('scalatest'), version: project.ext.scalatest.version
 }
