@@ -7,6 +7,8 @@ import p.Datum.DatumType.{R_NULL, R_BOOL, R_NUM, R_STR, R_ARRAY, R_OBJECT}
 
 object Datum {
 
+    def apply(value: Null) = new NullDatum
+
     def apply(value: Boolean) = new BoolDatum(value)
 
     def apply(value: Int) = new NumDatum(value)
@@ -21,7 +23,7 @@ object Datum {
 
     def apply(value: Seq[Any]) = new ArrayDatum(value)
 
-    def apply(value: Map[String, Any]) = new ObjectDatum(value)
+    def apply(value: Document) = new ObjectDatum(value)
 
     def apply(value: Option[Any]): Datum[Any] = value match {
         case Some(v) => Datum(v)
@@ -29,15 +31,15 @@ object Datum {
     }
 
     def apply(value: Any): Datum[Any] = value match {
-        case null                => new NullDatum
-        case v: Boolean          => new BoolDatum(v)
-        case v: Int              => new NumDatum(v)
-        case v: Long             => new NumDatum(v)
-        case v: Float            => new NumDatum(v)
-        case v: Double           => new NumDatum(v)
-        case v: String           => new StrDatum(v)
-        case v: Seq[Any]         => new ArrayDatum(v)
-        case v: Map[String, Any] => new ObjectDatum(v)
+        case null        => Datum(null)
+        case v: Boolean  => Datum(v)
+        case v: Int      => Datum(v)
+        case v: Long     => Datum(v)
+        case v: Float    => Datum(v)
+        case v: Double   => Datum(v)
+        case v: String   => Datum(v)
+        case v: Seq[Any] => Datum(v)
+        case v: Document => Datum(v)
         case _ => {
             val message = "Cannot convert %s to datum.".format(value.getClass)
             throw new RqlDriverError(message)
@@ -45,7 +47,7 @@ object Datum {
     }
 
     def unwrap(datum: p.Datum): Any = datum.getType match {
-        case R_NULL    => null
+        case R_NULL    => None
         case R_BOOL    => datum.getRBool
         case R_NUM     => datum.getRNum
         case R_STR     => datum.getRStr
@@ -138,7 +140,7 @@ object ObjectDatum {
 /**
  * ObjectDatum isn't actually a datum, but a MAKE_OBJ query.
  */
-final class ObjectDatum(val value: Map[String, Any]) extends Datum[Map[String, Any]] {
+final class ObjectDatum(val value: Document) extends Datum[Document] {
 
     protected override val termType = p.Term.TermType.MAKE_OBJ
     protected val datumType = R_OBJECT

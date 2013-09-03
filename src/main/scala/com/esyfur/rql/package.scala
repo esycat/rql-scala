@@ -1,9 +1,10 @@
 package com.esyfur
 
 import java.net.InetSocketAddress
-import com.esyfur.rql.ast._
 import java.util.Date
 import org.joda.time.DateTime
+
+import rql.ast._
 
 package object rql {
 
