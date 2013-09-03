@@ -7,6 +7,27 @@ import p.Datum.DatumType.{R_NULL, R_BOOL, R_NUM, R_STR, R_ARRAY, R_OBJECT}
 
 object Datum {
 
+    def apply(value: Boolean) = new BoolDatum(value)
+
+    def apply(value: Int) = new NumDatum(value)
+
+    def apply(value: Long) = new NumDatum(value)
+
+    def apply(value: Float) = new NumDatum(value)
+
+    def apply(value: Double) = new NumDatum(value)
+
+    def apply(value: String) = new StrDatum(value)
+
+    def apply(value: Seq[Any]) = new ArrayDatum(value)
+
+    def apply(value: Map[String, Any]) = new ObjectDatum(value)
+
+    def apply(value: Option[Any]): Datum[Any] = value match {
+        case Some(v) => Datum(v)
+        case None    => new NullDatum
+    }
+
     def apply(value: Any): Datum[Any] = value match {
         case null                => new NullDatum
         case v: Boolean          => new BoolDatum(v)

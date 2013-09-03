@@ -24,6 +24,15 @@ object Main extends App {
     conn.close()
 
     private def exercise(): Unit = {
+        c = r.expr(2).add(3).run()
+        print(c)
+
+        c = r.expr(20).sub(10).run()
+        print(c)
+
+        c = (r.expr(5) * r.expr(5)).run()
+        print(c)
+
         // select data from the table in different ways
         c = r.db(db).table(tbl).limit(2).run()
         print(c)
