@@ -41,19 +41,19 @@ trait NumValue extends Term { self: NumValue =>
 
     // Numeric operators
     def add(that: NumValue) = new Add(this, that)
-    def add(that: Int): Add = add(Datum(that))
+    def add(that: Double): Add = add(Datum(that))
 
     def sub(that: NumValue) = new Sub(this, that)
-    def sub(that: Int): Sub = sub(Datum(that))
+    def sub(that: Double): Sub = sub(Datum(that))
 
     def mul(that: NumValue) = new Mul(this, that)
-    def mul(that: Int): Mul = mul(Datum(that))
+    def mul(that: Double): Mul = mul(Datum(that))
 
     def div(that: NumValue) = new Div(this, that)
-    def div(that: Int): Div = div(Datum(that))
+    def div(that: Double): Div = div(Datum(that))
 
     def mod(that: NumValue) = new Mod(this, that)
-    def mod(that: Int): Mod = mod(Datum(that))
+    def mod(that: Double): Mod = mod(Datum(that))
 
     def +(that: NumValue) = add(that)
     def -(that: NumValue) = sub(that)
