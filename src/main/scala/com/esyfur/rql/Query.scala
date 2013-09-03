@@ -1,6 +1,6 @@
 package com.esyfur.rql
 
-import scala.collection.{Seq, Map, mutable}
+import scala.collection.{Seq, Map}
 
 import com.rethinkdb.{Ql2 => p}
 

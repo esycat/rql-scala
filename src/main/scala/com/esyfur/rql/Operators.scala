@@ -2,7 +2,7 @@ package com.esyfur.rql
 
 import scala.util.matching.Regex
 
-import com.esyfur.rql.ast.{During, Match, Time, ToEpochTime}
+import com.esyfur.rql.ast.{During, Match, ToEpochTime}
 import ast.ops._
 
 trait Value extends Term { self: Value =>

@@ -1,7 +1,6 @@
 package com.esyfur
 
 import java.net.InetSocketAddress
-import java.util.Date
 import org.joda.time.DateTime
 
 import rql.ast._

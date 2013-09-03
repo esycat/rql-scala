@@ -1,8 +1,6 @@
 package com.esyfur.rql.test
 
 import com.esyfur.{rql => r}
-import com.esyfur.rql.Connection
-import java.net.InetSocketAddress
 
 class RqlSpec extends BaseSpec with ConnectionAndDatabase {
 

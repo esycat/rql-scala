@@ -5,7 +5,6 @@ import java.nio.{ByteOrder, ByteBuffer}
 import java.net.{InetSocketAddress, Socket}
 import java.util.concurrent.atomic.AtomicInteger
 
-import scala.collection.Map
 import scala.collection.JavaConverters._
 
 import com.google.protobuf.Message

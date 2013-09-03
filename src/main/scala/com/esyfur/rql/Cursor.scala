@@ -1,6 +1,5 @@
 package com.esyfur.rql
 
-import scala.collection.mutable.LinkedList
 
 import com.rethinkdb.{Ql2 => p}
 

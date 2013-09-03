@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast.ops
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{NumValue, BiOpQuery, Query}
+import com.esyfur.rql.{NumValue, BiOpQuery}
 
 class Add(a: NumValue, b: NumValue) extends BiOpQuery(a, b) {
 
