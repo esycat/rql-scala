@@ -3,7 +3,7 @@ package com.esyfur.rql
 import scala.collection.Map
 import com.esyfur.rql.core.{Datum, Term}
 
-trait Options {
+private[rql] sealed trait Options {
 
     def toMap: Map[String, Term]
 

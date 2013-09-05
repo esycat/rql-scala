@@ -2,7 +2,7 @@ package com.esyfur.rql.core
 
 import com.rethinkdb.{Ql2 => p}
 
-abstract class Term {
+private[rql] abstract class Term {
 
     protected val termType: p.Term.TermType
 

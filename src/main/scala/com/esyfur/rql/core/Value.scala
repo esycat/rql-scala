@@ -6,7 +6,7 @@ import com.esyfur.rql.ast.ops._
 import com.esyfur.rql.ast.{During, ToEpochTime, Match}
 import com.esyfur.rql.SpanOptions
 
-trait Value extends Term { self: Value =>
+private[rql] trait Value extends Term { self: Value =>
 
     // Comparison operators
     def eq(that: Value) = new Eq(this, that)

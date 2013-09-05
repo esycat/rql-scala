@@ -63,7 +63,7 @@ object Datum {
 
 }
 
-private[rql] abstract class Datum[+T] extends Term {
+private[rql] sealed abstract class Datum[+T] extends Term {
 
     protected val termType = p.Term.TermType.DATUM
     protected val datumType: p.Datum.DatumType
