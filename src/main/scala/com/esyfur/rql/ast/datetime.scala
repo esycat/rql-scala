@@ -3,6 +3,7 @@ package com.esyfur.rql.ast
 import com.rethinkdb.{Ql2 => p}
 import com.esyfur.rql._
 import org.joda.time.DateTime
+import com.esyfur.rql.core.{TopLevelQuery, MethodQuery, TimeValue}
 
 class Time(val value: DateTime) extends MethodQuery with TimeValue {
 

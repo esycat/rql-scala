@@ -1,8 +1,10 @@
-package com.esyfur.rql
+package com.esyfur.rql.core
 
 import scala.collection.{Seq, Map}
 
 import com.rethinkdb.{Ql2 => p}
+import com.esyfur.rql.{expr, Connection, Cursor, QueryOptions, RqlDriverError}
+import com.esyfur.rql.util.QueryPrinter
 
 abstract class Query extends Term with Sequence with Selection {
 

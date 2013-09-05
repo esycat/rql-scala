@@ -1,4 +1,6 @@
-package com.esyfur.rql
+package com.esyfur.rql.util
+
+import com.esyfur.rql.core.Term
 
 class QueryPrinter(val query: Term) {
 

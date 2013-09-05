@@ -4,6 +4,7 @@ import java.net.InetSocketAddress
 import org.joda.time.DateTime
 
 import rql.ast._
+import com.esyfur.rql.core._
 
 package object rql {
 

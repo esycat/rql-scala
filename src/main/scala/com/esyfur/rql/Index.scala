@@ -1,6 +1,7 @@
 package com.esyfur.rql
 
 import com.rethinkdb.{Ql2 => p}
+import com.esyfur.rql.core.MethodQuery
 
 protected class Index(val table: Table, val name: String) extends MethodQuery(table, name) {
 

@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{Term, Sequence, MethodQuery}
+import com.esyfur.rql.core.{MethodQuery, Term, Sequence}
 
 private[rql] trait Joins extends Term { self: Sequence =>
 

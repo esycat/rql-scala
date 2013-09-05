@@ -1,6 +1,6 @@
-package com.esyfur.rql
+package com.esyfur.rql.core
 
-import ast._
+import com.esyfur.rql.ast.{Filter, Predicate, Between}
 
 trait Selection extends Term { self: Selection =>
 

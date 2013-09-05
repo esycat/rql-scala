@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast.ops
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{BoolValue, UnaryQuery, BinaryQuery}
+import com.esyfur.rql.core.{BinaryQuery, UnaryQuery, BoolValue}
 
 class Any(a: BoolValue, b: BoolValue) extends BinaryQuery(a, b) with BoolValue {
 

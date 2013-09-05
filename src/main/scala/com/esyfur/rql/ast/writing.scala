@@ -2,6 +2,7 @@ package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
 import com.esyfur.rql._
+import com.esyfur.rql.core.MethodQuery
 
 class Insert[T <: Document](val table: Table, document: T, options: InsertOptions) extends MethodQuery(table, document) {
 

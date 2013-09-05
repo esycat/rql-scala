@@ -1,9 +1,10 @@
-package com.esyfur.rql
+package com.esyfur.rql.core
 
 import scala.util.matching.Regex
 
-import ast.{During, Match, ToEpochTime}
-import ast.ops._
+import com.esyfur.rql.ast.ops._
+import com.esyfur.rql.ast.{During, ToEpochTime, Match}
+import com.esyfur.rql.SpanOptions
 
 trait Value extends Term { self: Value =>
 

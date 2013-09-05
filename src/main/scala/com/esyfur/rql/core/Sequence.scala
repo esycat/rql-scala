@@ -1,6 +1,6 @@
-package com.esyfur.rql
+package com.esyfur.rql.core
 
-import ast._
+import com.esyfur.rql.ast._
 
 trait Sequence extends Term with Joins { self: Sequence =>
 

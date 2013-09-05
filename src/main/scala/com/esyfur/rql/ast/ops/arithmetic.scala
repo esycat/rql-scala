@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast.ops
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{NumValue, BinaryQuery}
+import com.esyfur.rql.core.{BinaryQuery, NumValue}
 
 class Add(a: NumValue, b: NumValue) extends BinaryQuery(a, b) with NumValue {
 

@@ -2,6 +2,7 @@ package com.esyfur.rql
 
 import com.rethinkdb.{Ql2 => p}
 import com.esyfur.rql.ast._
+import com.esyfur.rql.core.{MethodQuery, Sequence, Selection}
 
 object Table {
 

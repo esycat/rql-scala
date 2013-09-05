@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{Term, Query, MethodQuery}
+import com.esyfur.rql.core.{MethodQuery, Query, Term}
 
 class Map extends MethodQuery {
 

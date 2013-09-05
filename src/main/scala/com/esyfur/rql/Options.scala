@@ -1,6 +1,7 @@
 package com.esyfur.rql
 
 import scala.collection.Map
+import com.esyfur.rql.core.{Datum, Term}
 
 trait Options {
 

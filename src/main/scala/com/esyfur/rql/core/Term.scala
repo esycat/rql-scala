@@ -1,10 +1,6 @@
-package com.esyfur.rql
+package com.esyfur.rql.core
 
 import com.rethinkdb.{Ql2 => p}
-
-object Term {
-
-}
 
 abstract class Term {
 

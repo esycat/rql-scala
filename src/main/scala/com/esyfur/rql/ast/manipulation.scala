@@ -2,7 +2,7 @@ package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
 
-import com.esyfur.rql.{StrValue, Term, MethodQuery}
+import com.esyfur.rql.core.{MethodQuery, StrValue, Term}
 
 class Pluck(operand: Term) extends MethodQuery(operand) {
 

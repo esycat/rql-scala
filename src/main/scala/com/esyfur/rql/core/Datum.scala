@@ -1,9 +1,11 @@
-package com.esyfur.rql
+package com.esyfur.rql.core
 
 import scala.collection.JavaConverters._
 
 import com.rethinkdb.{Ql2 => p}
 import p.Datum.DatumType.{R_NULL, R_BOOL, R_NUM, R_STR, R_ARRAY, R_OBJECT}
+
+import com.esyfur.rql.{expr, Document, RqlDriverError}
 
 object Datum {
 

@@ -1,7 +1,7 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.{ValueQuery, Term, MethodQuery}
+import com.esyfur.rql.core.{MethodQuery, ValueQuery, Term}
 
 class OrderBy(operand: Term, keys: String*) extends MethodQuery(operand /*, keys: _* */) {
 
