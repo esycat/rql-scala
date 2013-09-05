@@ -24,10 +24,7 @@ object Main extends App {
     conn.close()
 
     private def exercise(): Unit = {
-        c = r.expr(2).add(3).run()
-        print(c)
-
-        c = r.expr(20).sub(10).run()
+        c = r.expr(5).add(2).add(10).sub(12).mul(6).div(3).mod(3).run()
         print(c)
 
         c = (r.expr(5) * r.expr(5)).run()
@@ -46,6 +43,7 @@ object Main extends App {
 
         c = r.db(db).table(tbl).isEmpty.run()
         print(c)
+
     }
 
     private def setUp(): Unit = {

@@ -64,6 +64,9 @@ r.db(db).table(tbl).slice(1, 2).run()
 r.db(db).table(tbl).isEmpty.run()
 r.db(db).table(tbl).count().run()
 
+// math expressions
+r.expr(5).add(2).add(10).sub(12).mul(6).div(3).mod(3).run()
+
 // cleanup and disconnect
 r.db(db).tableDrop(tbl).run()
 r.dbDrop(db).run()

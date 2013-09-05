@@ -48,16 +48,9 @@ abstract class Query extends Term with Sequence with Selection {
 }
 
 /**
- * Base class for all arithmetic, bitwise, comparison, logic and other operators.
- */
-abstract class OpQuery extends Query {
-
-}
-
-/**
  * Base class for unary operators.
  */
-abstract class UnOpQuery(operand: Term) extends OpQuery {
+abstract class UnaryQuery(operand: Term) extends Query {
 
     protected override val posArgs = Seq(operand)
 
@@ -66,7 +59,7 @@ abstract class UnOpQuery(operand: Term) extends OpQuery {
 /**
  * Base class for binary operators.
  */
-abstract class BiOpQuery(a: Term, b: Term) extends OpQuery {
+abstract class BinaryQuery(a: Term, b: Term) extends Query {
 
     protected override val posArgs = Seq(a, b)
 
