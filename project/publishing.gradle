@@ -9,8 +9,9 @@ buildscript {
     }
 }
 
-apply plugin: 'maven-publish'
 apply plugin: 'signing'
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
 
 artifacts {
     archives jar
@@ -48,10 +49,6 @@ signing {
     required { !project.ext.isSnapshot && gradle.taskGraph.hasTask("publish") }
 }
 
-task install {
-    dependsOn ':publishMainPublicationToMavenLocalRepository'
-}
-
 task tagVersion(type: GitTag) {
     tagName = version
     message = "Release of v${version}."
@@ -60,6 +57,19 @@ task tagVersion(type: GitTag) {
         println sprintf('A new version %s has been tagged.', tagName)
     }
 }
+
+/*
+task install {
+    dependsOn ':publishMainPublicationToMavenLocalRepository'
+}
+*/
+
+task release {
+//    dependsOn tagVersion, publish
+    dependsOn tagVersion, uploadArchives
+}
+
+tasks.publish.mustRunAfter tagVersion
 
 /**
  * Create POM config and return for use by other tasks.
@@ -97,4 +107,28 @@ def getPomConfiguration() {
             name 'Persic Entertainment'
         }
     }
+}
+
+uploadArchives {
+    mustRunAfter tagVersion
+    repositories.mavenDeployer {
+        repository(url: project.ext.sonatype.url) {
+            authentication(
+                userName: System.properties['sonatype.username'],
+                password: System.properties['sonatype.password']
+            )
+        }
+        pom.project getPomConfiguration()
+        beforeDeployment { signing.signPom it }
+    }
+}
+
+install.repositories.mavenInstaller {
+    pom.project getPomConfiguration()
+}
+
+task pom << {
+    pom {
+        project getPomConfiguration()
+    }.writeTo(mavenPomDir.toString() + '/pom.xml')
 }
