@@ -1,5 +1,14 @@
+apply plugin: 'scala'
+
 ext.sclArt = { String artifactId ->
     sprintf('%s_%s', artifactId, project.ext.scala.branch)
+}
+
+repositories {
+    maven {
+        name 'Typesafe Releases'
+        url 'http://repo.typesafe.com/typesafe/releases/'
+    }
 }
 
 dependencies {
@@ -13,4 +22,8 @@ compileScala {
 task scaladocJar(type: Jar) {
     from scaladoc
     classifier = 'javadoc'
+}
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.useAnt = false
 }

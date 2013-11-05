@@ -1,0 +1,12 @@
+dependencies {
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api',                  version: project.ext.apache.log4j.version
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core',                 version: project.ext.apache.log4j.version
+
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl',           version: project.ext.apache.log4j.version
+
+    compile group: 'org.slf4j',                name: 'slf4j-api',                  version: project.ext.slf4j.version
+    compile group: 'org.slf4j',                name: 'slf4j-nop',                  version: project.ext.slf4j.version // required for BoneCP
+
+    compile group: 'com.typesafe',             name: sclArt('scalalogging-log4j'), version: project.ext.typesafe.logging.version
+    compile group: 'com.typesafe',             name: sclArt('scalalogging-slf4j'), version: project.ext.typesafe.logging.version
+}

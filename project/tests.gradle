@@ -1,3 +1,7 @@
+dependencies {
+    testCompile group: 'org.scalatest', name: sclArt('scalatest'), version: project.ext.scalatest.version
+}
+
 def getSuiteClassName(String specName) {
     [project.group, project.name, 'test', specName + 'Spec'].join('.')
 }
