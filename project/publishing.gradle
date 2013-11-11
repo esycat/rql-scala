@@ -65,11 +65,11 @@ task install {
 */
 
 task release {
-//    dependsOn tagVersion, publish
-    dependsOn tagVersion, uploadArchives
+    dependsOn tagVersion, /*publish*/ uploadArchives
 }
 
 tasks.publish.mustRunAfter tagVersion
+
 
 /**
  * Create POM config and return for use by other tasks.

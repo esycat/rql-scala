@@ -1,6 +1,6 @@
 description = 'Scala driver for RethinkDB.'
 group = 'com.esyfur'
-version = '0.1.5'
+version = '0.1.7'
 
 defaultTasks 'clean', 'run'
 
@@ -22,7 +22,7 @@ apply plugin: 'propsUtil'
 apply from: 'project/util.gradle'
 apply from: 'project/assemble.gradle'
 apply from: 'project/scala.gradle'
-apply from: 'project/logging.gradle'
+//apply from: 'project/logging.gradle'
 apply from: 'project/tests.gradle'
 apply from: 'project/publishing.gradle'
 apply from: 'project/ide.gradle'
@@ -33,8 +33,6 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.typesafe', name: 'config', version: project.ext.typesafe.config.version
-
     compile group: 'joda-time', name: 'joda-time',    version: project.ext.joda.time.version
     compile group: 'org.joda',  name: 'joda-convert', version: '1.3.1'
 
