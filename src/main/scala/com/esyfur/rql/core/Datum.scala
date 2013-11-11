@@ -1,5 +1,7 @@
 package com.esyfur.rql.core
 
+import org.joda.time.DateTime
+
 import scala.collection.JavaConverters._
 
 import com.rethinkdb.{Ql2 => p}
@@ -26,6 +28,8 @@ object Datum {
     def apply(value: Seq[Any]) = new ArrayDatum(value)
 
     def apply(value: Document) = new ObjectDatum(value)
+
+    def apply(value: DateTime) = ???
 
     def apply(value: Option[Any]): Datum[Any] = value match {
         case Some(v) => Datum(v)

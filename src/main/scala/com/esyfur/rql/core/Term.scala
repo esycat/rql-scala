@@ -8,6 +8,6 @@ private[rql] abstract class Term {
 
     protected def getTermBuilder(): p.Term.Builder = p.Term.newBuilder().setType(termType)
 
-    def build(): p.Term = getTermBuilder().build()
+    protected[rql] def build(): p.Term = getTermBuilder().build()
 
 }

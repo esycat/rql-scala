@@ -36,8 +36,6 @@ package object rql {
 
     def default() = ???
 
-//    def expr(value: Term): Term = value
-
     def expr(value: Boolean): BoolValue = Datum(value)
 
     def expr(value: Int): NumValue = Datum(value)
@@ -50,12 +48,12 @@ package object rql {
 
     def expr(value: String): StrValue = Datum(value)
 
+    def apply(value: Option[Any]): Datum[Any] = Datum(value)
+
     def expr(value: Any): Term = value match {
         case v: Term => v
         case _ => Datum(value)
     }
-
-//    def expr(value: Any): Datum[Any] = Datum(value)
 
     def js(expression: String) = ???
 
