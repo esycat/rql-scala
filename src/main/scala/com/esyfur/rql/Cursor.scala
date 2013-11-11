@@ -2,6 +2,7 @@ package com.esyfur.rql
 
 
 import com.rethinkdb.{Ql2 => p}
+import scala.collection.mutable.ArrayBuffer
 
 class Cursor(
     private val connection: Connection,
@@ -30,6 +31,8 @@ class Cursor(
     private def readMore(): Unit = {
         connection.continue(response.getToken)
     }
+
+    def generatedKey: String = next().asInstanceOf[Document].get("generated_keys").get.asInstanceOf[ArrayBuffer[String]].head
 
     def each() = ???
 

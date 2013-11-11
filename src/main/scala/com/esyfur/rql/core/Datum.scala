@@ -31,13 +31,9 @@ object Datum {
 
     def apply(value: DateTime) = ???
 
-    def apply(value: Option[Any]): Datum[Any] = value match {
-        case Some(v) => Datum(v)
-        case None    => new NullDatum
-    }
-
     def apply(value: Any): Datum[Any] = value match {
-        case null        => Datum(null)
+        case None | null => Datum(null)
+        case Some(v)     => Datum(v)
         case v: Boolean  => Datum(v)
         case v: Int      => Datum(v)
         case v: Long     => Datum(v)

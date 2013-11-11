@@ -48,7 +48,7 @@ package object rql {
 
     def expr(value: String): StrValue = Datum(value)
 
-    def apply(value: Option[Any]): Datum[Any] = Datum(value)
+    def expr(value: Option[Any]): Datum[Any] = Datum(value)
 
     def expr(value: Any): Term = value match {
         case v: Term => v
