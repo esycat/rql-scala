@@ -3,7 +3,8 @@ package com.esyfur.rql.core
 import scala.util.matching.Regex
 
 import com.esyfur.rql.ast.ops._
-import com.esyfur.rql.ast.{During, ToEpochTime, Match}
+import com.esyfur.rql.ast._
+import com.esyfur.rql.SpanOptions
 import com.esyfur.rql.SpanOptions
 
 private[rql] trait Value extends Term { self: Value =>
@@ -73,34 +74,36 @@ trait StrValue extends Term { self: StrValue =>
 
 trait TimeValue extends Term { self: TimeValue =>
 
-    def toISO8601(): NumValue = ???
+    def toISO8601(): StrValue = ???
 
     def toEpochTime() = new ToEpochTime(this)
 
-    def date(): TimeValue = ???
+    def date(): TimeValue = new Date(this)
 
-    def timeOfDay(): NumValue = ???
+    def year(): NumValue = new Year(this)
 
-    def timezone(): StrValue = ???
+    def month(): NumValue = new Month(this)
 
-    def inTimezone(): TimeValue = ???
+    def day() = dayOfMonth()
+
+    def dayOfMonth(): NumValue = new DayOfMonth(this)
+
+    def dayOfWeek(): NumValue = new DayOfWeek(this)
+
+    def dayOfYear(): NumValue = new DayOfYear(this)
+
+    def timeOfDay(): NumValue = new TimeOfDay(this)
+
+    def hours(): NumValue = new Hours(this)
+
+    def minutes(): NumValue = new Minutes(this)
+
+    def seconds(): NumValue = new Seconds(this)
+
+    def timezone(): StrValue = new Timezone(this)
+
+    def inTimezone(): TimeValue = new InTimezone()
 
     def during(start: TimeValue, end: TimeValue, options: Option[SpanOptions] = None) = new During(start, end, options)
-
-    def year(): NumValue = ???
-
-    def month(): NumValue = ???
-
-    def day(): NumValue = ???
-
-    def dayOfWeek(): NumValue = ???
-
-    def dayOfYear(): NumValue = ???
-
-    def hours(): NumValue = ???
-
-    def minutes(): NumValue = ???
-
-    def seconds(): NumValue = ???
 
 }

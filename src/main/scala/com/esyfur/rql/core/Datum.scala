@@ -29,7 +29,9 @@ object Datum {
 
     def apply(value: Document) = new ObjectDatum(value)
 
-    def apply(value: DateTime) = ???
+    def apply(value: DateTime): TimeValue = expr(value)
+
+    def apply(value: java.util.Date): TimeValue = expr(value)
 
     def apply(value: Any): Datum[Any] = value match {
         case None | null => Datum(null)

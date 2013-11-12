@@ -2,6 +2,7 @@ package com.esyfur
 
 import java.net.InetSocketAddress
 import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 
 import rql.ast._
 import com.esyfur.rql.core._
@@ -48,6 +49,10 @@ package object rql {
 
     def expr(value: String): StrValue = Datum(value)
 
+    def expr(value: DateTime): TimeValue = time(value)
+
+    def expr(value: java.util.Date): TimeValue = time(value)
+
     def expr(value: Option[Any]): Datum[Any] = Datum(value)
 
     def expr(value: Any): Term = value match {
@@ -79,9 +84,19 @@ package object rql {
 
     def now(): TimeValue = new Now()
 
-    def time(year: Short, month: Short, day: Short, hour: Short = 0, minute: Short = 0, second: Short = 0): TimeValue = time(new DateTime(year, month, day, hour, minute, second))
+    def time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int, zone: String): TimeValue = new Time(
+        year, month, day, hour, minute, second, zone
+    )
 
-    def time(dateTime: DateTime): TimeValue = new Time(dateTime)
+    def time(year: Int, month: Int, day: Int, zone: String): TimeValue = new Time(year, month, day, 0, 0, 0, zone)
+
+    def time(dateTime: DateTime): TimeValue = new Time(
+        dateTime.getYear, dateTime.getMonthOfYear, dateTime.getDayOfMonth,
+        dateTime.getHourOfDay, dateTime.getMinuteOfHour, dateTime.getSecondOfMinute,
+        dateTime.getZone.toString
+    )
+
+    def time(dateTime: java.util.Date): TimeValue = time(new DateTime(dateTime))
 
     def epochTime(seconds: Long): TimeValue = new EpochTime(seconds)
 
