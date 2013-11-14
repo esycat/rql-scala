@@ -2,6 +2,7 @@ package com.esyfur.rql
 
 import scala.util.Random.nextDouble
 import com.esyfur.{rql => r}
+import com.esyfur.rql.core.TimeValue
 
 object Main extends App {
 
@@ -13,12 +14,14 @@ object Main extends App {
     val data2 = Map("rndVal" -> nextDouble, "title" -> "Master of Orion", "year" -> 1993, "genre" -> "strategy", "altNames" -> Seq("MoO"))
 
     var c: Cursor = _
+    var t: TimeValue = _
 
     // connect to the server, set default connection and database
     val conn = r.connect(host).repl().use(db)
 
     setUp()
     exercise()
+    exerciseDateTime()
     tearDown()
 
     conn.close()
@@ -43,6 +46,11 @@ object Main extends App {
 
         c = r.db(db).table(tbl).isEmpty.run()
         print(c)
+    }
+
+    private def exerciseDateTime(): Unit = {
+        t = r.now()
+        print(t)
 
     }
 
@@ -80,6 +88,10 @@ object Main extends App {
     private def print(c: Cursor): Unit = {
         if (c.hasNext) println(c.next())
         else println("Cursor empty")
+    }
+
+    private def print(t: TimeValue): Unit = {
+        println(t.minutes())
     }
 
 }
