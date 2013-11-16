@@ -19,10 +19,10 @@ object Main extends App {
     // connect to the server, set default connection and database
     val conn = r.connect(host).repl().use(db)
 
-    setUp()
-    exercise()
+//    setUp()
+//    exercise()
     exerciseDateTime()
-    tearDown()
+//    tearDown()
 
     conn.close()
 
@@ -52,6 +52,8 @@ object Main extends App {
         t = r.now()
         print(t)
 
+        t = r.epochTime(System.currentTimeMillis() / 1000L)
+        print(t)
     }
 
     private def setUp(): Unit = {

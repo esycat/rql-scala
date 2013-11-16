@@ -20,17 +20,17 @@ class Time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int,
 
 }
 
+class EpochTime(val value: Long) extends MethodQuery(value) with TimeValue {
+
+    protected val termType = p.Term.TermType.EPOCH_TIME
+    val st = "epoch_time"
+
+}
+
 class Date(val value: TimeValue) extends MethodQuery(value) with TimeValue {
 
     protected val termType = p.Term.TermType.DATE
     val st = "date"
-
-}
-
-class EpochTime(val value: Long) extends TopLevelQuery(/*value*/) with TimeValue {
-
-    protected val termType = p.Term.TermType.EPOCH_TIME
-    val st = "epoch_time"
 
 }
 
