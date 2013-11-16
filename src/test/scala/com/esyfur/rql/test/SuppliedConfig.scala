@@ -1,17 +1,17 @@
 package com.esyfur.rql.test
 
-import org.scalatest.{Suite, BeforeAndAfterAll}
+import org.scalatest.{Suite, ConfigMap, BeforeAndAfterAll}
 
 trait SuppliedConfig extends Suite with BeforeAndAfterAll {
 
-    protected var configMap: Map[String, Any] = _
+    protected var config: ConfigMap = _
 
-    protected override def beforeAll(configMap: Map[String, Any]): Unit = {
-        this.configMap = configMap
+    protected override def beforeAll(configMap: ConfigMap): Unit = {
+        this.config = configMap
     }
 
-    protected def dbHost = configMap("db.host").asInstanceOf[String]
-    protected def dbPort = configMap("db.port").asInstanceOf[String].toInt
-    protected def dbName = configMap("db.name").asInstanceOf[String]
+    protected def dbHost = config.getRequired[String]("db.host")
+    protected def dbPort = config.getRequired[String]("db.port").toInt
+    protected def dbName = config.getRequired[String]("db.name")
 
 }

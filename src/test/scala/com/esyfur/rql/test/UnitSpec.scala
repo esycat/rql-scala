@@ -1,10 +1,9 @@
 package com.esyfur.rql.test
 
-import org.scalatest.{FunSpec, BeforeAndAfterAll}
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{FunSpec, Matchers, BeforeAndAfterAll, OptionValues, Inside}
 import com.esyfur.rql.Cursor
 
-abstract class BaseSpec extends FunSpec with BeforeAndAfterAll with ShouldMatchers {
+abstract class UnitSpec extends FunSpec with Matchers with BeforeAndAfterAll with OptionValues with Inside {
 
     protected def getRndSuffix = scala.util.Random.alphanumeric.take(5).mkString.toLowerCase
 

@@ -4,7 +4,7 @@ import com.esyfur.{rql => r}
 import scala.collection.mutable.ArrayBuffer
 import com.esyfur.rql.{Durability, TableOptions}
 
-class QuerySpec extends BaseSpec with ConnectionAndDatabase {
+class QuerySpec extends UnitSpec with ConnectionAndDatabase {
 
     private val tableName = "test"
     private val columnName = "name"

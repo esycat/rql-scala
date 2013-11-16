@@ -2,7 +2,7 @@ package com.esyfur.rql.test
 
 import com.esyfur.{rql => r}
 
-class RqlSpec extends BaseSpec with ConnectionAndDatabase {
+class RqlSpec extends UnitSpec with ConnectionAndDatabase {
 
     protected lazy val dbNameTmp = dbName + "_" + getRndSuffix
 

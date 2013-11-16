@@ -4,7 +4,7 @@ import com.esyfur.{rql => r}
 import com.esyfur.rql.Connection
 import java.net.InetSocketAddress
 
-class DriverSpec extends BaseSpec with SuppliedConfig {
+class DriverSpec extends UnitSpec with SuppliedConfig {
 
     private def assertConnection(connection: Connection): Unit = {
         connection should not be (null)
