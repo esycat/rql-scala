@@ -118,21 +118,21 @@ class During(val start: TimeValue, val end: TimeValue, val options: Option[SpanO
 
 }
 
-class ToEpochTime(val time: TimeValue) extends MethodQuery(time) {
+class ToEpochTime(val value: TimeValue) extends MethodQuery(value) {
 
     protected val termType = p.Term.TermType.TO_EPOCH_TIME
     val st = "to_epoch_time"
 
 }
 
-class ToISO8601(val time: TimeValue) extends MethodQuery(time) {
+class ToISO8601(val value: TimeValue) extends MethodQuery(value) {
 
     protected val termType = p.Term.TermType.TO_ISO8601
     val st = "to_iso8601"
 
 }
 
-class InTimezone extends MethodQuery with TimeValue {
+class InTimezone(val value: TimeValue, val zone: String) extends MethodQuery(value, zone) with TimeValue {
 
     protected val termType = p.Term.TermType.IN_TIMEZONE
     val st = "in_timezone"
