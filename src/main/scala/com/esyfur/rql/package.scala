@@ -93,6 +93,6 @@ package object rql {
 
     def epochTime(seconds: Long): EpochTime = new EpochTime(seconds)
 
-    def iso8601(dateString: String, defaultTimezone: Option[String] = None): TimeValue = new ISO8601(dateString)
+    def iso8601(dateString: String, defaultTimezone: Option[String] = None): ISO8601 = new ISO8601(dateString)
 
 }
