@@ -1,8 +1,9 @@
 package com.esyfur
 
 import java.net.InetSocketAddress
+
+import java.util.Date
 import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
 
 import rql.ast._
 import com.esyfur.rql.core._
@@ -49,9 +50,9 @@ package object rql {
 
     def expr(value: String): StrValue = Datum(value)
 
-    def expr(value: DateTime): TimeValue = time(value)
+    def expr(value: DateTime): TimeValue = iso8601(value.toString)
 
-    def expr(value: java.util.Date): TimeValue = time(value)
+    def expr(value: Date): TimeValue = expr(new DateTime(value))
 
     def expr(value: Option[Any]): Datum[Any] = Datum(value)
 
@@ -82,23 +83,17 @@ package object rql {
 
     def table(name: String) = Connection.default.db.table(name)
 
-    def now(): TimeValue = new Now()
+    def now(): Now = new Now()
 
-    def time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int, zone: String): TimeValue = new Time(
+    def time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int, zone: String): Time = new Time(
         year, month, day, hour, minute, second, zone
     )
 
-    def time(year: Int, month: Int, day: Int, zone: String): TimeValue = new Time(year, month, day, 0, 0, 0, zone)
-
-    def time(dateTime: DateTime): TimeValue = new Time(
-        dateTime.getYear, dateTime.getMonthOfYear, dateTime.getDayOfMonth,
-        dateTime.getHourOfDay, dateTime.getMinuteOfHour, dateTime.getSecondOfMinute,
-        dateTime.getZone.toString
+    def time(year: Int, month: Int, day: Int, zone: String = "Z"): Time = time(
+        year, month, day, 0, 0, 0, zone
     )
 
-    def time(dateTime: java.util.Date): TimeValue = time(new DateTime(dateTime))
-
-    def epochTime(seconds: Long): TimeValue = new EpochTime(seconds)
+    def epochTime(seconds: Long): EpochTime = new EpochTime(seconds)
 
     def iso8601(dateString: String, defaultTimezone: Option[String] = None): TimeValue = new ISO8601(dateString)
 

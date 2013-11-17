@@ -1,5 +1,6 @@
 package com.esyfur.rql.core
 
+import java.util.Date
 import org.joda.time.DateTime
 
 import scala.collection.JavaConverters._
@@ -31,7 +32,7 @@ object Datum {
 
     def apply(value: DateTime): TimeValue = expr(value)
 
-    def apply(value: java.util.Date): TimeValue = expr(value)
+    def apply(value: Date): TimeValue = expr(value)
 
     def apply(value: Any): Datum[Any] = value match {
         case None | null => Datum(null)

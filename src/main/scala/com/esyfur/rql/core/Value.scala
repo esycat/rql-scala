@@ -74,35 +74,35 @@ trait StrValue extends Term { self: StrValue =>
 
 trait TimeValue extends Term { self: TimeValue =>
 
-    def toISO8601(): StrValue = ???
+    def toISO8601() = new ToISO8601(this)
 
     def toEpochTime() = new ToEpochTime(this)
 
-    def date(): TimeValue = new Date(this)
+    def date() = new Date(this)
 
-    def year(): NumValue = new Year(this)
+    def year() = new Year(this)
 
     def month(): NumValue = new Month(this)
 
     def day() = dayOfMonth()
 
-    def dayOfMonth(): NumValue = new DayOfMonth(this)
+    def dayOfMonth() = new DayOfMonth(this)
 
-    def dayOfWeek(): NumValue = new DayOfWeek(this)
+    def dayOfWeek() = new DayOfWeek(this)
 
-    def dayOfYear(): NumValue = new DayOfYear(this)
+    def dayOfYear() = new DayOfYear(this)
 
-    def timeOfDay(): NumValue = new TimeOfDay(this)
+    def timeOfDay() = new TimeOfDay(this)
 
-    def hours(): NumValue = new Hours(this)
+    def hours() = new Hours(this)
 
-    def minutes(): NumValue = new Minutes(this)
+    def minutes() = new Minutes(this)
 
-    def seconds(): NumValue = new Seconds(this)
+    def seconds() = new Seconds(this)
 
-    def timezone(): StrValue = new Timezone(this)
+    def timezone() = new Timezone(this)
 
-    def inTimezone(): TimeValue = new InTimezone()
+    def inTimezone() = new InTimezone()
 
     def during(start: TimeValue, end: TimeValue, options: Option[SpanOptions] = None) = new During(start, end, options)
 

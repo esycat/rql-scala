@@ -111,21 +111,21 @@ class Seconds(val value: TimeValue) extends MethodQuery(value) with NumValue {
 
 }
 
-class During(start: TimeValue, end: TimeValue, options: Option[SpanOptions]) extends MethodQuery(start, end) {
+class During(val start: TimeValue, val end: TimeValue, val options: Option[SpanOptions]) extends MethodQuery(start, end) {
 
     protected val termType = p.Term.TermType.DURING
     val st = "during"
 
 }
 
-class ToEpochTime(seconds: TimeValue) extends MethodQuery(seconds) {
+class ToEpochTime(val time: TimeValue) extends MethodQuery(time) {
 
     protected val termType = p.Term.TermType.TO_EPOCH_TIME
     val st = "to_epoch_time"
 
 }
 
-class ToISO8601 extends MethodQuery {
+class ToISO8601(val time: TimeValue) extends MethodQuery(time) {
 
     protected val termType = p.Term.TermType.TO_ISO8601
     val st = "to_iso8601"
