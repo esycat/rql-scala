@@ -14,7 +14,6 @@ object Main extends App {
     val data2 = Map("rndVal" -> nextDouble, "title" -> "Master of Orion", "year" -> 1993, "genre" -> "strategy", "altNames" -> Seq("MoO"))
 
     var c: Cursor = _
-    var t: TimeValue = _
 
     // connect to the server, set default connection and database
     val conn = r.connect(host).repl().use(db)
@@ -49,11 +48,17 @@ object Main extends App {
     }
 
     private def exerciseDateTime(): Unit = {
-        t = r.now()
-        print(t)
+        c = r.now.run()
+        print(c)
 
-        t = r.epochTime(System.currentTimeMillis() / 1000L)
-        print(t)
+        c = r.epochTime(System.currentTimeMillis() / 1000L).run()
+        print(c)
+
+        c = r.iso8601()
+        print(c)
+
+        c = r.time(1983, 11, 13, "+10:00").run
+        print(c)
     }
 
     private def setUp(): Unit = {

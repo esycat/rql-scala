@@ -22,21 +22,9 @@ package object rql {
         connect(addr, db)
     }
 
-    // def connect(host: String, db: String): Connection = connect(host = host, db = db)
-
     def connect(address: InetSocketAddress): Connection = new Connection(address)
 
     def connect(address: InetSocketAddress, db: String): Connection =  connect(address).use(db)
-
-    // def do() = ???
-
-    def branch(test: Boolean, positive: (() => Unit), negative: (() => Unit)) = ???
-
-    def foreach() = ???
-
-    def error() = ???
-
-    def default() = ???
 
     def expr(value: Boolean): BoolValue = Datum(value)
 
@@ -60,6 +48,16 @@ package object rql {
         case v: Term => v
         case _ => Datum(value)
     }
+
+    def funcall() = ???
+
+    def branch(test: Boolean, positive: (() => Unit), negative: (() => Unit)) = ???
+
+    def foreach() = ???
+
+    def error() = ???
+
+    def default() = ???
 
     def js(expression: String) = ???
 
