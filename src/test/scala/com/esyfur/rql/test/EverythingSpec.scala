@@ -5,5 +5,6 @@ import org.scalatest.Suites
 class EverythingSpec extends Suites (
     new DriverSpec,
     new RqlSpec,
-    new QuerySpec
+    new QuerySpec,
+    new DateTimeSpec
 )

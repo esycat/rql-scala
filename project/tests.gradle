@@ -7,6 +7,7 @@ def getSuiteClassName(String specName) {
 }
 
 task test(overwrite: true, dependsOn: testClasses) << {
+    def testSuiteName = project.ext.has('suite') ? project.ext.get('suite') : project.ext.testProp.suite
     ant.taskdef(
             name: 'scalatest',
             classname: 'org.scalatest.tools.ScalaTestAntTask',
@@ -14,7 +15,7 @@ task test(overwrite: true, dependsOn: testClasses) << {
     )
     ant.scalatest(runpath: sourceSets.test.output.classesDir, haltonfailure: true, fork: false) {
         reporter(type: 'stderr', config: 'S')
-        suite(classname: getSuiteClassName(project.ext.testProp.suite))
+        suite(classname: getSuiteClassName(testSuiteName))
         config(name: 'db.host', value: project.ext.testProp.db.host)
         config(name: 'db.port', value: project.ext.testProp.db.port)
         config(name: 'db.name', value: project.ext.testProp.db.name)
