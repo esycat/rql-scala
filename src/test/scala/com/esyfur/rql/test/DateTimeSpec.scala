@@ -11,6 +11,8 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
 
     private val tz = DateTimeZone.forOffsetHours(10)
 
+    private def seconds(dateTime: DateTime): Double = dateTime.getSecondOfMinute + dateTime.getMillisOfSecond / 1000.0
+
     private def assertTime(ts: DateTime, tolerance: Option[Double] = None)(cursor: Cursor): Unit = {
         assertNotEmpty(cursor)
 
@@ -43,10 +45,7 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
             it("for a specific date in a given timezone") {
                 // current date at midnight converted to the given timezone
                 val ts = currentTime.withTimeAtStartOfDay.withZoneRetainFields(tz)
-                val cursor = r.time(
-                    ts.getYear, ts.getMonthOfYear, ts.getDayOfMonth,
-                    getTzOffset(ts.getZone)
-                ).run
+                val cursor = r.time(ts.getYear, ts.getMonthOfYear, ts.getDayOfMonth,getTzOffset(ts.getZone)).run
                 assertTime(ts)(cursor)
             }
 
@@ -55,7 +54,7 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
                 val ts = currentTime.withZoneRetainFields(tz)
                 val cursor = r.time(
                     ts.getYear, ts.getMonthOfYear, ts.getDayOfMonth,
-                    ts.getHourOfDay, ts.getMinuteOfHour, ts.getSecondOfMinute + ts.getMillisOfSecond / 1000.0,
+                    ts.getHourOfDay, ts.getMinuteOfHour, seconds(ts),
                     getTzOffset(ts.getZone)
                 ).run
                 assertTime(ts)(cursor)
@@ -88,7 +87,6 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
                     val expected = ts.withZone(tz)
                     val cursor = r.iso8601(ts.toString).inTimezone(getTzOffset(tz)).run
                     assertTime(expected)(cursor)
-
                 }
 
                 it("based only on its date") {
@@ -103,6 +101,62 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
                 val ts = currentTime
                 val expected = ts.getMillisOfDay / 1000.0
                 val cursor = r.expr(ts).timeOfDay().run
+                assertCursor(expected, cursor)
+            }
+
+            it("year") {
+                val ts = currentTime
+                val expected = ts.getYear
+                val cursor = r.expr(ts).year().run
+                assertCursor(expected, cursor)
+            }
+
+            it("month") {
+                val ts = currentTime
+                val expected = ts.getMonthOfYear
+                val cursor = r.expr(ts).month().run
+                assertCursor(expected, cursor)
+            }
+
+            it("day of month") {
+                val ts = currentTime
+                val expected = ts.getDayOfMonth
+                val cursor = r.expr(ts).dayOfMonth().run
+                assertCursor(expected, cursor)
+            }
+
+            it("day of week") {
+                val ts = currentTime
+                val expected = ts.getDayOfWeek
+                val cursor = r.expr(ts).dayOfWeek().run
+                assertCursor(expected, cursor)
+            }
+
+            it("day of year") {
+                val ts = currentTime
+                val expected = ts.getDayOfYear
+                val cursor = r.expr(ts).dayOfYear().run
+                assertCursor(expected, cursor)
+            }
+
+            it("hours") {
+                val ts = currentTime
+                val expected = ts.getHourOfDay
+                val cursor = r.expr(ts).hours().run
+                assertCursor(expected, cursor)
+            }
+
+            it("minutes") {
+                val ts = currentTime
+                val expected = ts.getMinuteOfHour
+                val cursor = r.expr(ts).minutes().run
+                assertCursor(expected, cursor)
+            }
+
+            it("seconds") {
+                val ts = currentTime
+                val expected = seconds(ts)
+                val cursor = r.expr(ts).seconds().run
                 assertCursor(expected, cursor)
             }
         }

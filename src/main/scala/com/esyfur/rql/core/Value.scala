@@ -82,7 +82,7 @@ trait TimeValue extends Term { self: TimeValue =>
 
     def year() = new Year(this)
 
-    def month(): NumValue = new Month(this)
+    def month() = new Month(this)
 
     def day() = dayOfMonth()
 
