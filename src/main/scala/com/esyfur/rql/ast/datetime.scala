@@ -11,7 +11,7 @@ class Now extends TopLevelQuery with TimeValue {
 
 }
 
-class Time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int, zone: String)
+class Time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Double, zone: String)
     extends MethodQuery(year, month, day, hour, minute, second, zone)
     with TimeValue {
 
@@ -20,7 +20,7 @@ class Time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int,
 
 }
 
-class EpochTime(val value: Long) extends MethodQuery(value) with TimeValue {
+class EpochTime(val value: Double) extends MethodQuery(value) with TimeValue {
 
     protected val termType = p.Term.TermType.EPOCH_TIME
     val st = "epoch_time"

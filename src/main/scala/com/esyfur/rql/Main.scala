@@ -51,6 +51,23 @@ object Main extends App {
     }
 
     private def exerciseDateTime(): Unit = {
+        val tz = DateTimeZone.forOffsetHours(10)
+        val ts = currentTime.withZoneRetainFields(tz)
+
+        c = r.iso8601(ts.toString).run
+
+        val document = c.next().asInstanceOf[Document]
+        val epochTime = document("epoch_time").asInstanceOf[Double]
+
+        println(epochTime)
+        println(toEpochTime(ts))
+        println(ts.getMillis / 1000.0)
+
+        println("")
+        println(epochTime * 1000 toLong)
+        println(ts.getMillis)
+
+        /*
         c = r.now.run
         printCursor(c)
 
@@ -81,6 +98,7 @@ object Main extends App {
         ).run
         d = c.next().asInstanceOf[Document]
         println(d("epoch_time").asInstanceOf[Double].toLong)
+        */
     }
 
     private def setUp(): Unit = {

@@ -83,7 +83,7 @@ package object rql {
 
     def now(): Now = new Now()
 
-    def time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Int, zone: String): Time = new Time(
+    def time(year: Int, month: Int, day: Int, hour: Int, minute: Int, second: Double, zone: String): Time = new Time(
         year, month, day, hour, minute, second, zone
     )
 
@@ -91,7 +91,9 @@ package object rql {
         year, month, day, 0, 0, 0, zone
     )
 
-    def epochTime(seconds: Long): EpochTime = new EpochTime(seconds)
+    def epochTime(seconds: Double): EpochTime = new EpochTime(seconds)
+
+    def epochTime(millis: Long): EpochTime = epochTime(millis / 1000.0)
 
     def iso8601(dateString: String, defaultTimezone: Option[String] = None): ISO8601 = new ISO8601(dateString)
 

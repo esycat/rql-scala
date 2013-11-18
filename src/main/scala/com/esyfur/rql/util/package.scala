@@ -19,6 +19,8 @@ package object util {
 
     private[rql] def getTzOffset(timeZone: DateTimeZone): String = getTzOffset(timeZone.toTimeZone)
 
+    private[rql] def toEpochTime(dateTime: DateTime): Double = dateTime.getMillis / 1000.0
+
     private[rql] def currentTime: DateTime = new DateTime(DateTimeZone.UTC)
 
 }
