@@ -10,7 +10,7 @@ It should work for RethinkDB v1.8.
 
 ```scala
 appDependencies ++= Seq(
-    "com.esyfur" % "rql" % "0.1"
+    "com.esyfur" % "rql" % "0.1.+"
 )
 ```
 
@@ -18,13 +18,18 @@ appDependencies ++= Seq(
 
 ```groovy
 dependencies {
-    compile group: 'com.esyfur', name: 'rql', version: '0.1'
+    compile group: 'com.esyfur', name: 'rql', version: '0.1.+'
 }
 ```
 
 ### Maven
 
 ```xml
+<dependency>
+  <groupId>com.esyfur</groupId>
+  <artifactId>rql</artifactId>
+  <version>0.1.+</version>
+</dependency>
 ```
 
 
