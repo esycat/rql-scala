@@ -160,6 +160,22 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
                 assertCursor(expected, cursor)
             }
         }
+
+        it("should be able to tell whether it is between two other times") {
+            val ts = currentTime
+
+            val cursor1 = r.expr(ts).during(
+                r.expr(ts.minusHours(1)),
+                r.expr(ts.plusHours(1))
+            ).run
+            assertCursor(true, cursor1)
+
+            val cursor2 = r.expr(ts).during(
+                r.expr(ts.plusDays(1)),
+                r.expr(ts.plusMonths(1))
+            ).run
+            assertCursor(false, cursor2)
+        }
     }
 
 }

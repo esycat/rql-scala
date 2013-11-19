@@ -27,6 +27,13 @@ class EpochTime(val value: Double) extends MethodQuery(value) with TimeValue {
 
 }
 
+class InTimezone(val value: TimeValue, val zone: String) extends MethodQuery(value, zone) with TimeValue {
+
+    protected val termType = p.Term.TermType.IN_TIMEZONE
+    val st = "in_timezone"
+
+}
+
 class Date(val value: TimeValue) extends MethodQuery(value) with TimeValue {
 
     protected val termType = p.Term.TermType.DATE
@@ -111,30 +118,25 @@ class Seconds(val value: TimeValue) extends MethodQuery(value) with NumValue {
 
 }
 
-class During(val start: TimeValue, val end: TimeValue, val options: Option[SpanOptions]) extends MethodQuery(start, end) {
+class During(val value: TimeValue, val start: TimeValue, val end: TimeValue, val options: Option[SpanOptions])
+    extends MethodQuery(value, start, end)
+    with BoolValue {
 
     protected val termType = p.Term.TermType.DURING
     val st = "during"
 
 }
 
-class ToEpochTime(val value: TimeValue) extends MethodQuery(value) {
+class ToEpochTime(val value: TimeValue) extends MethodQuery(value) with NumValue {
 
     protected val termType = p.Term.TermType.TO_EPOCH_TIME
     val st = "to_epoch_time"
 
 }
 
-class ToISO8601(val value: TimeValue) extends MethodQuery(value) {
+class ToISO8601(val value: TimeValue) extends MethodQuery(value) with StrValue {
 
     protected val termType = p.Term.TermType.TO_ISO8601
     val st = "to_iso8601"
-
-}
-
-class InTimezone(val value: TimeValue, val zone: String) extends MethodQuery(value, zone) with TimeValue {
-
-    protected val termType = p.Term.TermType.IN_TIMEZONE
-    val st = "in_timezone"
 
 }

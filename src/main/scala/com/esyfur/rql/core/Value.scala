@@ -104,6 +104,6 @@ trait TimeValue extends Term { self: TimeValue =>
 
     def inTimezone(timezone: String) = new InTimezone(this, timezone)
 
-    def during(start: TimeValue, end: TimeValue, options: Option[SpanOptions] = None) = new During(start, end, options)
+    def during(start: TimeValue, end: TimeValue, options: Option[SpanOptions] = None) = new During(this, start, end, options)
 
 }
