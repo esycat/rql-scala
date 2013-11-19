@@ -74,7 +74,7 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
             }
         }
 
-        it("should have defined weekdays") {
+        ignore("should have defined weekday and month names") {
 
         }
     }
