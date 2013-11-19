@@ -101,7 +101,7 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
                 val ts = currentTime
                 val expected = ts.getMillisOfDay / 1000.0
                 val cursor = r.expr(ts).timeOfDay().run
-                assertCursor(expected, cursor)
+                assertCursor(expected)(cursor)
             }
 
             it("its components") {
@@ -139,14 +139,14 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
                 val ts = currentTime
                 val expected = toEpochTime(ts)
                 val cursor = r.expr(ts).toEpochTime().run
-                assertCursor(expected, cursor)
+                assertCursor(expected)(cursor)
             }
 
             it("to its ISO 8601 format") {
                 val ts = currentTime.withZone(tz)
                 val expected = ts.toString()
                 val cursor = r.expr(ts).toISO8601().run
-                assertCursor(expected, cursor)
+                assertCursor(expected)(cursor)
             }
         }
 

@@ -136,7 +136,7 @@ final class ArrayDatum(val value: Seq[Any]) extends Datum[Seq[Any]] {
 
 object ObjectDatum {
 
-    def unwrap(datum: Seq[p.Datum.AssocPair]): Map[String, Any] = datum.map(pair =>
+    def unwrap(datum: Seq[p.Datum.AssocPair]): Document = datum.map(pair =>
         pair.getKey -> (Datum unwrap pair.getVal)
     )(collection.breakOut)
 

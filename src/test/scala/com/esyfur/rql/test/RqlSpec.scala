@@ -10,7 +10,7 @@ class RqlSpec extends UnitSpec with ConnectionAndDatabase {
         it("should be able to create a database") {
             val expected = Map("created" -> 1.0)
             val cursor = r.dbCreate(dbNameTmp).run
-            assertCursor(expected, cursor)
+            assertCursor(expected)(cursor)
         }
 
         it("should be able to get a list of existing databases") {
@@ -20,7 +20,7 @@ class RqlSpec extends UnitSpec with ConnectionAndDatabase {
         it("should be able to drop a database") {
             val expected = Map("dropped" -> 1.0)
             val cursor = r.dbDrop(dbNameTmp).run
-            assertCursor(expected, cursor)
+            assertCursor(expected)(cursor)
         }
     }
 

@@ -13,7 +13,7 @@ abstract class UnitSpec extends FunSpec with Matchers with BeforeAndAfterAll wit
         cursor.hasNext should be (true)
     }
 
-    protected def assertCursor(expected: Any, cursor: Cursor): Unit = {
+    protected def assertCursor(expected: Any)(cursor: Cursor): Unit = {
         assertNotEmpty(cursor)
         val actual = cursor.next()
         actual should equal (expected)
@@ -21,7 +21,7 @@ abstract class UnitSpec extends FunSpec with Matchers with BeforeAndAfterAll wit
 
     protected def assertQuery(expected: Any)(query: Query): Unit = {
         val cursor = query.run
-        assertCursor(expected, cursor)
+        assertCursor(expected)(cursor)
     }
 
 }

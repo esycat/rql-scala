@@ -59,13 +59,10 @@ object Main extends App {
         val document = c.next().asInstanceOf[Document]
         val epochTime = document("epoch_time").asInstanceOf[Double]
 
-        println(epochTime)
-        println(toEpochTime(ts))
-        println(ts.getMillis / 1000.0)
-
-        println("")
-        println(epochTime * 1000 toLong)
-        println(ts.getMillis)
+        val iso8601 = currentTime.toString()
+        c = r.iso8601(iso8601).toISO8601().run
+        println(c.next())
+        println(iso8601)
 
         /*
         c = r.now.run
