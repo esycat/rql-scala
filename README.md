@@ -26,9 +26,9 @@ dependencies {
 
 ```xml
 <dependency>
-  <groupId>com.esyfur</groupId>
-  <artifactId>rql</artifactId>
-  <version>0.1.+</version>
+    <groupId>com.esyfur</groupId>
+    <artifactId>rql</artifactId>
+    <version>0.1.+</version>
 </dependency>
 ```
 
