@@ -97,66 +97,55 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
                 }
             }
 
-            it("number of seconds elapsed since the beginning of the day") {
+            it("a number of seconds elapsed since the beginning of the day") {
                 val ts = currentTime
                 val expected = ts.getMillisOfDay / 1000.0
                 val cursor = r.expr(ts).timeOfDay().run
                 assertCursor(expected, cursor)
             }
 
-            it("year") {
+            it("its components") {
                 val ts = currentTime
-                val expected = ts.getYear
-                val cursor = r.expr(ts).year().run
+                val tv = r.expr(ts)
+
+                // Year
+                assertQuery(ts.getYear)(tv.year)
+
+                // Month
+                assertQuery(ts.getMonthOfYear)(tv.month)
+
+                // Day of Month
+                assertQuery(ts.getDayOfMonth)(tv.dayOfMonth)
+
+                // Day of Week
+                assertQuery(ts.getDayOfWeek)(tv.dayOfWeek)
+
+                // Day of Year
+                assertQuery(ts.getDayOfYear)(tv.dayOfYear)
+
+                // Hours
+                assertQuery(ts.getHourOfDay)(tv.hours)
+
+                // Minutes
+                assertQuery(ts.getMinuteOfHour)(tv.minutes)
+
+                // Seconds
+                assertQuery(seconds(ts))(tv.seconds)
+            }
+        }
+
+        describe("can be converted") {
+            it("to its epoch time") {
+                val ts = currentTime
+                val expected = toEpochTime(ts)
+                val cursor = r.expr(ts).toEpochTime().run
                 assertCursor(expected, cursor)
             }
 
-            it("month") {
-                val ts = currentTime
-                val expected = ts.getMonthOfYear
-                val cursor = r.expr(ts).month().run
-                assertCursor(expected, cursor)
-            }
-
-            it("day of month") {
-                val ts = currentTime
-                val expected = ts.getDayOfMonth
-                val cursor = r.expr(ts).dayOfMonth().run
-                assertCursor(expected, cursor)
-            }
-
-            it("day of week") {
-                val ts = currentTime
-                val expected = ts.getDayOfWeek
-                val cursor = r.expr(ts).dayOfWeek().run
-                assertCursor(expected, cursor)
-            }
-
-            it("day of year") {
-                val ts = currentTime
-                val expected = ts.getDayOfYear
-                val cursor = r.expr(ts).dayOfYear().run
-                assertCursor(expected, cursor)
-            }
-
-            it("hours") {
-                val ts = currentTime
-                val expected = ts.getHourOfDay
-                val cursor = r.expr(ts).hours().run
-                assertCursor(expected, cursor)
-            }
-
-            it("minutes") {
-                val ts = currentTime
-                val expected = ts.getMinuteOfHour
-                val cursor = r.expr(ts).minutes().run
-                assertCursor(expected, cursor)
-            }
-
-            it("seconds") {
-                val ts = currentTime
-                val expected = seconds(ts)
-                val cursor = r.expr(ts).seconds().run
+            it("to its ISO 8601 format") {
+                val ts = currentTime.withZone(tz)
+                val expected = ts.toString()
+                val cursor = r.expr(ts).toISO8601().run
                 assertCursor(expected, cursor)
             }
         }
@@ -164,17 +153,17 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
         it("should be able to tell whether it is between two other times") {
             val ts = currentTime
 
-            val cursor1 = r.expr(ts).during(
+            val queryTrue = r.expr(ts).during(
                 r.expr(ts.minusHours(1)),
                 r.expr(ts.plusHours(1))
-            ).run
-            assertCursor(true, cursor1)
+            )
+            assertQuery(true)(queryTrue)
 
-            val cursor2 = r.expr(ts).during(
+            val queryFalse = r.expr(ts).during(
                 r.expr(ts.plusDays(1)),
                 r.expr(ts.plusMonths(1))
-            ).run
-            assertCursor(false, cursor2)
+            )
+            assertQuery(false)(queryFalse)
         }
     }
 
