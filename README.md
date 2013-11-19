@@ -2,7 +2,7 @@
 
 The driver implements only the base part of the [API](http://rethinkdb.com/api/).
 
-It should work for RethinkDB v1.8.
+It should work for RethinkDB v1.10.
 
 ## Installation
 
