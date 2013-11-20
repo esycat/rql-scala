@@ -77,22 +77,22 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
         it("should have defined weekday and month names") {
             // Week days
             val expectedWeekDaySum = (1 to 7).sum
-            val queryWeekDaySum = r.datetime.monday + r.datetime.tuesday + r.datetime.wednesday +
-                r.datetime.thursday + r.datetime.friday + r.datetime.saturday + r.datetime.sunday
+            val queryWeekDaySum = r.monday + r.tuesday + r.wednesday +
+                r.thursday + r.friday + r.saturday + r.sunday
             assertQuery(expectedWeekDaySum)(queryWeekDaySum)
 
-            r.datetime.weekdays.length should be (7)
-            r.datetime.weekday(5) should equal (r.datetime.friday)
+            r.weekdays.length should be (7)
+            r.weekday(5) should equal (r.friday)
 
             // Months
             val expectedMonthSum = (1 to 12).sum
-            val queryMonthSum = r.datetime.january + r.datetime.february + r.datetime.march + r.datetime.april +
-                r.datetime.may + r.datetime.june + r.datetime.july + r.datetime.august +
-                r.datetime.september + r.datetime.october + r.datetime.november + r.datetime.december
+            val queryMonthSum = r.january + r.february + r.march + r.april +
+                r.may + r.june + r.july + r.august +
+                r.september + r.october + r.november + r.december
             assertQuery(expectedMonthSum)(queryMonthSum)
 
-            r.datetime.months.length should be (12)
-            r.datetime.month(11) should equal (r.datetime.november)
+            r.months.length should be (12)
+            r.month(11) should equal (r.november)
         }
     }
 
