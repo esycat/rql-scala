@@ -6,6 +6,7 @@ import org.joda.time.DateTime
 import scala.collection.JavaConverters._
 
 import com.rethinkdb.{Ql2 => p}
+import p.Term.TermType
 import p.Datum.DatumType.{R_NULL, R_BOOL, R_NUM, R_STR, R_ARRAY, R_OBJECT}
 
 import com.esyfur.rql.{expr, Document, RqlDriverError}
@@ -68,7 +69,7 @@ object Datum {
 
 private[rql] sealed abstract class Datum[+T] extends Term {
 
-    protected val termType = p.Term.TermType.DATUM
+    protected val termType = TermType.DATUM
     protected val datumType: p.Datum.DatumType
 
     protected val value: T
@@ -121,7 +122,7 @@ object ArrayDatum {
  */
 final class ArrayDatum(val value: Seq[Any]) extends Datum[Seq[Any]] {
 
-    protected override val termType = p.Term.TermType.MAKE_ARRAY
+    protected override val termType = TermType.MAKE_ARRAY
     protected val datumType = R_ARRAY
 
     protected override def getTermBuilder() = {
@@ -147,7 +148,7 @@ object ObjectDatum {
  */
 final class ObjectDatum(val value: Document) extends Datum[Document] {
 
-    protected override val termType = p.Term.TermType.MAKE_OBJ
+    protected override val termType = TermType.MAKE_OBJ
     protected val datumType = R_OBJECT
 
     protected override def getTermBuilder() = {

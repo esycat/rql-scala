@@ -1,49 +1,51 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
+import p.Term.TermType
+
 import com.esyfur.rql.core.{TopLevelQuery, MethodQuery, ValueQuery, Query}
 
 class Var extends Query {
 
-    protected val termType = p.Term.TermType.VAR
+    protected val termType = TermType.VAR
 
 }
 
 class ImplicitVar extends Query {
 
-    protected val termType = p.Term.TermType.IMPLICIT_VAR
+    protected val termType = TermType.IMPLICIT_VAR
 
 }
 
 class JavaScript(expression: String) extends ValueQuery(expression) {
 
-    protected val termType = p.Term.TermType.JAVASCRIPT
+    protected val termType = TermType.JAVASCRIPT
     val st = "js"
 
 }
 
 class UserError extends TopLevelQuery {
 
-    protected val termType = p.Term.TermType.ERROR
+    protected val termType = TermType.ERROR
     val st = "error"
 
 }
 
 class Default extends Query {
 
-    protected val termType = p.Term.TermType.DEFAULT
+    protected val termType = TermType.DEFAULT
     val st = "default"
 
 }
 
 class GetField extends Query {
 
-    protected val termType = p.Term.TermType.GET_FIELD
+    protected val termType = TermType.GET_FIELD
 }
 
 class Keys extends MethodQuery {
 
-    protected val termType = p.Term.TermType.KEYS
+    protected val termType = TermType.KEYS
     val st = "keys"
 
 }

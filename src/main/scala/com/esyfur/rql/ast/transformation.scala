@@ -1,57 +1,59 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
+import p.Term.TermType
+
 import com.esyfur.rql.core.{MethodQuery, Query, Term}
 
 class Map extends MethodQuery {
 
-    protected val termType = p.Term.TermType.MAP
+    protected val termType = TermType.MAP
     val st = "map"
 
 }
 
 class WithFields extends MethodQuery {
 
-    protected val termType = p.Term.TermType.WITH_FIELDS
+    protected val termType = TermType.WITH_FIELDS
     val st = "with_fields"
 
 }
 
 class ConcatMap extends MethodQuery {
 
-    protected val termType = p.Term.TermType.CONCATMAP
+    protected val termType = TermType.CONCATMAP
     val st = "concat_map"
 
 }
 
 class Skip(operand: Term, number: Integer) extends MethodQuery(operand, number) {
 
-    protected val termType = p.Term.TermType.SKIP
+    protected val termType = TermType.SKIP
     val st = "skip"
 }
 
 class Slice(operand: Term, startIndex: Int, endIndex: Int) extends MethodQuery(operand, startIndex, endIndex) {
 
-    protected val termType = p.Term.TermType.SLICE
+    protected val termType = TermType.SLICE
 
 }
 
 class IsEmpty(operand: Term) extends MethodQuery(operand) {
 
-    protected val termType = p.Term.TermType.IS_EMPTY
+    protected val termType = TermType.IS_EMPTY
 
 }
 
 class Union(operand: Term, query: Query) extends MethodQuery(operand, query) {
 
-    protected val termType = p.Term.TermType.UNION
+    protected val termType = TermType.UNION
     val st = "union"
 
 }
 
 class Sample(operand: Term, number: Int) extends MethodQuery(operand, number) {
 
-    protected val termType = p.Term.TermType.UNION
+    protected val termType = TermType.UNION
     val st = "sample"
 
 }

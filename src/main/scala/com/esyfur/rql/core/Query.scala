@@ -3,6 +3,8 @@ package com.esyfur.rql.core
 import scala.collection.{Seq, Map}
 
 import com.rethinkdb.{Ql2 => p}
+import p.Term.TermType
+
 import com.esyfur.rql.{expr, Connection, Cursor, QueryOptions, RqlDriverError}
 import com.esyfur.rql.util.QueryPrinter
 

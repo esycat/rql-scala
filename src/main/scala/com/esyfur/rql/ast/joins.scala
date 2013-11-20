@@ -1,6 +1,8 @@
 package com.esyfur.rql.ast
 
 import com.rethinkdb.{Ql2 => p}
+import p.Term.TermType
+
 import com.esyfur.rql.core.{MethodQuery, Term, Sequence}
 
 private[rql] trait Joins extends Term { self: Sequence =>
@@ -17,28 +19,28 @@ private[rql] trait Joins extends Term { self: Sequence =>
 
 final class InnerJoin(left: Sequence, right: Sequence, predicate: Predicate) extends MethodQuery {
 
-    protected val termType = p.Term.TermType.INNER_JOIN
+    protected val termType = TermType.INNER_JOIN
     val st = "inner_join"
 
 }
 
 final class OuterJoin(left: Sequence, right: Sequence, predicate: Predicate) extends MethodQuery {
 
-    protected val termType = p.Term.TermType.OUTER_JOIN
+    protected val termType = TermType.OUTER_JOIN
     val st = "outer_join"
 
 }
 
 final class EqJoin(left: Sequence, right: Sequence, attr: String, index: Option[String] = None) extends MethodQuery {
 
-    protected val termType = p.Term.TermType.EQ_JOIN
+    protected val termType = TermType.EQ_JOIN
     val st = "eq_join"
 
 }
 
 final class Zip extends MethodQuery {
 
-    protected val termType = p.Term.TermType.ZIP
+    protected val termType = TermType.ZIP
     val st = "zip"
 
 }

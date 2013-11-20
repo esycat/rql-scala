@@ -1,6 +1,7 @@
 package com.esyfur.rql.core
 
 import com.rethinkdb.{Ql2 => p}
+import p.Term.TermType
 
 private[rql] abstract class Term {
 
