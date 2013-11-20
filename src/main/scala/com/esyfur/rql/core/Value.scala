@@ -2,9 +2,9 @@ package com.esyfur.rql.core
 
 import scala.util.matching.Regex
 
-import com.esyfur.rql.ast.ops._
 import com.esyfur.rql.ast._
-import com.esyfur.rql.SpanOptions
+import com.esyfur.rql.ast.ops._
+import com.esyfur.rql.ast.time._
 import com.esyfur.rql.SpanOptions
 
 private[rql] trait Value extends Term { self: Value =>

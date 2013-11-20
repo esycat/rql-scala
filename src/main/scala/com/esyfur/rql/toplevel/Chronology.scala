@@ -3,7 +3,7 @@ package com.esyfur.rql.toplevel
 import com.rethinkdb.{Ql2 => p}
 import p.Term.TermType
 
-import com.esyfur.rql.ast._
+import com.esyfur.rql.ast.time._
 
 private[rql] trait Chronology {
 

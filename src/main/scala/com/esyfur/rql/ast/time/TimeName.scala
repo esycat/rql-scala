@@ -1,4 +1,4 @@
-package com.esyfur.rql.ast
+package com.esyfur.rql.ast.time
 
 import com.rethinkdb.{Ql2 => p}
 import p.Term.TermType
