@@ -74,8 +74,25 @@ class DateTimeSpec extends UnitSpec with ConnectionAndDatabase with Tolerance {
             }
         }
 
-        ignore("should have defined weekday and month names") {
+        it("should have defined weekday and month names") {
+            // Week days
+            val expectedWeekDaySum = (1 to 7).sum
+            val queryWeekDaySum = r.datetime.monday + r.datetime.tuesday + r.datetime.wednesday +
+                r.datetime.thursday + r.datetime.friday + r.datetime.saturday + r.datetime.sunday
+            assertQuery(expectedWeekDaySum)(queryWeekDaySum)
 
+            r.datetime.weekdays.length should be (7)
+            r.datetime.weekday(5) should equal (r.datetime.friday)
+
+            // Months
+            val expectedMonthSum = (1 to 12).sum
+            val queryMonthSum = r.datetime.january + r.datetime.february + r.datetime.march + r.datetime.april +
+                r.datetime.may + r.datetime.june + r.datetime.july + r.datetime.august +
+                r.datetime.september + r.datetime.october + r.datetime.november + r.datetime.december
+            assertQuery(expectedMonthSum)(queryMonthSum)
+
+            r.datetime.months.length should be (12)
+            r.datetime.month(11) should equal (r.datetime.november)
         }
     }
 
