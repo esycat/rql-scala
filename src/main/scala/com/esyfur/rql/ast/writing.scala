@@ -6,7 +6,7 @@ import p.Term.TermType
 import com.esyfur.rql._
 import com.esyfur.rql.core.MethodQuery
 
-class Insert[T <: Document](val table: Table, document: T, options: InsertOptions) extends MethodQuery(table, document) {
+private[rql] class Insert[T <: Document](val table: Table, document: T, options: InsertOptions) extends MethodQuery(table, document) {
 
     protected val termType = TermType.INSERT
     val st = "insert"
@@ -15,7 +15,7 @@ class Insert[T <: Document](val table: Table, document: T, options: InsertOption
 
 }
 
-class Update[T <: Document](val table: Table, document: T, options: UpdateOptions) extends MethodQuery(table, document) {
+private[rql] class Update[T <: Document](val table: Table, document: T, options: UpdateOptions) extends MethodQuery(table, document) {
 
     protected val termType = TermType.UPDATE
     val st = "update"
@@ -24,7 +24,7 @@ class Update[T <: Document](val table: Table, document: T, options: UpdateOption
 
 }
 
-class Replace(val table: Table, options: UpdateOptions) extends MethodQuery(table) {
+private[rql] class Replace(val table: Table, options: UpdateOptions) extends MethodQuery(table) {
 
     protected val termType = TermType.REPLACE
     val st = "replace"
@@ -33,7 +33,7 @@ class Replace(val table: Table, options: UpdateOptions) extends MethodQuery(tabl
 
 }
 
-class Delete(val table: Table) extends MethodQuery(table) {
+private[rql] class Delete(val table: Table) extends MethodQuery(table) {
 
     protected val termType = TermType.DELETE
     val st = "delete"

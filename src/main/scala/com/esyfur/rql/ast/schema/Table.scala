@@ -10,7 +10,7 @@ object Table {
 
 }
 
-class Table(val db: Db, val name: String)
+private[rql] class Table(val db: Db, val name: String)
     extends MethodQuery(db, name) with Sequence with Selection {
 
     protected val termType = p.Term.TermType.TABLE
@@ -41,19 +41,19 @@ class Table(val db: Db, val name: String)
 
 }
 
-class TableCreate(val table: Table, val options: TableOptions) extends MethodQuery(table.name) {
+private[rql] class TableCreate(val table: Table, val options: TableOptions) extends MethodQuery(table.name) {
     protected val termType = p.Term.TermType.TABLE_CREATE
     val st = "table_create"
 
     protected override val optArgs = options.toMap
 }
 
-class TableDrop(val table: Table) extends MethodQuery(table.name) {
+private[rql] class TableDrop(val table: Table) extends MethodQuery(table.name) {
     protected val termType = p.Term.TermType.TABLE_DROP
     val st = "table_drop"
 }
 
-class TableList(val db: Db) extends MethodQuery(db) {
+private[rql] class TableList(val db: Db) extends MethodQuery(db) {
     protected val termType = p.Term.TermType.TABLE_LIST
     val st = "table_list"
 }

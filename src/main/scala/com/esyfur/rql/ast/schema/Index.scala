@@ -13,14 +13,14 @@ protected class Index(val table: Table, val name: String) extends MethodQuery(ta
 
 }
 
-class IndexCreate(val index: Index) extends MethodQuery(index.table, index.name) {
+private[rql] class IndexCreate(val index: Index) extends MethodQuery(index.table, index.name) {
     protected val termType = p.Term.TermType.INDEX_CREATE
 }
 
-class IndexDrop(val index: Index) extends MethodQuery(index.table, index.name) {
+private[rql] class IndexDrop(val index: Index) extends MethodQuery(index.table, index.name) {
     protected val termType = p.Term.TermType.INDEX_DROP
 }
 
-class IndexList(val table: Table) extends MethodQuery(table) {
+private[rql] class IndexList(val table: Table) extends MethodQuery(table) {
     protected val termType = p.Term.TermType.INDEX_LIST
 }

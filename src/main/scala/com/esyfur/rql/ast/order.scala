@@ -5,7 +5,7 @@ import p.Term.TermType
 
 import com.esyfur.rql.core.{MethodQuery, ValueQuery, Term}
 
-class OrderBy(operand: Term, keys: String*) extends MethodQuery(operand /*, keys: _* */) {
+private[rql] class OrderBy(operand: Term, keys: String*) extends MethodQuery(operand /*, keys: _* */) {
 
     protected val termType = TermType.ORDERBY
 
@@ -13,14 +13,14 @@ class OrderBy(operand: Term, keys: String*) extends MethodQuery(operand /*, keys
 
 abstract class Ordering(val key: String) extends ValueQuery(key)
 
-class Asc(key: String) extends Ordering(key) {
+private[rql] class Asc(key: String) extends Ordering(key) {
 
     protected val termType = TermType.ASC
     val st = "asc"
 
 }
 
-class Desc(key: String) extends Ordering(key) {
+private[rql] class Desc(key: String) extends Ordering(key) {
 
     protected val termType = TermType.DESC
     val st = "desc"

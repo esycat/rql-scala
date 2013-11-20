@@ -5,84 +5,84 @@ import p.Term.TermType
 
 import com.esyfur.rql.core.{MethodQuery, StrValue, Term}
 
-class Pluck(operand: Term) extends MethodQuery(operand) {
+private[rql] class Pluck(operand: Term) extends MethodQuery(operand) {
 
     protected val termType = TermType.PLUCK
     val st = "pluck"
 
 }
 
-class Without(operand: Term) extends MethodQuery(operand) {
+private[rql] class Without(operand: Term) extends MethodQuery(operand) {
 
     protected val termType = TermType.WITHOUT
     val st = "without"
 
 }
 
-class Merge extends MethodQuery {
+private[rql] class Merge extends MethodQuery {
 
     protected val termType = TermType.MERGE
     val st = "merge"
 
 }
 
-class Append extends MethodQuery {
+private[rql] class Append extends MethodQuery {
 
     protected val termType = TermType.APPEND
     val st = "append"
 
 }
 
-class Prepend extends MethodQuery {
+private[rql] class Prepend extends MethodQuery {
 
     protected val termType = TermType.PREPEND
     val st = "prepend"
 
 }
 
-class Difference extends MethodQuery {
+private[rql] class Difference extends MethodQuery {
 
     protected val termType = TermType.DIFFERENCE
     val st = "difference"
 
 }
 
-class SetInsert extends MethodQuery {
+private[rql] class SetInsert extends MethodQuery {
 
     protected val termType = TermType.SET_INSERT
     val st = "set_insert"
 
 }
 
-class SetUnion extends MethodQuery {
+private[rql] class SetUnion extends MethodQuery {
 
     protected val termType = TermType.SET_UNION
     val st = "set_union"
 
 }
 
-class SetIntersection extends MethodQuery {
+private[rql] class SetIntersection extends MethodQuery {
 
     protected val termType = TermType.SET_INTERSECTION
     val st = "set_intersection"
 
 }
 
-class SetDifference extends MethodQuery {
+private[rql] class SetDifference extends MethodQuery {
 
     protected val termType = TermType.SET_DIFFERENCE
     val st = "set_difference"
 
 }
 
-class HasFields extends MethodQuery {
+private[rql] class HasFields extends MethodQuery {
 
     protected val termType = TermType.HAS_FIELDS
     val st = "has_fields"
 
 }
 
-class Match(operand: StrValue, regexp: String) extends MethodQuery(operand, regexp) {
+private[rql] class Match(operand: StrValue, regexp: String) extends MethodQuery(operand, regexp) {
 
     protected val termType = TermType.MATCH
     val st = "match"

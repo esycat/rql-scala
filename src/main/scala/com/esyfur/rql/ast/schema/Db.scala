@@ -9,7 +9,7 @@ object Db {
 
 }
 
-class Db(val name: String) extends TopLevelQuery(name) {
+private[rql] class Db(val name: String) extends TopLevelQuery(name) {
 
     protected val termType = p.Term.TermType.DB
     val st = "db"
@@ -28,17 +28,17 @@ class Db(val name: String) extends TopLevelQuery(name) {
 
 }
 
-class DbCreate(val db: Db) extends TopLevelQuery(db.name) {
+private[rql] class DbCreate(val db: Db) extends TopLevelQuery(db.name) {
     protected val termType = p.Term.TermType.DB_CREATE
     val st = "db_create"
 }
 
-class DbDrop(val db: Db) extends TopLevelQuery(db.name) {
+private[rql] class DbDrop(val db: Db) extends TopLevelQuery(db.name) {
     protected val termType = p.Term.TermType.DB_DROP
     val st = "db_drop"
 }
 
-class DbList extends TopLevelQuery {
+private[rql] class DbList extends TopLevelQuery {
     protected val termType = p.Term.TermType.DB_LIST
     val st = "db_list"
 }

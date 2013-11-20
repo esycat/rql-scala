@@ -12,4 +12,4 @@ object TimeName {
 
 }
 
-class TimeName(protected val termType: TermType) extends Query with NumValue
+private[rql] class TimeName(protected val termType: TermType) extends Query with NumValue

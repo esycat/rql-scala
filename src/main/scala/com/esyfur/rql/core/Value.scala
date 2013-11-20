@@ -26,7 +26,7 @@ private[rql] trait Value extends Term { self: Value =>
 
 }
 
-trait BoolValue extends Term { self: BoolValue =>
+private[rql] trait BoolValue extends Term { self: BoolValue =>
 
     // Logical operators
     def not()                = new Not(this)
@@ -39,7 +39,7 @@ trait BoolValue extends Term { self: BoolValue =>
 
 }
 
-trait NumValue extends Term { self: NumValue =>
+private[rql] trait NumValue extends Term { self: NumValue =>
 
     // Numeric operators
     def add(that: NumValue) = new Add(this, that)
@@ -65,14 +65,14 @@ trait NumValue extends Term { self: NumValue =>
 
 }
 
-trait StrValue extends Term { self: StrValue =>
+private[rql] trait StrValue extends Term { self: StrValue =>
 
     def matchWith(regexp: String) = new Match(this, regexp)
     def matchWith(regexp: Regex)  = new Match(this, regexp.toString())
 
 }
 
-trait TimeValue extends Term { self: TimeValue =>
+private[rql] trait TimeValue extends Term { self: TimeValue =>
 
     def toISO8601() = new ToISO8601(this)
 
