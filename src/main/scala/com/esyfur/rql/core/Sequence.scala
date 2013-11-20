@@ -4,6 +4,8 @@ import com.esyfur.rql.ast._
 
 private[rql] trait Sequence extends Term with Joins { self: Sequence =>
 
+    def default() = ???
+
     /* Transformations */
 
     def map(): Query = ???

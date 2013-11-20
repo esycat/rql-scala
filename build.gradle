@@ -1,6 +1,6 @@
 description = 'Scala driver for RethinkDB.'
 group = 'com.esyfur'
-version = '0.1.7'
+version = '0.1.8'
 
 defaultTasks 'clean', 'run'
 

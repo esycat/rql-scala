@@ -17,14 +17,21 @@ private[rql] class ImplicitVar extends Query {
 
 }
 
-private[rql] class JavaScript(expression: String) extends ValueQuery(expression) {
+private[rql] class JavaScript(jsString: String) extends ValueQuery(jsString) {
 
     protected val termType = TermType.JAVASCRIPT
     val st = "js"
 
 }
 
-private[rql] class UserError extends TopLevelQuery {
+private[rql] class JSON(jsonString: String) extends ValueQuery(jsonString) {
+
+    protected val termType = TermType.JSON
+    val st = "js"
+
+}
+
+private[rql] class UserError(message: String) extends TopLevelQuery(message) {
 
     protected val termType = TermType.ERROR
     val st = "error"

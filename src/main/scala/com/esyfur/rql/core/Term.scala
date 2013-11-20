@@ -11,4 +11,8 @@ private[rql] abstract class Term {
 
     protected[rql] def build(): p.Term = getTermBuilder().build()
 
+    def typeOf() = ???
+
+    def info() = ???
+
 }

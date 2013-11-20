@@ -1,21 +1,21 @@
 package com.esyfur.rql.toplevel
 
 import com.esyfur.rql.{Connection, DbList, Db}
-import com.esyfur.rql.ast.{Desc, Asc, Ordering}
+import com.esyfur.rql.ast._
 
 private[rql] trait Func {
 
-    def funcall() = ???
+    def db(name: String) = Db(name)
 
-    def branch(test: Boolean, positive: (() => Unit), negative: (() => Unit)) = ???
+    def dbCreate(name: String) = db(name).create()
 
-    def foreach() = ???
+    def dbDrop(name: String) = db(name).drop()
 
-    def error() = ???
+    def dbList = new DbList
 
-    def default() = ???
+    def table(name: String) = Connection.default.db.table(name)
 
-    def js(expression: String) = ???
+    def row(atr: String) = ???
 
     def count() = ???
 
@@ -27,14 +27,16 @@ private[rql] trait Func {
 
     def desc(key: String): Ordering = new Desc(key)
 
-    def db(name: String) = Db(name)
+    def funcall() = ???
 
-    def dbCreate(name: String) = db(name).create()
+    def branch(test: Boolean, positive: (() => Unit), negative: (() => Unit)) = ???
 
-    def dbDrop(name: String) = db(name).drop()
+    def foreach() = ???
 
-    def dbList = new DbList
+    def error(message: String) = new UserError(message)
 
-    def table(name: String) = Connection.default.db.table(name)
+    def js(jsString: String) = new JavaScript(jsString)
+
+    def json(jsonString: String) = new JSON(jsonString)
 
 }
