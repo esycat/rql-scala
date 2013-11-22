@@ -1,7 +1,8 @@
 package com.esyfur.rql
 
 import com.rethinkdb.{Ql2 => p}
-import com.esyfur.rql.core.TopLevelQuery
+
+import com.esyfur.rql.core._
 
 object Db {
 

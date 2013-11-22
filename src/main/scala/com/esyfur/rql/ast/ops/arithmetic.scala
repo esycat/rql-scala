@@ -3,7 +3,7 @@ package com.esyfur.rql.ast.ops
 import com.rethinkdb.{Ql2 => p}
 import p.Term.TermType
 
-import com.esyfur.rql.core.{BinaryQuery, NumValue}
+import com.esyfur.rql.core._
 
 private[rql] class Add(a: NumValue, b: NumValue) extends BinaryQuery(a, b) with NumValue {
 

@@ -55,7 +55,6 @@ object Main extends App {
         val ts = currentTime.withZoneRetainFields(tz)
 
         c = r.iso8601(ts.toString).run
-
         val document = c.next().asInstanceOf[Document]
         val epochTime = document("epoch_time").asInstanceOf[Double]
 

@@ -15,17 +15,17 @@ private[rql] trait Func {
 
     def table(name: String) = Connection.default.db.table(name)
 
-    def row(atr: String) = ???
+    def row(attr: String) = new Row(attr)
 
-    def count() = ???
+    def count(): Aggregator = CountBy()
 
-    def sum(key: String) = ???
+    def sum(attr: String): Aggregator = Sum(attr)
 
-    def avg(key: String) = ???
+    def avg(attr: String): Aggregator = Avg(attr)
 
-    def asc(key: String): Ordering = new Asc(key)
+    def asc(attr: String): Ordering = new Asc(attr)
 
-    def desc(key: String): Ordering = new Desc(key)
+    def desc(attr: String): Ordering = new Desc(attr)
 
     def funcall() = ???
 

@@ -3,23 +3,36 @@ package com.esyfur.rql.ast
 import com.rethinkdb.{Ql2 => p}
 import p.Term.TermType
 
-import com.esyfur.rql.core.{MethodQuery, StrValue, Term}
+import com.esyfur.rql.core._
 
-private[rql] class Pluck(operand: Term) extends MethodQuery(operand) {
+private[rql] class Row(attr: String) extends TopLevelQuery(attr) {
+
+    protected val termType = TermType.IMPLICIT_VAR
+    val st = "row"
+
+}
+
+private[rql] class Pluck(self: Sequence)
+    extends MethodQuery(self)
+    with Stream {
 
     protected val termType = TermType.PLUCK
     val st = "pluck"
 
 }
 
-private[rql] class Without(operand: Term) extends MethodQuery(operand) {
+private[rql] class Without(self: Sequence)
+    extends MethodQuery(self)
+    with Stream {
 
     protected val termType = TermType.WITHOUT
     val st = "without"
 
 }
 
-private[rql] class Merge extends MethodQuery {
+private[rql] class Merge(self: Sequence)
+    extends MethodQuery(self)
+    with Stream {
 
     protected val termType = TermType.MERGE
     val st = "merge"
@@ -82,7 +95,7 @@ private[rql] class HasFields extends MethodQuery {
 
 }
 
-private[rql] class Match(operand: StrValue, regexp: String) extends MethodQuery(operand, regexp) {
+private[rql] class Match(self: StrValue, regexp: String) extends MethodQuery(self, regexp) {
 
     protected val termType = TermType.MATCH
     val st = "match"

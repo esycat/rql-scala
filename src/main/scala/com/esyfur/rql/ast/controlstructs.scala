@@ -3,7 +3,7 @@ package com.esyfur.rql.ast
 import com.rethinkdb.{Ql2 => p}
 import p.Term.TermType
 
-import com.esyfur.rql.core.{TopLevelQuery, MethodQuery, ValueQuery, Query}
+import com.esyfur.rql.core._
 
 private[rql] class Var extends Query {
 

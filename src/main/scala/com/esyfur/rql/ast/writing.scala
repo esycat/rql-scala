@@ -4,7 +4,7 @@ import com.rethinkdb.{Ql2 => p}
 import p.Term.TermType
 
 import com.esyfur.rql._
-import com.esyfur.rql.core.MethodQuery
+import com.esyfur.rql.core._
 
 private[rql] class Insert[T <: Document](val table: Table, document: T, options: InsertOptions) extends MethodQuery(table, document) {
 

@@ -2,59 +2,59 @@ package com.esyfur.rql.core
 
 import com.esyfur.rql.ast._
 
-private[rql] trait Sequence extends Term with Joins { self: Sequence =>
+private[rql] trait Sequence extends Query with Joins {
 
     def default() = ???
 
     /* Transformations */
 
-    def map(): Query = ???
+    def map(): Stream = new Map(this)
 
-    def withFields(fields: String*): Query = ???
+    def withFields(fields: String*): Stream = new WithFields(this)
 
-    def concatMap(): Query = ???
+    def concatMap(): Stream = new ConcatMap(this)
 
-    def orderBy(keys: String*): Query = new OrderBy(this, keys: _*)
+    def orderBy(keys: String*): Stream = new OrderBy(this, keys: _*)
 
     //def orderBy(keys: Ordering*) = new OrderBy(this, keys)
 
-    def skip(number: Int): Query = new Skip(this, number)
+    def skip(number: Int): Stream = new Skip(this, number)
 
-    def limit(number: Int): Query = new Limit(this, number)
+    def limit(number: Int): Stream = new Limit(this, number)
 
-    def slice(startIndex: Int, endIndex: Int): Query = new Slice(this, startIndex, endIndex)
+    def slice(startIndex: Int, endIndex: Int): Stream = new Slice(this, startIndex, endIndex)
 
-    def nth(index: Int): Query = ???
+    def nth(index: Int): Nth = new Nth(this, index)
 
     def indexesOf(datum: Datum[Any]): Query = ???
 
     def indexesOf(predicate: Predicate): Query = ???
 
-    def isEmpty(): Query = new IsEmpty(this)
+    def isEmpty(): IsEmpty = new IsEmpty(this)
 
-    def union(query: Query): Query = new Union(this, query)
+    def union(other: Sequence): Query = new Union(this, other)
 
-    def sample(number: Int): Query = new Sample(this, number)
+    def sample(number: Int): Selection = new Sample(this, number)
 
 
     /* Aggregation */
 
-    def reduce() = new Reduce(this)
+    def reduce(): Reduce = new Reduce(this)
 
-    def count() = new Count(this)
+    def count(): Count = new Count(this)
 
-    def distinct(): Query = new Distinct(this)
+    def distinct(): Distinct = new Distinct(this)
 
     def groupedMapReduce() = ???
 
-    def groupBy() = ???
+    def groupBy(reductor: Aggregator, attr: String, attrs: String*): Query = new GroupBy(this, reductor, attr +: attrs)
 
-    def contains(values: Any*) = new Contains(this, values: _*)
+    def contains(values: Any*): Contains = new Contains(this, values: _*)
 
     /* Document Manipulation */
 
-    def pluck() = new Pluck(this)
+    def pluck(): Pluck = new Pluck(this)
 
-    def without() = new Without(this)
+    def without(): Without = new Without(this)
 
 }

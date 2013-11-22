@@ -8,7 +8,7 @@ import p.Term.TermType
 import com.esyfur.rql.{expr, Connection, Cursor, QueryOptions, RqlDriverError}
 import com.esyfur.rql.util.QueryPrinter
 
-abstract class Query extends Term with Sequence with Selection {
+abstract class Query extends Term {
 
     protected val posArgs: Seq[Term] = Seq.empty[Term]
     protected val optArgs: Map[String, Term] = Map.empty[String, Term]
