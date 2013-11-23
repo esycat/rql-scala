@@ -4,7 +4,7 @@ import java.net.InetSocketAddress
 
 import com.esyfur.rql.toplevel._
 
-package object rql extends Expr with Func with Chronology {
+package object rql extends Expr with Funcs with Chronology {
 
     type Document = collection.Map[String, Any]
 

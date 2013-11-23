@@ -3,7 +3,7 @@ package com.esyfur.rql.toplevel
 import com.esyfur.rql.{Connection, DbList, Db}
 import com.esyfur.rql.ast._
 
-private[rql] trait Func {
+private[rql] trait Funcs {
 
     def db(name: String) = Db(name)
 
@@ -27,7 +27,7 @@ private[rql] trait Func {
 
     def desc(attr: String): Ordering = new Desc(attr)
 
-    def funcall() = ???
+    def funCall(value: Predicate) = new FunCall(value)
 
     def branch(test: Boolean, positive: (() => Unit), negative: (() => Unit)) = ???
 
