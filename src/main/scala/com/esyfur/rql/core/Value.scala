@@ -33,7 +33,7 @@ private[rql] trait BoolValue extends Term { self: BoolValue =>
     def and(that: BoolValue) = new All(this, that)
     def or(that: BoolValue)  = new Any(this, that)
 
-    def !                  = not()
+    def unary_!            = not()
     def &(that: BoolValue) = and(that)
     def |(that: BoolValue) = or(that)
 
@@ -68,7 +68,7 @@ private[rql] trait NumValue extends Term { self: NumValue =>
 private[rql] trait StrValue extends Term { self: StrValue =>
 
     def matchWith(regexp: String) = new Match(this, regexp)
-    def matchWith(regexp: Regex)  = new Match(this, regexp.toString())
+    def matchWith(regexp: Regex)  = matchWith(regexp.toString())
 
 }
 

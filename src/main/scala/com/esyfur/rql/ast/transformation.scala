@@ -26,13 +26,13 @@ private[rql] class ConcatMap(self: Sequence) extends MethodQuery(self) with Stre
 
 }
 
-private[rql] class Skip(self: Sequence, number: Int) extends MethodQuery(self, number) with Stream {
+private[rql] class Skip(self: Sequence, n: Int) extends MethodQuery(self, n) with Stream {
 
     protected val termType = TermType.SKIP
     val st = "skip"
 }
 
-private[rql] class Limit(self: Sequence, number: Int) extends MethodQuery(self, number) with Stream {
+private[rql] class Limit(self: Sequence, n: Int) extends MethodQuery(self, n) with Stream {
 
     protected val termType = TermType.LIMIT
     val st = "limit"
@@ -66,7 +66,7 @@ private[rql] class Union(self: Sequence, other: Sequence) extends MethodQuery(se
 
 }
 
-private[rql] class Sample(self: Sequence, number: Int) extends MethodQuery(self, number) with Selection {
+private[rql] class Sample(self: Sequence, n: Int) extends MethodQuery(self, n) with Selection {
 
     protected val termType = TermType.UNION
     val st = "sample"

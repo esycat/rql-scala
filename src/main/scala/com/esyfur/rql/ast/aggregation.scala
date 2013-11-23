@@ -26,7 +26,15 @@ private[rql] class Distinct(self: Sequence) extends MethodQuery(self) {
 
 }
 
-private[rql] class GroupBy(self: Sequence, reductor: Aggregator, selectors: Seq[String]) extends MethodQuery(self, selectors) {
+private[rql] class GroupedMapReduce(self: Sequence, grouping: Predicate, mapping: Predicate, reduction: Predicate, base: Predicate)
+    extends MethodQuery(self) {
+
+    protected val termType = TermType.GROUPED_MAP_REDUCE
+    val st = "grouped_map_reduce"
+
+}
+
+private[rql] class GroupBy(self: Sequence, reduction: Aggregator, selectors: Seq[String]) extends MethodQuery(self, selectors) {
 
     protected val termType = TermType.GROUPBY
     val st = "group_by"

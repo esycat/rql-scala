@@ -5,7 +5,7 @@ import p.Term.TermType
 
 import com.esyfur.rql.core._
 
-private[rql] class OrderBy(self: Sequence, keys: String*) extends MethodQuery(self /*, keys: _* */) with Stream {
+private[rql] class OrderBy(self: Sequence, keys: Seq[String]) extends MethodQuery(self, keys: _*) with Stream {
 
     protected val termType = TermType.ORDERBY
 

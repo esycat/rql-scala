@@ -38,7 +38,7 @@ private[rql] class UserError(message: String) extends TopLevelQuery(message) {
 
 }
 
-private[rql] class Default extends Query {
+private[rql] class Default(self: Sequence, value: Any) extends MethodQuery(self, value) {
 
     protected val termType = TermType.DEFAULT
     val st = "default"

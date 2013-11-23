@@ -4,7 +4,7 @@ import com.esyfur.rql.ast._
 
 private[rql] trait Sequence extends Query with Joins {
 
-    def default() = ???
+    def default(value: Any): Default = new Default(this, value)
 
     /* Transformations */
 
@@ -14,13 +14,13 @@ private[rql] trait Sequence extends Query with Joins {
 
     def concatMap(): Stream = new ConcatMap(this)
 
-    def orderBy(keys: String*): Stream = new OrderBy(this, keys: _*)
+    def orderBy(key: String, keys: String*): Stream = new OrderBy(this, key +: keys)
 
-    //def orderBy(keys: Ordering*) = new OrderBy(this, keys)
+    // def orderBy(key: Ordering, keys: Ordering*) = new OrderBy(this, key +: keys)
 
-    def skip(number: Int): Stream = new Skip(this, number)
+    def skip(n: Int): Stream = new Skip(this, n)
 
-    def limit(number: Int): Stream = new Limit(this, number)
+    def limit(n: Int): Stream = new Limit(this, n)
 
     def slice(startIndex: Int, endIndex: Int): Stream = new Slice(this, startIndex, endIndex)
 
@@ -34,7 +34,7 @@ private[rql] trait Sequence extends Query with Joins {
 
     def union(other: Sequence): Query = new Union(this, other)
 
-    def sample(number: Int): Selection = new Sample(this, number)
+    def sample(n: Int): Selection = new Sample(this, n)
 
 
     /* Aggregation */
@@ -45,9 +45,10 @@ private[rql] trait Sequence extends Query with Joins {
 
     def distinct(): Distinct = new Distinct(this)
 
-    def groupedMapReduce() = ???
+    def groupedMapReduce(grouping: Predicate, mapping: Predicate, reduction: Predicate, base: Predicate): GroupedMapReduce
+        = new GroupedMapReduce(this, grouping, mapping, reduction, base)
 
-    def groupBy(reductor: Aggregator, attr: String, attrs: String*): Query = new GroupBy(this, reductor, attr +: attrs)
+    def groupBy(reduction: Aggregator, attr: String, attrs: String*): Query = new GroupBy(this, reduction, attr +: attrs)
 
     def contains(values: Any*): Contains = new Contains(this, values: _*)
 
