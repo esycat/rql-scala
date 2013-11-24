@@ -30,12 +30,20 @@ private[rql] trait BoolValue extends Term { self: BoolValue =>
 
     // Logical operators
     def not()                = new Not(this)
+
     def and(that: BoolValue) = new All(this, that)
+    def and(that: Boolean)   = new All(this, Datum(that))
+
     def or(that: BoolValue)  = new Any(this, that)
+    def or(that: Boolean)    = new Any(this, Datum(that))
 
     def unary_!            = not()
-    def &(that: BoolValue) = and(that)
-    def |(that: BoolValue) = or(that)
+
+    def &(that: BoolValue)   = and(that)
+    def &(that: Boolean)     = and(that)
+
+    def |(that: BoolValue)   = or(that)
+    def |(that: Boolean)     = or(that)
 
 }
 
@@ -58,10 +66,19 @@ private[rql] trait NumValue extends Term { self: NumValue =>
     def mod(that: Double): Mod = mod(Datum(that))
 
     def +(that: NumValue) = add(that)
+    def +(that: Double)   = add(that)
+
     def -(that: NumValue) = sub(that)
+    def -(that: Double)   = sub(that)
+
     def *(that: NumValue) = mul(that)
+    def *(that: Double)   = mul(that)
+
     def /(that: NumValue) = div(that)
+    def /(that: Double)   = div(that)
+
     def %(that: NumValue) = mod(that)
+    def %(that: Double)   = mod(that)
 
 }
 
