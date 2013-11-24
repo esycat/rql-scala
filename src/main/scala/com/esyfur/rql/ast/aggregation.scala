@@ -5,7 +5,7 @@ import p.Term.TermType
 
 import com.esyfur.rql.core._
 
-private[rql] class Reduce(self: Sequence) extends MethodQuery(self) {
+private[rql] class Reduce(self: Sequence, function: ReductionFunction) extends MethodQuery(self) {
 
     protected val termType = TermType.REDUCE
     val st = "reduce"
@@ -47,3 +47,5 @@ private[rql] class Contains(self: Sequence, values: Any*) extends MethodQuery(se
     val st = "contains"
 
 }
+
+class ReductionFunction {}

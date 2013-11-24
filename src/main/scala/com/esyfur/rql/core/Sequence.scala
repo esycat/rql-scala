@@ -8,11 +8,11 @@ private[rql] trait Sequence extends Query with Joins {
 
     /* Transformations */
 
-    def map(): Stream = new Map(this)
+    def map(function: MappingFunction): Stream = new Map(this, function)
 
     def withFields(fields: String*): Stream = new WithFields(this)
 
-    def concatMap(): Stream = new ConcatMap(this)
+    def concatMap(function: MappingFunction): Stream = new ConcatMap(this, function)
 
     def orderBy(key: String, keys: String*): Stream = new OrderBy(this, key +: keys)
 
@@ -39,7 +39,7 @@ private[rql] trait Sequence extends Query with Joins {
 
     /* Aggregation */
 
-    def reduce(): Reduce = new Reduce(this)
+    def reduce(function: ReductionFunction): Reduce = new Reduce(this, function)
 
     def count(): Count = new Count(this)
 

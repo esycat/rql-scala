@@ -57,6 +57,18 @@ private[rql] class Keys extends MethodQuery {
 
 }
 
+private[rql] class FunCall(value: Predicate) extends MethodQuery {
+
+    protected val termType = TermType.FUNCALL
+
+}
+
+private[rql] class Func(value: Predicate) extends MethodQuery {
+
+    protected val termType = TermType.FUNC
+
+}
+
 private[rql] class Predicate extends MethodQuery {
 
     protected val termType = ???

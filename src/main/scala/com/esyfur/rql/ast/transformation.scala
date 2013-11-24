@@ -5,7 +5,7 @@ import p.Term.TermType
 
 import com.esyfur.rql.core._
 
-private[rql] class Map(self: Sequence) extends MethodQuery(self) with Stream {
+private[rql] class Map(self: Sequence, function: MappingFunction) extends MethodQuery(self) with Stream {
 
     protected val termType = TermType.MAP
     val st = "map"
@@ -19,7 +19,7 @@ private[rql] class WithFields(self: Sequence) extends MethodQuery(self) with Str
 
 }
 
-private[rql] class ConcatMap(self: Sequence) extends MethodQuery(self) with Stream {
+private[rql] class ConcatMap(self: Sequence, function: MappingFunction) extends MethodQuery(self) with Stream {
 
     protected val termType = TermType.CONCATMAP
     val st = "concat_map"
@@ -72,3 +72,5 @@ private[rql] class Sample(self: Sequence, n: Int) extends MethodQuery(self, n) w
     val st = "sample"
 
 }
+
+class MappingFunction {}
