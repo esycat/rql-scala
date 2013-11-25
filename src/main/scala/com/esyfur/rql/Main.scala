@@ -4,6 +4,8 @@ import scala.util.Random.nextDouble
 import org.joda.time.{DateTime, DateTimeZone}
 
 import com.esyfur.{rql => r}
+import com.esyfur.rql.ast._
+import com.esyfur.rql.core._
 import com.esyfur.rql.util._
 
 object Main extends App {
@@ -48,6 +50,14 @@ object Main extends App {
 
         c = r.db(db).table(tbl).isEmpty.run()
         printCursor(c)
+    }
+
+    private def exerciseJoins(): Unit = {
+        val trxs  = r.db("aerarium").table("transactions")
+        val items = r.db("aerarium").table("transactionItems")
+
+        val predicate = (x: Var, y: Var) => Datum(true)
+        trxs.innerJoin(items, predicate)
     }
 
     private def exerciseDateTime(): Unit = {

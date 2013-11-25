@@ -15,14 +15,14 @@ private[rql] class Map(self: Sequence, function: MappingFunction) extends Method
 private[rql] class WithFields(self: Sequence) extends MethodQuery(self) with Stream {
 
     protected val termType = TermType.WITH_FIELDS
-    val st = "with_fields"
+    val st = "withFields"
 
 }
 
 private[rql] class ConcatMap(self: Sequence, function: MappingFunction) extends MethodQuery(self) with Stream {
 
     protected val termType = TermType.CONCATMAP
-    val st = "concat_map"
+    val st = "concatMap"
 
 }
 
@@ -72,5 +72,3 @@ private[rql] class Sample(self: Sequence, n: Int) extends MethodQuery(self, n) w
     val st = "sample"
 
 }
-
-class MappingFunction {}

@@ -47,5 +47,3 @@ private[rql] class Contains(self: Sequence, values: Any*) extends MethodQuery(se
     val st = "contains"
 
 }
-
-class ReductionFunction {}

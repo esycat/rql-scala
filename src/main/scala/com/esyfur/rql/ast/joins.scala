@@ -7,29 +7,29 @@ import com.esyfur.rql.core._
 
 private[rql] trait Joins extends Term { self: Sequence =>
 
-    def innerJoin(other: Sequence, predicate: Predicate): Stream = new InnerJoin(this, other, predicate)
+    def innerJoin(other: Sequence, predicate: JoinPredicate): Stream = new InnerJoin(this, other, predicate)
 
-    def outerJoin(other: Sequence, predicate: Predicate): Stream = new OuterJoin(this, other, predicate)
+    def outerJoin(other: Sequence, predicate: JoinPredicate): Stream = new OuterJoin(this, other, predicate)
 
     def eqJoin(leftAttr: String, other: Sequence, index: String = "id"): Stream = new EqJoin(this, leftAttr, other, index)
 
 }
 
-final class InnerJoin(left: Sequence, right: Sequence, predicate: Predicate)
+final class InnerJoin(left: Sequence, right: Sequence, predicate: JoinPredicate)
     extends MethodQuery(left, right, predicate)
     with Stream {
 
     protected val termType = TermType.INNER_JOIN
-    val st = "inner_join"
+    val st = "innerJoin"
 
 }
 
-final class OuterJoin(left: Sequence, right: Sequence, predicate: Predicate)
+final class OuterJoin(left: Sequence, right: Sequence, predicate: JoinPredicate)
     extends MethodQuery(left, right, predicate)
     with Stream {
 
     protected val termType = TermType.OUTER_JOIN
-    val st = "outer_join"
+    val st = "outerJoin"
 
 }
 
@@ -38,7 +38,7 @@ final class EqJoin(left: Sequence, leftAttr: String, right: Sequence, index: Str
     with Stream {
 
     protected val termType = TermType.EQ_JOIN
-    val st = "eq_join"
+    val st = "eqJoin"
 
 }
 
