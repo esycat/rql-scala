@@ -69,7 +69,7 @@ abstract class BinaryQuery(a: Term, b: Term) extends Query {
 
 }
 
-abstract class ValueQuery(value: String) extends Query {
+abstract class ValueQuery(value: Any) extends Query {
 
     protected override val posArgs = Seq(expr(value))
 

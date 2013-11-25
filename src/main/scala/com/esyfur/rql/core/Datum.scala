@@ -125,6 +125,8 @@ final class ArrayDatum(val value: Seq[Any]) extends Datum[Seq[Any]] {
     protected override val termType = TermType.MAKE_ARRAY
     protected val datumType = R_ARRAY
 
+    def this(value: Any*) = this(value)
+
     protected override def getTermBuilder() = {
         val builder = super.getTermBuilder().clearDatum()
 

@@ -5,7 +5,7 @@ import p.Term.TermType
 
 import com.esyfur.rql.core._
 
-private[rql] class Var extends Query {
+private[rql] class Var(index: Int) extends ValueQuery(index) {
 
     protected val termType = TermType.VAR
 

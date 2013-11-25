@@ -1,21 +1,21 @@
 package com.esyfur.rql.toplevel
 
-import com.esyfur.rql.{Connection, DbList, Db}
+import com.esyfur.rql._
 import com.esyfur.rql.ast._
 
 private[rql] trait Funcs {
 
-    def db(name: String) = Db(name)
+    def db(name: String): Db = Db(name)
 
-    def dbCreate(name: String) = db(name).create()
+    def dbCreate(name: String): DbCreate = db(name).create()
 
-    def dbDrop(name: String) = db(name).drop()
+    def dbDrop(name: String): DbDrop = db(name).drop()
 
-    def dbList = new DbList
+    def dbList: DbList = new DbList
 
-    def table(name: String) = Connection.default.db.table(name)
+    def table(name: String): Table = Connection.default.db.table(name)
 
-    def row(attr: String) = new Row(attr)
+    def row(attr: String): Row = new Row(attr)
 
     def count(): Aggregator = CountBy()
 

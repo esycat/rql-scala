@@ -15,17 +15,17 @@ private[rql] class Db(val name: String) extends TopLevelQuery(name) {
     protected val termType = p.Term.TermType.DB
     val st = "db"
 
-    def create() = new DbCreate(this)
+    def create(): DbCreate = new DbCreate(this)
 
-    def drop() = new DbDrop(this)
+    def drop(): DbDrop = new DbDrop(this)
 
-    def table(name: String, useOutdated: Boolean = false) = new Table(this, name)
+    def table(name: String, useOutdated: Boolean = false): Table = new Table(this, name)
 
-    def tableCreate(name: String, options: Option[TableOptions] = None) = table(name).create(options)
+    def tableCreate(name: String, options: Option[TableOptions] = None): TableCreate = table(name).create(options)
 
-    def tableDrop(name: String) = table(name).drop()
+    def tableDrop(name: String): TableDrop = table(name).drop()
 
-    def tableList = new TableList(this)
+    def tableList: TableList = new TableList(this)
 
 }
 

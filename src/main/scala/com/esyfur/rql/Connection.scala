@@ -53,13 +53,15 @@ class Connection(
     private val address: InetSocketAddress
     ) extends AutoCloseable {
 
-    private val token: AtomicInteger = new AtomicInteger()
-
     private var socket: Socket = _
     private var in: InputStream = _
     private var out: OutputStream = _
 
+    private val token: AtomicInteger = new AtomicInteger()
+    def nextToken = token.incrementAndGet
+
     private var defaultDb: Option[Db] = None
+    def db = defaultDb.get
 
     reconnect()
 
@@ -110,15 +112,13 @@ class Connection(
         this
     }
 
-    def db = this.defaultDb.get
-
     def execute[T](query: Query, options: QueryOptions): Cursor = {
         if (!isOpen) throw new RqlDriverError("Connection is closed.")
 
         // Constructing query.
         val builder = p.Query.newBuilder()
             .setType(p.Query.QueryType.START)
-            .setToken(token.incrementAndGet())
+            .setToken(nextToken)
             .setQuery(query.build)
 
         defaultDb foreach { db => builder.addGlobalOptargs(
